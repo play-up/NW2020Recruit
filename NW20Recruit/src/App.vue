@@ -6,7 +6,12 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  mounted() {
+    document.body.addEventListener('touchmove', function (e) {
+      e.preventDefault(); 
+    }, {passive: false});
+  },
 }
 </script>
 
