@@ -3,7 +3,7 @@
     <moon />
     <div class="moon-down-shadow" v-show="false"></div>
     <stars />
-    <starry-text />
+    <starry-text/>
   </div>
 </template>
 
@@ -18,8 +18,11 @@ export default {
     Stars,
     StarryText,
   },
+  data() {
+    return {
+    }
+  },
   mounted() {
-console.log('aaaaaa');
 
   },
 }
