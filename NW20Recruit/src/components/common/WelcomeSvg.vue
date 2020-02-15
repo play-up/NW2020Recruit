@@ -1,12 +1,12 @@
 <template>
     <svg
     height="7vw"
-    width="8ch" 
+    width="18vw" 
     @click="bbbbbb" 
         >
           <text id="svg-text" 
           dx="130 40 30 20"
-          x="0" y="4vw"
+          x="0" y="5.2vw"
           >欢迎进入
           <animate
             attributeType = "XML"
@@ -50,7 +50,6 @@ export default {
 <style scoped>
 #svg-text {
     fill: #afaa95;
-    font-family: monospace;
     /* dominant-baseline:middle; */
 }
 </style>

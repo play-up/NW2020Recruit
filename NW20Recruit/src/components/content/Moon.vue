@@ -308,15 +308,19 @@ export default {
         filter: drop-shadow(0px 0px 1px white) brightness(120%);
     }
     25% {
-        -webkit-filter: drop-shadow(1px 1px 3px white) brightness(140%); /* Chrome, Safari, Opera */
-        filter: drop-shadow(0.5px 0.5px 2px white) brightness(140%);
+        -webkit-filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%); /* Chrome, Safari, Opera */
+        filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%);
     }
-    75% {
-        -webkit-filter: drop-shadow(2px 2px 5px white) brightness(160%); /* Chrome, Safari, Opera */
+    50% {
+        -webkit-filter: drop-shadow(0.5px 0.5px 2px white) brightness(140%); /* Chrome, Safari, Opera */
         filter: drop-shadow(0.5px 0.5px 2px white) brightness(140%);
+    }   
+    75% {
+        -webkit-filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%); /* Chrome, Safari, Opera */
+        filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%);
     }
     100% {
-        -webkit-filter: drop-shadow(2px 2px 5px white) brightness(160%); /* Chrome, Safari, Opera */
+        -webkit-filter: drop-shadow(0px 0px 1px white) brightness(120%); /* Chrome, Safari, Opera */
         filter: drop-shadow(0px 0px 1px white) brightness(120%);
     }
 }
