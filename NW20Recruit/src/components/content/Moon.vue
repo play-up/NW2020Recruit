@@ -1,7 +1,7 @@
 <template>
   <div 
     id="moon-wrap" 
-    :class="{'moon-wrap-down': drop==1,'moon-wrap-uo': drop==2}"
+    :class="{'moon-wrap-down': drop==1,'moon-wrap-up': drop==2}"
     
   >
     <div class="moon-text" :class="{'text-show': drop == 1}">
@@ -17,13 +17,23 @@
         <p >多项目正在设计和开发中。</p>
     </div>
     <div class="moon-box" ref="moonbox">
-        <img src="~assets/moon.png" alt="dawdawdw" class="moon">
+        <img src="~assets/moon.png" 
+        alt="dawdawdw" 
+        class="moon" 
+        :class="{'moon-shine': starryCurrent!=0}"
+        >
         <img src="~assets/line.png" alt="adawd" class="line-moon">
+        <transition name="moon-notice-fade" >
+            <span class="moon-notice" v-if="starryCurrent === 1">点击/下拉</span>
+        </transition>
     </div>
   </div>
 </template>
 
 <script>
+
+import { mapState,mapMutations } from 'vuex'
+
 export default {
   name: 'Moon',
   data() {
@@ -32,54 +42,53 @@ export default {
           drop: 0
       }
   },
+  computed: {
+      ...mapState(['starryCurrent'])
+  },
   methods: {
-      touch () {
-          let that = this
-          this.$refs.moonbox.addEventListener('touchstart', evt=>{
-              
-              that.touchY.startY = evt.touches[0].clientY
-              that.touchY.endY = 0
-              
-          })
-          this.$refs.moonbox.addEventListener('touchmove', evt=>{
-              that.touchY.endY = evt.touches[0].clientY
-          })
-          this.$refs.moonbox.addEventListener('touchend', ()=>{
-              if(!that.touchY.endY) { //|| Math.abs(that.touchY.startY-that.touchY.endY) < 10
-                  return
-              }
-              if (that.touchY.startY < that.touchY.endY) {
-                  this.drop = true
-              }
-          })
-        },
+      ...mapMutations(['starryNext']),
     },
     mounted() {
-        let that = this
-        this.$refs.moonbox.addEventListener('touchstart', evt=>{
-            that.touchY.startY = evt.touches[0].clientY
-            that.touchY.endY = 0
-            
-        })
-        this.$refs.moonbox.addEventListener('touchmove', evt=>{
-            that.touchY.endY = evt.touches[0].clientY
-        })
-        this.$refs.moonbox.addEventListener('touchend', evt=>{
-            
-            if(!that.touchY.endY ) {//Math.abs(that.touchY.startY-that.touchY.endY) < 10
-                return
-            }
-            if (that.touchY.startY < that.touchY.endY) {
-                if(this.drop == 0) {
-                    this.drop = 1
-                }else if (this.drop == 1) {
-                    this.drop = 2
-                }else {
-                    this.drop = 0
+        console.log(this.starryCurrent);
+            let that = this
+            this.$refs.moonbox.addEventListener('click',()=>{
+                if(this.starryCurrent != 0) {
+                    if(this.drop == 0) {
+                            this.drop = 1
+                        }else if (this.drop == 1) {
+                            this.drop = 2
+                            this.starryNext()
+                        }else {
+                            this.drop = 0
+                    }
                 }
-            }
-        })
-    },
+            })
+            this.$refs.moonbox.addEventListener('touchstart', evt=>{
+                that.touchY.startY = evt.touches[0].clientY
+                that.touchY.endY = 0
+            })
+            this.$refs.moonbox.addEventListener('touchmove', evt=>{
+                that.touchY.endY = evt.touches[0].clientY
+            })
+            this.$refs.moonbox.addEventListener('touchend', evt=>{
+                if(this.starryCurrent != 0) {
+                    if(!that.touchY.endY ) {//Math.abs(that.touchY.startY-that.touchY.endY) < 10
+                        return
+                    }
+                    if (that.touchY.startY < that.touchY.endY) {
+                        if(this.drop == 0) {
+                            this.drop = 1
+                        }else if (this.drop == 1) {
+                            this.drop = 2
+                            this.starryNext()
+                        }else {
+                            this.drop = 0
+                        }
+                    }
+                }
+            })
+        
+    }
 }
 </script>
 
@@ -91,7 +100,7 @@ export default {
     top: -680px;
     z-index: 10;
     /* animation: box 1s linear 0 infinite normal;    cubic-bezier(0.165, 0.84, 0.44, 1)*/
-    transition: all 2s ease;
+    transition: all 1s ease;
     /* transform: translate(0,0); */
 }
 .moon-wrap-down {
@@ -124,7 +133,37 @@ export default {
     -webkit-background-clip: text;   /*背景剪裁为文字，只将文字显示为背景*/
     background-clip: text;
     background-size: 300% 100%;    /*背景图片向水平方向扩大一倍，这样background-position才有移动与变化的空间*/
-    transition: all 2s linear 2s;
+    transition: all 3s linear;
+}
+.moon-text p:nth-child(1) {
+    transition-delay: 1.5s
+}
+.moon-text p:nth-child(2) {
+    transition-delay: 4.5s
+}
+.moon-text p:nth-child(3) {
+    transition-delay: 7.5s
+}
+.moon-text p:nth-child(4) {
+    transition-delay: 10.5s
+}
+.moon-text p:nth-child(5) {
+    transition-delay: 13.5s
+}
+.moon-text p:nth-child(6) {
+    transition-delay: 16.5s
+}
+.moon-text p:nth-child(7) {
+    transition-delay: 19.5s
+}
+.moon-text p:nth-child(8) {
+    transition-delay: 21.5s
+}
+.moon-text p:nth-child(9) {
+    transition-delay: 24.5s
+}
+.moon-text p:nth-child(10) {
+    transition-delay: 27.5s
 }
 .text-show p{
     background-position: -73% 0;
@@ -146,7 +185,24 @@ export default {
     position: absolute;
     left: 74px;
     bottom: 49px;
+}
+.moon-shine {
     animation:moonlight 1.5s infinite reverse;
+}
+.moon-notice {
+    font-size: 20px;
+    position: absolute;
+    bottom: 48px;
+    right: -40px;
+}
+.moon-notice-fade-enter,.moon-notice-fade-leave-to {
+  opacity: 0;
+}
+.moon-notice-fade-leave,.moon-notice-fade-enter-to {
+  opacity: 1;
+}
+.moon-notice-fade-enter-active,.moon-notice-fade-leave-active {
+  transition: all 2s ease;
 }
 .text-bounce {
     animation: textbounce 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
@@ -252,15 +308,19 @@ export default {
         filter: drop-shadow(0px 0px 1px white) brightness(120%);
     }
     25% {
-        -webkit-filter: drop-shadow(1px 1px 3px white) brightness(140%); /* Chrome, Safari, Opera */
-        filter: drop-shadow(0.5px 0.5px 2px white) brightness(140%);
+        -webkit-filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%); /* Chrome, Safari, Opera */
+        filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%);
     }
-    75% {
-        -webkit-filter: drop-shadow(2px 2px 5px white) brightness(160%); /* Chrome, Safari, Opera */
+    50% {
+        -webkit-filter: drop-shadow(0.5px 0.5px 2px white) brightness(140%); /* Chrome, Safari, Opera */
         filter: drop-shadow(0.5px 0.5px 2px white) brightness(140%);
+    }   
+    75% {
+        -webkit-filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%); /* Chrome, Safari, Opera */
+        filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%);
     }
     100% {
-        -webkit-filter: drop-shadow(2px 2px 5px white) brightness(160%); /* Chrome, Safari, Opera */
+        -webkit-filter: drop-shadow(0px 0px 1px white) brightness(120%); /* Chrome, Safari, Opera */
         filter: drop-shadow(0px 0px 1px white) brightness(120%);
     }
 }
