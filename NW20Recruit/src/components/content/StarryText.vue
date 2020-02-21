@@ -1,6 +1,6 @@
 <template>
   <transition name="starry-text-fade">
-    <div id="starry-text" v-if="StarryTextShow">
+    <div id="starry-text" v-if="false"><!-- v-if="StarryTextShow" -->
       <div class="text-box">
         <p class="starry-text1" :class="{'starry-text1-come': isCome}">
           <span>欢</span>
@@ -155,8 +155,8 @@ export default {
 #starry-text {
     width: 100%;
     position: absolute;
-    top: 550px;
-    text-align: center;
+    top: 50%;
+    transform: translateY(-120px);
 }
 #starry-text .text-box {
     display: flex;
@@ -166,7 +166,7 @@ export default {
     font-family: "Microsoft YaHei" sans-serif;
     font-weight: 400;
     color: #afaa95;
-    transform: translateX(63px);
+    transform: translateX(43px);
 }
 #starry-text .text-box p {
   overflow: hidden;

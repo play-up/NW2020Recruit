@@ -5,16 +5,16 @@
     
   >
     <div class="moon-text" :class="{'text-show': drop == 1,'text-none':drop ==2}">
-        <p >Night’s Watch 工作室成立于2017年初，</p>
-        <p >前身是协同工作室前端组，目前主要分为设</p>
-        <p >计组、前端组和后台组，工作室专注设计并</p>
-        <p >开发Web项目、移动端网页及小程序，注重</p>
-        <p >开源交流，特色独立项目为女生节的许愿墙</p>
-        <p >。我们注重培养多方面、多技能的人才，增</p>
-        <p >加自身竞争力。毕业的师兄师姐大多就职于</p>
-        <p >阿里、腾讯、网易、唯品会等一线互联网公</p>
-        <p >司。现工作室处在快速成长的阶段，仍有许</p>
-        <p >多项目正在设计和开发中。</p>
+        <div class="run-around-wrap"><run-around :startRun="startRun" /></div>
+        <p >Night’s Watch 工作室成立于2017年初，前身是</p>
+        <p >协同工作室前端组，目前主要分为设计组、前端组</p>
+        <p >和后台组，工作室专注设计并开发Web项目、移动</p>
+        <p >端网页及小程序，注重开源交流，特色独立项目为</p>
+        <p >女生节的许愿墙。我们注重培养多方面、多技能的</p>
+        <p >人才，增加自身竞争力。毕业的师兄师姐大多就职</p>
+        <p >于阿里、腾讯、网易、唯品会等一线互联网公司。</p>
+        <p >现工作室处在快速成长的阶段，仍有许多项目正在</p>
+        <p >设计和开发中。</p>
     </div>
     <div class="moon-box" ref="moonbox">
         <img src="~assets/moon.png" 
@@ -32,19 +32,37 @@
 </template>
 
 <script>
-
 import { mapState,mapMutations } from 'vuex'
+
+import RunAround from '../common/RunAround'
 
 export default {
   name: 'Moon',
+  components: {
+      RunAround,
+  },
   data() {
       return {
           touchY: {},
-          drop: 0
+          drop: 0,
+          startRun: false
       }
   },
   computed: {
       ...mapState(['starryCurrent'])
+  },
+  watch: {
+      drop (val) {
+          let timer
+          if(val == 0) {
+             timer = setTimeout(()=>{
+                  this.startRun = false
+              },1000)
+          }else if (val === 1) {
+              clearTimeout(timer)
+                this.startRun = true
+          }
+      }
   },
   methods: {
       ...mapMutations(['starryNext']),
@@ -53,7 +71,7 @@ export default {
         console.log(this.starryCurrent);
             let that = this
             this.$refs.moonbox.addEventListener('click',()=>{
-                if(this.starryCurrent != 0) {
+                if(this.starryCurrent != -9) {
                     if(this.drop == 0) { //下拉
                             this.$emit('moonEvent',0)
                             this.drop = 1
@@ -102,14 +120,14 @@ export default {
     width: 100%;
     color: white;
     position: absolute;
-    top: -680px;
+    top: -740px;
     z-index: 10;
     /* animation: box 1s linear 0 infinite normal;    cubic-bezier(0.165, 0.84, 0.44, 1)*/
     transition: all 1s ease;
     /* transform: translate(0,0); */
 }
 .moon-wrap-down {
-    transform: translate(0,683px); 
+    transform: translate(0,810px); 
     /* animation:mymove 3s infinite; */
 }
 .moon-wrap-up {
@@ -119,19 +137,35 @@ export default {
 .moon-text {
     display: flex;
     align-content: center;
-    justify-content: flex-start ;
+    justify-content: center ;
     /* flex-direction: column; */
-    flex-wrap: wrap;
-    width: 600px;
-    height: 680px;
-    border-radius: 50% 50%;
+    /* flex-wrap: wrap; */
+    flex-flow: column wrap;
+    width: 720px;
+    height: 720px;
+    /* border-radius: 50% 50%; */
+    /* padding-top: 10px; */
     margin: 0 auto;
-    background: rgb(110, 104, 110);
-    font-size: 25px;
+    /* background: rgb(110, 104, 110); */
+    background: url("~assets/moon-text-back.png") no-repeat ;
+    background-size: cover;
+    background-position: center center;
+    font-size: 22px;
+    font-weight: 550;
     line-height: 42px;
 }
+.run-around-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    top: 0;
+    left: 10px;
+}
 .moon-text p {
-    padding-left:68px;
+    /* padding-left:68px; */
     color: transparent;
     -webkit-text-fill-color: transparent;/*制作流光文字要点：text-fill-color一般设置为transparent（透明色）*/
     background-image: linear-gradient(to left,rgb(158, 148, 158),rgb(236, 226, 236),white,white,rgb(110, 103, 110),rgb(110, 103, 110),rgb(110, 103, 110));
