@@ -1,6 +1,6 @@
 <template>
   <transition name="starry-text-fade">
-    <div id="starry-text" v-if="StarryTextShow">
+    <div id="starry-text" v-if="false"><!-- v-if="StarryTextShow" -->
       <div class="text-box">
         <p class="starry-text1" :class="{'starry-text1-come': isCome}">
           <span>欢</span>
@@ -155,8 +155,8 @@ export default {
 #starry-text {
     width: 100%;
     position: absolute;
-    top: 550px;
-    text-align: center;
+    top: 50%;
+    transform: translateY(-120px);
 }
 #starry-text .text-box {
     display: flex;
@@ -166,13 +166,14 @@ export default {
     font-family: "Microsoft YaHei" sans-serif;
     font-weight: 400;
     color: #afaa95;
-    padding-left: 63px;
+    transform: translateX(43px);
 }
 #starry-text .text-box p {
   overflow: hidden;
   white-space: nowrap;
 }
 #starry-text .text-box p span {
+  display: inline-block;
   font-size: 34px;
   letter-spacing: 0.2vw;
 }
@@ -184,20 +185,20 @@ export default {
   width: 143px;
 }
 .starry-text1 span:nth-child(1) {
-  padding-left: 150px;
+  transform: translateX(150px);
 }
 .starry-text1 span:nth-child(2) {
-  padding-left: 30px;
+  transform: translateX(180px);
 }
 .starry-text1 span:nth-child(3) {
-  padding-left: 40px;
+  transform: translateX(210px);
 }
 .starry-text1 span:nth-child(4) {
-  padding-left: 50px;
+  transform: translateX(240px);
 }
 #starry-text .starry-text1-come span {/* 欢迎进入 优先级不够加了个id的 */
-  padding-left: 0px;
-  transition: padding 1s ease;
+  transform: translateX(0px);
+  transition: transform 1s ease;
 }
 /* Night's Watch */
 .starry-text2 {

@@ -1,5 +1,5 @@
 <template>
-    <div :class="!changeable?'all':'change'">
+    <div>
         <div class="up"></div>
         <div class="down"></div>
     </div>

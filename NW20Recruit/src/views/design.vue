@@ -1,18 +1,20 @@
 <template>
     <div class="all">
-        <Boolean></Boolean>
-        <p class="title">设计组</p>
+        <Boolean :class="!isfly?'cbig':'lsmall'"></Boolean>
+        <p :class="['title', {'show':showTitle}]">设计组</p>
         <div class="upBat"></div>
         <div class="word">
-            <p>不同于传统画师，UI设计师除了要给用户带来最</p>
-            <p>优的视觉效果，同时需要明确产品功能，安排界</p>
-            <p>面布局，制定交互逻辑，创造流畅的动态效果，</p>
-            <p>从而带来最佳的用户体验。</p>
-            <p>当然，我们设计组并不局限于UI设计，还会涉及</p>
-            <p>到平面，海报，插图设计等，从用笔纸作画，到</p>
-            <p>用PhotoShop处理图像，Illustrator绘制图案，</p>
-            <p>AfterEffect制定交互……工具多如繁星，只为实</p>
-            <p>现你天马行空的绮梦。</p>
+            <p 
+                v-for="(word, index) in words" 
+                :key="index"
+                class="landin"
+            >
+                <span 
+                    v-for="(letter, i) in letters[index]" 
+                    :key="i"
+                    :style="`animationDelay:${i * 0.02}s`"
+                >{{letter}}</span>
+            </p>
         </div>
         <div class="downBat"></div>
         <div class="bottom"></div>
@@ -25,6 +27,82 @@ export default {
     name: "design",
     components: {
         Boolean
+    },
+    data() {
+        return {
+            isfly: false,
+            istitle: false,
+            showTitle: false,
+            words: ['不同于传统画师，UI设计师除了要给用户带来最',
+                    '优的视觉效果，同时需要明确产品功能，安排界',
+                    '面布局，制定交互逻辑，创造流畅的动态效果，',
+                    '从而带来最佳的用户体验。',
+                    '当然，我们设计组并不局限于UI设计，还会涉及',
+                    '到平面，海报，插图设计等，从用笔纸作画，到',
+                    '用PhotoShop处理图像，Illustrator绘制图案，',
+                    'AfterEffect制定交互……工具多如繁星，只为实',
+                    '现你天马行空的绮梦。'
+            ],
+            showWord: false,
+            letters: []
+        }
+    },
+    methods: {
+        //气球向上飞
+        fly() {
+            let that = this;
+            return new Promise((resolve, reject) =>{
+                setTimeout(() => {
+                    that.isfly = true;
+                    resolve(3000);
+                }, 2000)
+            })
+        },
+        //停顿留有动画时间
+        rest(ms) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve();
+                }, ms)
+            })
+        },
+        //显现出标题
+        typTitle(ms) {
+            let that = this;
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    this.showTitle = true;
+                    resolve(500);
+                }, ms)
+            });
+        },
+        //显示出正文
+        typPara() {
+            let that = this;
+            let i = 0;
+            return new Promise((resolve, reject) => {
+                let showLetter = setInterval(() => {
+                    let letter = this.words[i].split('');
+                    that.letters.push([])
+                    let j = 0;
+                    //嵌套定时器
+                    let sTimer = setInterval(() => {
+                        that.letters[i].push(letter[j++]);
+                        if(j == letter.length) {
+                            i++;
+                            clearInterval(sTimer);
+                        }
+                    }, 15);
+                    if(i == that.words.length-1) {
+                        clearInterval(showLetter)
+                        resolve();
+                    }
+                }, 1000);
+            })
+        }
+    },
+    mounted() {
+        this.fly().then(this.typTitle).then(this.rest).then(this.typPara);
     }
 }
 </script>
@@ -67,8 +145,18 @@ export default {
     font-size: 12rem;
     color: white;
     position: absolute;
-    top: 200px;
     left: 300px;
+    height: 120px;
+    opacity: 0;
+    top: 260px;
+}
+.title>span{
+    white-space: nowrap;
+}
+.show{
+    top: 200px;
+    opacity: 1;
+    transition: opacity 0.5s, top 0.5s linear;
 }
 .word{
     color: white;
@@ -79,7 +167,7 @@ export default {
     z-index: 4;
 }
 .word>p{
-    display: inline-block;
+    /* display: inline-block; */
     position: relative;
     left: 0;
     right: 0;
@@ -88,5 +176,57 @@ export default {
 .none{
     display: none;
     transition: display 3s;
+}
+.cbig{
+    width: 485px;
+    height: 695px;
+    position: absolute;
+    left: 135px;
+    top: 150px;
+}
+.lsmall{
+    /* width: 35.333rem;
+    height: 50.533rem;
+    left: 8rem;
+    top: 18.667rem; */
+    width: 230px;
+    height: 322px;
+    left: 40px;
+    top: 40px;
+    position: absolute;
+    transition: width 3s, height 3s, left 3s, top 3s linear;
+}
+.landin {
+    display: flex;
+    flex-wrap: nowrap;
+    color: white;
+}
+
+.landin>span {
+    animation: landIn 0.2s ease-out both;
+    display: inline-block;
+}
+
+@keyframes landIn {
+  from {
+    opacity: 0;
+    transform: translate(0, -2vw);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+@-webkit-keyframes landIn {
+  from {
+    opacity: 0;
+    -webkit-transform: translate(0, -2vw);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate(0, 0);
+  }
 }
 </style>
