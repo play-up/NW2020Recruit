@@ -55,7 +55,7 @@ export default {
                 setTimeout(() => {
                     that.isfly = true;
                     resolve(3000);
-                }, 2000)
+                }, 3000)
             })
         },
         //停顿留有动画时间
