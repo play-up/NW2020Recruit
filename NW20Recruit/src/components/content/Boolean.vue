@@ -74,11 +74,21 @@ export default {
     position: relative;
     left: 32%;
     bottom: -1%;
+    animation: boolean 4s linear infinite;
 }
 .down{
     height: 76%;
     width: 100%;
     background-image: url('~assets/boolean.png');
     background-size: 100% 100%;
+}
+@keyframes boolean {
+    0%, 100% {
+        transform: skewY(2deg);
+        
+    }
+    50% {
+        transform: skewY(-2deg);
+    }
 }
 </style>
