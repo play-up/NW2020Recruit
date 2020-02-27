@@ -6,13 +6,19 @@
     </div>
     <!-- 星球分布 -->
     <div id="stars">
-      <div class="design-star star">
+      <div class="design_star star">
+        <div :class="{'bling1 ':isBling==1}"></div>
+        <!-- <div class="bling1"></div> -->
         <img src="~assets/design-star.png" />
       </div>
-      <div class="back-star star">
+      <div class="back_star star">
+        <div :class="{'bling2 ':isBling==2}"></div>
+        <!-- <div class="bling2"></div> -->
         <img src="~assets/back-star.png" />
       </div>
-      <div class="front-star star">
+      <div class="front_star star">
+        <div :class="{'bling3 ':isBling==3}"></div>
+        <!-- <div class="bling3"></div> -->
         <img src="~assets/front-star.png" />
       </div>
     </div>
@@ -21,21 +27,96 @@
 </template>
 
 <script>
+import store from "@/store";
 export default {
-  name: "moonStar"
+  name: "moonStar",
+  data() {
+    return {
+      // isBling:0
+    };
+  },
+  computed: {
+    isBling() {
+      return this.$store.state.chooseNum;
+    }
+  }
 };
 </script>
 
 <style scoped>
-.container{
+/* .bling1,
+.bling2,
+.bling3 {
   position: absolute;
+  width: 2vw;
+  height: 2vw;
+  transform: rotate(45deg);
+  background: white;
+  right: 3vw;
+  top: 5.067vw;
+  box-shadow: 1px 1px 1px #ffffff;
+  animation: bling 1s;
+} */
+.bling1,
+.bling2,
+.bling3 {
+  background-image: url('~assets/shine.png');
+  background-size:100% 100%; 
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 5vw;
+    height: 7vw;
+    right: 0.5vw;
+  top: 5.067vw;
+  position: absolute;
+  animation: opacity-change 1s ease-in-out forwards;
+}
+@keyframes opacity-change {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.bling2 {
+  width: 4vw;
+    height: 6vw;
+    right: 1.5vw;
+    top: 2vw;
+}
+.bling3 {
+  width: 3vw;
+    height: 4vw;
+    right: 0vw;
+    top: 1vw;
+}
+@keyframes bling {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.container {
+  /* position: absolute; */
   width: 100vw;
   margin: 0 auto;
 }
 .moon-box {
   width: 200px;
   height: 250px;
-  position: relative;
+  /* position: relative; */
+  position: absolute;
+  /* top: -98.667vw; */
+  /* width: 100%; */
+  /* width: 100%; */
+  left: 50%;
+  transform: translateX(-50%);
   text-align: center;
   margin: 0 auto;
 }
@@ -53,29 +134,29 @@ export default {
 .moon-shine {
   animation: moonlight 1.5s infinite reverse;
 }
-#stars .star {
+.star {
   position: absolute;
 }
-.design-star {
+.design_star {
   top: 47vw;
   left: 23vw;
 }
-.back-star {
+.back_star {
   top: 87vw;
   left: 66vw;
 }
-.front-star {
+.front_star {
   top: 103vw;
   left: 18vw;
 }
-.design-star img {
+.design_star img {
   width: 156px;
 }
 
-.back-star img {
+.back_star img {
   width: 122px;
 }
-.front-star img {
+.front_star img {
   width: 65px;
 }
 .filter {
