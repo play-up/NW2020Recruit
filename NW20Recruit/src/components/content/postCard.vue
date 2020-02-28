@@ -23,7 +23,7 @@
           <li class="name">
             <label for="name">姓名</label>
             <div class="underline">
-              <input type="text" id="name" v-model="formData.userName" required />
+              <input type="text" id="name" v-model="formData.name" required />
             </div>
             <div class="sex">
               <div :class="item.class" v-for="(item,index) in sexArr" :key="item.id">
@@ -41,9 +41,9 @@
               </div>
             </div>
           </li>
-          <li v-for="item in propArr" :key="item.index">
+          <li v-for="(item,index) in propArr" :key="item.index">
             <label :for="item.prop">{{item.content}}</label>
-            <div class="underline" :class="{'underline2':item.flag}">
+            <div :class="'underline'+item.num">
               <input type="text" :id="item.prop" required="required" v-model="formData[item.prop]" />
             </div>
           </li>
@@ -59,7 +59,7 @@
                   ref="checkDir"
                   @click="choose('dir',index)"
                   required="required"
-                  v-model="formData.direction"
+                  v-model="formData.intention"
                   :value="item.content"
                 />
                 <span :class="{'active':item.isRight}"></span>
@@ -73,24 +73,31 @@
           <li class="introdution">
             <p class="i-text">自我介绍</p>
             <div class="self">
-              <textarea name id cols="30" rows="10" οnpaste="return true;"></textarea>
+              <textarea
+                name
+                id
+                cols="30"
+                rows="10"
+                οnpaste="return true;"
+                v-model="formData.introduce"
+              ></textarea>
             </div>
           </li>
           <li>
             <input
               type="sumbit"
               class="submit"
-              @click="roll2();return false;"
+              @click="submit();return false;"
               value="提交"
               readonly="readonly"
             />
-            <!-- <input type="sumbit" class="submit"  @click="submit();return false;"  value="提交" readonly="readonly"/> -->
           </li>
         </ul>
 
         <div class="right">
           <div class="code">
             <img src="~assets/code.png" alt />
+            <div class="code-text">招新咨询群</div>
           </div>
           <div>
             <img src="~assets/seal.png" alt class="none" :class="{'seal':isSeel}" />
@@ -107,24 +114,25 @@
 import store from "@/store";
 export default {
   name: "postCard",
-  props:{
-    'isShow':Boolean
+  props: {
+    isShow: Boolean
   },
   data() {
     return {
       formData: {
-        stuNum: "",
-        class: "",
-        phoneNum: "", //学号，班级，电话
-        userName: "", //姓名,
+        name: "", //名字
         sex: "", //性别
-        direction: "" //方向
+        studentid: null, //学号
+        college: "", //学院班级
+        phone: null, //电话号码
+        intention: "", //方向
+        introduce: "" //自我介绍
       },
       sexCheck: 0,
       propArr: [
-        { prop: "stuNum", content: "学号", flag: 0 },
-        { prop: "class", content: "专业班级", flag: 1 },
-        { prop: "phoneNum", content: "手机号", flag: 0 }
+        { prop: "studentid", content: "学号", flag: 0,num:1 },
+        { prop: "college", content: "专业班级", flag: 1,num:2 },
+        { prop: "phone", content: "手机号", flag: 0,num:3 }
       ],
 
       sexArr: [
@@ -163,26 +171,39 @@ export default {
       isSeel: 0, //是否盖章
       SexIndex: false,
       DirIndex: false,
-      isLocal:false,
-      isAlive:true
-
-      // propModel: { stuNum: "", class: "", phoneNum: "" }, //学号，班级，电话
-      // userName: "", //姓名,
-      // sex: "", //性别
-      // direction: "" //方向
+      isLocal: false, //是否已经客户端保存
+      isAlive: true, //是否点击了提交，点击后点击外围不跳转到首页
+      backStatus: null //后台返回的状态
     };
   },
-  watch:{
-  isAlive(){
-    if(this.isAlive==false){
-          document.body.removeEventListener("click", this._close)
+  watch: {
+    // 当已经点击了提交并且成功后，不可以点击页面返回主页
+    isAlive() {
+      if (this.isAlive == false) {
+        document.body.removeEventListener("click", this._close);
+      }
     }
-    
-  }
   },
   methods: {
     // 整理数据
-    collectingData() {},
+    collectingData() {
+      let formData = JSON.stringify(this.formData);
+      // 将学号，手机号专程数字型
+      this.formData.studentid = parseInt(this.formData.studentid);
+      this.formData.phone = parseInt(this.formData.phone);
+      this.formData.sex = 1;
+      //  console.log(this.formData.studentid);
+      let arr = this.formData;
+      localStorage.setItem("formData", JSON.stringify(arr));
+
+      localStorage.setItem("SexIndex", this.SexIndex);
+      this.SexIndex = localStorage.getItem("SexIndex");
+
+      localStorage.setItem("DirIndex", this.DirIndex);
+      this.DirIndex = localStorage.getItem("DirIndex");
+
+      localStorage.setItem("isLocal", true);
+    },
     // 选择框（性别+方向）
     choose(el, index) {
       var arr;
@@ -205,40 +226,34 @@ export default {
         // this.isSmaller=Arr[index].id
         this.DirIndex = index;
       }
-
     },
     // 点击后卡片翻转到背面
     roll() {
       let front = this.$refs.front;
       let back = this.$refs.back;
       this.isRoll = 1;
-      // 传到父组件
-      // this.$emit("rollNum", this.isRoll);
-      // console.log(this.isRoll)
-      // console.log(this.isRoll);
     },
     // 点击后盖章，卡片翻转到正面且向父组件传值，使卡片缩小且飞向指定位置
     roll2() {
       this.isSeel = 1;
       setTimeout(() => {
-        this.isAlive=false;
+        this.isAlive = false;
         // 1s后卡片翻转
         this.isRoll = 0;
         // 再过1s之后卡片再变小
         // this.isSmaller = 1;
-        this.isSmaller=this.dirArr[this.DirIndex].id
+        this.isSmaller = this.dirArr[this.DirIndex].id;
         setTimeout(() => {
           this.$emit("smaller", this.isSmaller);
           // console.log(this.isSmaller);
-          
+
           setTimeout(() => {
             this.$store.commit("chooseNum", this.isSmaller);
             // console.log(this.$store.state.isBling);
-            
           }, 3000);
         }, 1000);
       }, 1500);
-      this.submitForm();
+      
     },
     judgePhoneNo(phoneNo) {
       var reg = /^1[3-9][0-9]\d{8}$/;
@@ -250,11 +265,11 @@ export default {
     },
     // 判断是否都输入且是否输入合法
     judgeInsure() {
-      if (this.userName == "") {
+      if (this.formData.name == "") {
         alert("请输入名字");
 
         return true;
-      } else if (!this.judeName(this.userName)) {
+      } else if (!this.judeName(this.formData.name)) {
         console.log("请输入正确的姓名");
         return true;
       }
@@ -264,12 +279,12 @@ export default {
       }
       for (var i = 0; i < this.propArr.length; i++) {
         let index = this.propArr[i].prop;
-        if (this.propModel[index] == "") {
+        if (this.formData[index] == "") {
           console.log("请填写" + this.propArr[i].content);
           return true;
         } else if (
-          index == "phoneNum" &&
-          !this.judgePhoneNo(this.propModel[index])
+          index == "phone" &&
+          !this.judgePhoneNo(this.formData[index])
         ) {
           console.log("请输入正确的手机号");
           return true;
@@ -287,84 +302,61 @@ export default {
       if (this.judgeInsure()) {
         return;
       } else {
-        console.log("发送网络请求");
-
         this.submitForm();
         // 后台返回一个状态码，如果成功则先盖章后卡片翻转，不成功则提醒
-        this.roll2();
       }
     },
+    moreSubmit() {
+      this.$axios.post("/update", this.formData).then(res => {
+        this.backStatus = res.data.code;
+        console.log((this.backStatus = res.data.code + "第二次"));
+        this.roll2();
+      });
+    },
     submitForm() {
-      let formData = JSON.stringify(this.formData);
-      let arr = this.formData;
-      localStorage.setItem("formData", JSON.stringify(arr));
-
-      localStorage.setItem("SexIndex", this.SexIndex);
-      this.SexIndex = localStorage.getItem("SexIndex");
-
-      localStorage.setItem("DirIndex", this.DirIndex);
-      this.DirIndex = localStorage.getItem("DirIndex");
-
-      localStorage.setItem('isLocal',true)
+      this.collectingData();
 
       //axios
-      // axios.post('/user',formData).then(res => {
-      //     // success callback
-      // }).catch(err => {
-      //     // error callback
-      // });
+      this.$axios.post("/new", this.formData).then(res => {
+        this.backStatus = res.data.code;
+        if (this.backStatus == 2) {
+          this.roll2();
+        } else if (this.backStatus == 4) {
+          this.moreSubmit();
+        }
+      });
     }
   },
   mounted() {
     this.isLocal = localStorage.getItem("isLocal");
-    if(this.isLocal){
+    if (this.isLocal) {
       this.formData = JSON.parse(localStorage.getItem("formData"));
       this.SexIndex = localStorage.getItem("SexIndex");
       this.DirIndex = localStorage.getItem("DirIndex");
       var sexArr = this.sexArr;
-      // sexArr[this.SexIndex].isRight = true;
+      sexArr[this.SexIndex].isRight = true;
       // console.log(this.SexIndex);
-      
+
       var dirArr = this.dirArr;
       dirArr[this.DirIndex].isRight = true;
-      
-      var sexArr = this.sexArr;
-       sexArr[this.SexIndex].isRight = true;
-      // console.log(this.formData);
     }
-    // document.body.addEventListener('click',()=>{
-    //         console.log('hahaha');
-    //         this.$router.push({
-    //       path:'/',
-    //     })
-            
-    // },false)
-        // document.addEventListener("click", ()=>{
-        //   console.log('hahah');
-          
-        //   this.$router.push({
-        //     path:'/'
-        //   })
-          
-        // });
-
   },
   beforeMount() {
-  this._close = e => {
-    // 如果点击发生在当前组件内部，则不处理
-    if (this.$el.contains(e.target)) {
-      return;
-    }
-     console.log('hahah');
-         this.$router.push({
-            path:'/'
-          })
-  };  
-  document.body.addEventListener('click', this._close);
-},
-  beforeDestroy(){
-    document.body.removeEventListener("click", this._close)
-    console.log('该组件');
+    this._close = e => {
+      // 如果点击发生在当前组件内部，则不处理
+      if (this.$el.contains(e.target)) {
+        return;
+      }
+      //  console.log('hahah');
+      this.$router.push({
+        path: "/"
+      });
+    };
+    document.body.addEventListener("click", this._close);
+  },
+  beforeDestroy() {
+    document.body.removeEventListener("click", this._close);
+    // console.log('该组件');
   }
 };
 </script>
@@ -386,6 +378,8 @@ ul {
   position: absolute;
   right: 3vw;
   top: 6vw;
+  text-align: center;
+  font-size: 14px;
 }
 .code img {
   width: 16vw;
@@ -508,32 +502,47 @@ input {
   box-sizing: border-box;
   padding-bottom: 2px;
 }
-.underline {
+.underline,.underline1,.underline2,.underline3 {
   display: inline-block;
   position: relative;
   width: 16vw;
   margin-left: 2vw;
   padding-bottom: 2px;
 }
-.underline::after {
+.underline::after,.underline1::after,.underline2::after,.underline3::after {
   position: absolute;
   content: "";
   background: url("../../assets/underline.png") no-repeat;
   background-size: 100% 100%;
-  width: 16vw;
+  width: 100%;
   height: 3px;
   bottom: 0;
   left: 0;
 }
-.underline2 {
+ .underline2 {
   width: 38vw;
 }
 .underline2::after {
   background: url("../../assets/underline2.png") no-repeat;
   height: 4px;
   background-size: 100% 100%;
-  width: 38vw;
+}  
+.underline1{
+  width:26vw;
 }
+.underline1::after {
+  background: url("../../assets/underline1.png") no-repeat;
+  height: 4px;
+  background-size: 100% 100%;
+}  
+.underline3{
+  width: 26vw;
+}
+.underline3::after {
+  background: url("../../assets/underline3.png") no-repeat;
+  height: 4px;
+  background-size: 100% 100%;
+} 
 .female,
 .male,
 .direction {
@@ -663,7 +672,7 @@ input {
   background-size: 100% 100%;
   font-size: 36px;
   float: right;
-  transform: translateY(-3vw);
+  /* transform: translateY(-3vw); */
   text-align: center;
   cursor: pointer;
 }
