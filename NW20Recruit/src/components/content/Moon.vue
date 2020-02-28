@@ -6,15 +6,17 @@
   >
     <div class="moon-text" :class="{'text-show': drop == 1,'text-none':drop ==2}">
         <div class="run-around-wrap"><run-around :startRun="startRun" /></div>
-        <p >Night’s Watch 工作室成立于2017年初，前身是</p>
-        <p >协同工作室前端组，目前主要分为设计组、前端组</p>
-        <p >和后台组，工作室专注设计并开发Web项目、移动</p>
-        <p >端网页及小程序，注重开源交流，特色独立项目为</p>
-        <p >女生节的许愿墙。我们注重培养多方面、多技能的</p>
-        <p >人才，增加自身竞争力。毕业的师兄师姐大多就职</p>
-        <p >于阿里、腾讯、网易、唯品会等一线互联网公司。</p>
-        <p >现工作室处在快速成长的阶段，仍有许多项目正在</p>
-        <p >设计和开发中。</p>
+        <div>
+            <p >Night’s Watch 工作室成立于2017年初，前身是</p>
+            <p >协同工作室前端组，目前主要分为设计组、前端组</p>
+            <p >和后台组，工作室专注设计并开发Web项目、移动</p>
+            <p >端网页及小程序，注重开源交流，特色独立项目为</p>
+            <p >女生节的许愿墙。我们注重培养多方面、多技能的</p>
+            <p >人才，增加自身竞争力。毕业的师兄师姐大多就职</p>
+            <p >于阿里、腾讯、网易、唯品会等一线互联网公司。</p>
+            <p >现工作室处在快速成长的阶段，仍有许多项目正在</p>
+            <p >设计和开发中。</p>            
+        </div>
     </div>
     <div class="moon-box" ref="moonbox">
         <img src="~assets/moon.png" 
@@ -71,7 +73,7 @@ export default {
         console.log(this.starryCurrent);
             let that = this
             this.$refs.moonbox.addEventListener('click',()=>{
-                if(this.starryCurrent != -9) {
+                if(this.starryCurrent != 0) {
                     if(this.drop == 0) { //下拉
                             this.$emit('moonEvent',0)
                             this.drop = 1
@@ -136,8 +138,9 @@ export default {
 }
 .moon-text {
     display: flex;
-    align-content: center;
+    /* align-content: center; */
     justify-content: center ;
+    align-items: center;
     /* flex-direction: column; */
     /* flex-wrap: wrap; */
     flex-flow: column wrap;
