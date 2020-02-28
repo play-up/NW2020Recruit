@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="moon-box">
+    <div class="moon_box">
       <img src="~assets/moon.png" class="moon" />
-      <img src="~assets/line.png" class="line-moon" />
+      <img src="~assets/line.png" class="line_moon" />
     </div>
     <!-- 星球分布 -->
     <div id="stars">
@@ -107,7 +107,7 @@ export default {
   width: 100vw;
   margin: 0 auto;
 }
-.moon-box {
+.moon_box {
   width: 200px;
   height: 250px;
   /* position: relative; */
@@ -120,7 +120,7 @@ export default {
   text-align: center;
   margin: 0 auto;
 }
-.line-moon {
+.line_moon {
   width: 10%;
   height: 80%;
   position: absolute;
@@ -131,7 +131,7 @@ export default {
   left: 74px;
   bottom: 49px;
 }
-.moon-shine {
+.moon_shine {
   animation: moonlight 1.5s infinite reverse;
 }
 .star {
