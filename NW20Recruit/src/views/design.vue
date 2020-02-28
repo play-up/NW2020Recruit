@@ -1,7 +1,10 @@
 <template>
     <div class="all" ref="all">
         <Boolean :class="!isfly?'cbig':'lsmall'"></Boolean>
-        <p :class="['title', {'show':showTitle}]">设计组</p>
+        <!-- <p :class="['title', {'show':showTitle}]">设计组</p> -->
+        <div :class="['title', {'show':showTitle}]">
+            <img class="word-img" src="@/assets/she.png" alt=""><img class="word-img" src="@/assets/ji.png" alt="">
+        </div>
         <div class="upBat"></div>
         <div class="word">
             <p 
@@ -175,7 +178,7 @@ export default {
     font-size: 12rem;
     color: white;
     position: absolute;
-    left: 300px;
+    left: 330px;
     height: 120px;
     opacity: 0;
     top: 260px;
@@ -219,10 +222,10 @@ export default {
     height: 50.533rem;
     left: 8rem;
     top: 18.667rem; */
-    width: 230px;
-    height: 322px;
+    width: 255px;
+    height: 350px;
     left: 40px;
-    top: 40px;
+    top: 25px;
     position: absolute;
     transition: width 3s, height 3s, left 3s, top 3s linear;
 }
@@ -230,6 +233,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     color: white;
+    align-items: center;
 }
 
 .landin>span {
@@ -308,5 +312,9 @@ export default {
 }
 .hide{
     bottom: -100px;
+}
+.word-img {
+    width: 100px;
+    height: 100px;
 }
 </style>
