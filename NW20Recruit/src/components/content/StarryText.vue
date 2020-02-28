@@ -1,6 +1,6 @@
 <template>
   <transition name="starry-text-fade">
-    <div id="starry-text" v-if="false"><!-- v-if="StarryTextShow" -->
+    <div id="starry-text" v-if="StarryTextShow" ><!-- -->
       <div class="text-box">
         <p class="starry-text1" :class="{'starry-text1-come': isCome}">
           <span>欢</span>

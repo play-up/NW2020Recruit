@@ -9,7 +9,7 @@
       ></div>
     </transition>
     <stars />
-    <starry-text v-if="true" />
+    <starry-text  />
   </div>
 </template>
 
