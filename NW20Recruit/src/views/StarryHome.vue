@@ -12,7 +12,7 @@
     <starry-text v-if="true" />
     <submit v-show="isSubmitShow"></submit>
     <!-- 模拟取消后信封出现在首页 -->
-    <!-- <div class="letter" v-if="isLetterShow" @click="showPostCard(true)">这是信封</div> -->
+    <div class="letter" v-if="isLetterShow" @click="showPostCard" @click.stop>这是信封</div>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ import Moon from 'components/content/Moon'
 import Stars from 'components/content/Stars'
 import StarryText from 'components/content/StarryText'
 import submit from './submit'
+import store from '@/store'
 import { mapState,mapMutations } from 'vuex'
 
 export default {
@@ -49,6 +50,10 @@ export default {
     }),
     showPostCard(){
       //  console.log(this.isPostShow);
+       this.$store.commit('isPostShow',true)
+       this.$store.commit('isSubmitShow',true)
+       this.$store.commit('isLetterShow',false)
+       console.log('点击了');
        
     }
   },

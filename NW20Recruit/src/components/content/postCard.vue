@@ -107,6 +107,7 @@
 
       <p class="bottom">Night's Watch</p>
     </div>
+    
     <div class="remind">
       <popup :remind-show="this.isRemindShow" @yes="yes" @no="no">
         <div slot="main">
@@ -316,7 +317,6 @@ export default {
     // 判断是否都输入且是否输入合法
     judgeInsure() {
       if (this.formData.name == "") {
-        alert("请输入名字");
 
         return true;
       } else if (!this.judeName(this.formData.name)) {
