@@ -1,6 +1,6 @@
 <template>
   <transition name="starry-text-fade">
-    <div id="starry-text" v-if="StarryTextShow" ><!-- -->
+    <div id="starry-text" v-if="StarryTextShow && starryCurrent!=-1"><!--  -->
       <div class="text-box">
         <p class="starry-text1" :class="{'starry-text1-come': isCome}">
           <span>欢</span>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations,mapState } from 'vuex'
 
 import WelcomeSvg from 'components/common/WelcomeSvg'
 import NwSvg from 'components/common/NwSvg'
@@ -54,23 +54,47 @@ export default {
       isTyping: false,
     }
   },
+  computed: {
+    ...mapState(['starryCurrent']),
+  },
+  watch: {
+    starryCurrent (val) {
+      console.log(val)
+      if(val==0) {
+        let come = setTimeout(()=>{
+          this.isCome = true
+          clearTimeout(come)
+        },30)
+        let drop = setTimeout(()=>{
+          this.isDrop = true
+          clearTimeout(drop)
+        },1000)
+        let typing = setTimeout(()=>{
+          this.isTyping = true
+          clearTimeout(typing)
+        },3200)
+        let nextCurrent = setTimeout(()=>{
+          this.StarryTextShow = false
+          this.starryNext()//进入下一个状态 
+          clearTimeout(nextCurrent)
+        },7000)
+      }
+    }
+  },
   methods: {
     ...mapMutations(['starryNext']),
     come() {
-      console.log('aaaa');
       
       this.isCome = true
       console.log(this.isCome);
       
     },
         drop() {
-      console.log('aaabbbba');
       
       this.isDrop = true      
     },
 
         typing() {
-      console.log('aaabbbba');
       
       this.isTyping = true      
     },
@@ -130,23 +154,7 @@ export default {
     //         clearTimeout(nextCurrent)
     //       },3000)
     // })
-    let come = setTimeout(()=>{
-      this.isCome = true
-      clearTimeout(come)
-    },30)
-    let drop = setTimeout(()=>{
-      this.isDrop = true
-      clearTimeout(drop)
-    },1000)
-    let typing = setTimeout(()=>{
-      this.isTyping = true
-      clearTimeout(typing)
-    },3200)
-    let nextCurrent = setTimeout(()=>{
-      this.StarryTextShow = false
-      this.starryNext()//进入下一个状态 
-      clearTimeout(nextCurrent)
-    },7000)
+
   },
 }
 </script>
@@ -164,17 +172,18 @@ export default {
     justify-content: center;
     font-size: 0;
     font-family: "Microsoft YaHei" sans-serif;
-    font-weight: 400;
     color: #afaa95;
-    transform: translateX(43px);
+    transform: translateX(40px);
 }
 #starry-text .text-box p {
   overflow: hidden;
   white-space: nowrap;
+  font-size: 0;
 }
 #starry-text .text-box p span {
   display: inline-block;
   font-size: 34px;
+  font-weight: 400;
   letter-spacing: 0.2vw;
 }
 #starry-text .text-box p .text-s {
@@ -203,7 +212,7 @@ export default {
 /* Night's Watch */
 .starry-text2 {
   width: 260px;
-  margin-right: 7px;
+  margin-right: 1px;
   box-sizing: border-box;
 }
 .starry-text2 span {
