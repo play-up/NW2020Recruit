@@ -9,7 +9,10 @@
       ></div>
     </transition>
     <stars />
-    <starry-text  />
+    <starry-text v-if="true" />
+    <submit v-show="isSubmitShow"></submit>
+    <!-- 模拟取消后信封出现在首页 -->
+    <!-- <div class="letter" v-if="isLetterShow" @click="showPostCard(true)">这是信封</div> -->
   </div>
 </template>
 
@@ -17,16 +20,20 @@
 import Moon from 'components/content/Moon'
 import Stars from 'components/content/Stars'
 import StarryText from 'components/content/StarryText'
+import submit from './submit'
+import { mapState,mapMutations } from 'vuex'
+
 export default {
   name: 'StarryHome',
   components: {
     Moon,
     Stars,
     StarryText,
+    submit
   },
   data() {
     return {
-    ShadowShow: false
+    ShadowShow: false,
     }
   },
   methods: {
@@ -36,15 +43,33 @@ export default {
       } else if (state === 1) {
         this.ShadowShow = false
       }
+    },
+    ...mapMutations({
+      
+    }),
+    showPostCard(){
+      //  console.log(this.isPostShow);
+       
     }
+  },
+  
+  computed: {
+      ...mapState(['isSubmitShow','isLetterShow'])
   },
   mounted() {
 
-  },
+  }
 }
 </script>
 
 <style scoped>
+.letter{
+  position: absolute;
+  width: 20vw;
+  height: 10vw;
+  color:white;
+  bottom: 0
+}
 #starry-home {
   width: 100%;
   height: 100%;
