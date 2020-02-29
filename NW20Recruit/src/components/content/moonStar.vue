@@ -60,13 +60,13 @@ export default {
 .bling1,
 .bling2,
 .bling3 {
-  background-image: url('~assets/shine.png');
-  background-size:100% 100%; 
+  background-image: url("~assets/shine.png");
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center;
   width: 5vw;
-    height: 7vw;
-    right: 0.5vw;
+  height: 7vw;
+  right: 0.5vw;
   top: 5.067vw;
   position: absolute;
   animation: opacity-change 1s ease-in-out forwards;
@@ -84,15 +84,15 @@ export default {
 }
 .bling2 {
   width: 4vw;
-    height: 6vw;
-    right: 1.5vw;
-    top: 2vw;
+  height: 6vw;
+  right: 1.5vw;
+  top: 2vw;
 }
 .bling3 {
   width: 3vw;
-    height: 4vw;
-    right: 0vw;
-    top: 1vw;
+  height: 4vw;
+  right: 0vw;
+  top: 1vw;
 }
 @keyframes bling {
   from {

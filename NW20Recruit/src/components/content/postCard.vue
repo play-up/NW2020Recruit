@@ -107,18 +107,60 @@
 
       <p class="bottom">Night's Watch</p>
     </div>
+    <div class="remind">
+      <popup :remind-show="this.isRemindShow" @yes="yes" @no="no">
+        <div slot="main">
+          <p>{{remindArr[remindIndex].content1}}</p>
+          <p>{{remindArr[remindIndex].content2}}</p>
+        </div>
+        <div slot="yes">{{remindArr[remindIndex].sureBtn}}</div>
+        <div slot="no">{{remindArr[remindIndex].rejectBtn}}</div>
+      </popup>
+    </div>
   </div>
 </template>
 
 <script>
 import store from "@/store";
+import popup from "../common/popup";
+import $ from 'jquery';
+
+
 export default {
   name: "postCard",
+  components: {
+    popup
+  },
   props: {
-    isShow: Boolean
+    isShow: Boolean //弹窗是否出现
   },
   data() {
     return {
+      remindIndex: 0,
+      remindArr: [
+        {
+          content1: "你的报名表尚未提交,",
+          content2: "确认残忍离开吗QAQ",
+          sureBtn: "继续报名",
+          rejectBtn: "忍痛拒绝"
+        },
+        {
+          content1: "你的报名表未填写完整,",
+          content2: "不能提交哦QAQ",
+          sureBtn: "继续报名"
+        },
+        {
+          content1: "你的报名表已提交过一次了,",
+          content2: "确认继续提交吗?",
+          sureBtn: "继续提交",
+          rejectBtn: "忍痛拒绝"
+        },
+        {
+          content1: "提交信息未成功哦",
+          content2: "请重新提交QAQ",
+          sureBtn: "继续报名"
+        }
+      ],
       formData: {
         name: "", //名字
         sex: "", //性别
@@ -130,9 +172,9 @@ export default {
       },
       sexCheck: 0,
       propArr: [
-        { prop: "studentid", content: "学号", flag: 0,num:1 },
-        { prop: "college", content: "专业班级", flag: 1,num:2 },
-        { prop: "phone", content: "手机号", flag: 0,num:3 }
+        { prop: "studentid", content: "学号", flag: 0, num: 1 },
+        { prop: "college", content: "专业班级", flag: 1, num: 2 },
+        { prop: "phone", content: "手机号", flag: 0, num: 3 }
       ],
 
       sexArr: [
@@ -173,7 +215,8 @@ export default {
       DirIndex: false,
       isLocal: false, //是否已经客户端保存
       isAlive: true, //是否点击了提交，点击后点击外围不跳转到首页
-      backStatus: null //后台返回的状态
+      backStatus: null, //后台返回的状态
+      isRemindShow: false //弹窗是否要出现
     };
   },
   watch: {
@@ -231,7 +274,10 @@ export default {
     roll() {
       let front = this.$refs.front;
       let back = this.$refs.back;
-      this.isRoll = 1;
+      // 当弹窗没有出来的时候，点击才可以翻转到背面
+      if (this.isRemindShow == false) {
+        this.isRoll = 1;
+      }
     },
     // 点击后盖章，卡片翻转到正面且向父组件传值，使卡片缩小且飞向指定位置
     roll2() {
@@ -249,11 +295,15 @@ export default {
 
           setTimeout(() => {
             this.$store.commit("chooseNum", this.isSmaller);
+
+            //动画执行完成后，报名表组件消失
+            setTimeout(() => {
+              this.$store.commit("isSubmitShow", false);
+            });
             // console.log(this.$store.state.isBling);
           }, 3000);
         }, 1000);
       }, 1500);
-      
     },
     judgePhoneNo(phoneNo) {
       var reg = /^1[3-9][0-9]\d{8}$/;
@@ -300,7 +350,8 @@ export default {
       // this.judgeInsure();
       // 输入不合法时
       if (this.judgeInsure()) {
-        return;
+        this.isRemindShow = true;
+        this.remindIndex = 1;
       } else {
         this.submitForm();
         // 后台返回一个状态码，如果成功则先盖章后卡片翻转，不成功则提醒
@@ -309,7 +360,6 @@ export default {
     moreSubmit() {
       this.$axios.post("/update", this.formData).then(res => {
         this.backStatus = res.data.code;
-        console.log((this.backStatus = res.data.code + "第二次"));
         this.roll2();
       });
     },
@@ -322,9 +372,31 @@ export default {
         if (this.backStatus == 2) {
           this.roll2();
         } else if (this.backStatus == 4) {
-          this.moreSubmit();
+          // this.moreSubmit();
+          this.isRemindShow = true;
+          this.remindIndex = 2;
+        } else if (this.backStatus == 5) {
+          // 当存入数据库失败时
+          this.isRemindShow = true;
+          this.remindIndex = 3;
         }
       });
+    },
+    yes() {
+      this.isRemindShow = false;
+      console.log(this.remindIndex);
+      if (this.remindIndex == 2) this.moreSubmit(); //如果是继续提交按钮被点击，则触发这个方法
+    },
+    no() {
+      this.isRemindShow = false;
+      if (this.remindIndex == 0) {
+        //   this.$router.push({
+        //   path: "/"
+        // });
+        // 报名表这个组件消失
+        this.$store.commit("isSubmitShow", false);
+        this.$store.commit("isLetterShow", true);
+      }
     }
   },
   mounted() {
@@ -340,6 +412,28 @@ export default {
       var dirArr = this.dirArr;
       dirArr[this.DirIndex].isRight = true;
     }
+
+    // 解决安卓苹果输入框问题
+    let ua = window.navigator.userAgent;
+    let app = window.navigator.appVersion;
+    //$alert('浏览器版本: ' + app + '\n' + '用户代理: ' + ua);
+    if(!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+        // alert('ios端');
+        $("input,textarea").on("blur",function () {
+            var currentPosition,timer;
+            var speed=1;
+            timer=setInterval(function(){
+                currentPosition=document.documentElement.scrollTop || document.body.scrollTop;
+                currentPosition-=speed; 
+                window.scrollTo(0,currentPosition);//页面向上滚动
+                currentPosition+=speed;
+                window.scrollTo(0,currentPosition);//页面向下滚动
+                clearInterval(timer);
+            },100);
+        })
+    }else if(ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1) {
+        // alert('android端');
+    }
   },
   beforeMount() {
     this._close = e => {
@@ -348,9 +442,11 @@ export default {
         return;
       }
       //  console.log('hahah');
-      this.$router.push({
-        path: "/"
-      });
+      this.isRemindShow = true; //如果点击了则弹窗出现
+      this.remindIndex = 0;
+      // this.$router.push({
+      //   path: "/"
+      // });
     };
     document.body.addEventListener("click", this._close);
   },
@@ -502,14 +598,20 @@ input {
   box-sizing: border-box;
   padding-bottom: 2px;
 }
-.underline,.underline1,.underline2,.underline3 {
+.underline,
+.underline1,
+.underline2,
+.underline3 {
   display: inline-block;
   position: relative;
   width: 16vw;
   margin-left: 2vw;
   padding-bottom: 2px;
 }
-.underline::after,.underline1::after,.underline2::after,.underline3::after {
+.underline::after,
+.underline1::after,
+.underline2::after,
+.underline3::after {
   position: absolute;
   content: "";
   background: url("../../assets/underline.png") no-repeat;
@@ -519,30 +621,30 @@ input {
   bottom: 0;
   left: 0;
 }
- .underline2 {
+.underline2 {
   width: 38vw;
 }
 .underline2::after {
   background: url("../../assets/underline2.png") no-repeat;
   height: 4px;
   background-size: 100% 100%;
-}  
-.underline1{
-  width:26vw;
+}
+.underline1 {
+  width: 26vw;
 }
 .underline1::after {
   background: url("../../assets/underline1.png") no-repeat;
   height: 4px;
   background-size: 100% 100%;
-}  
-.underline3{
+}
+.underline3 {
   width: 26vw;
 }
 .underline3::after {
   background: url("../../assets/underline3.png") no-repeat;
   height: 4px;
   background-size: 100% 100%;
-} 
+}
 .female,
 .male,
 .direction {
@@ -644,7 +746,7 @@ input {
   padding-bottom: 2vw;
 }
 .self {
-  width: 80vw;
+  width: 78vw;
   height: 40vw;
   background: url("../../assets/bgtext.png") no-repeat;
   background-size: 100% 100%;
@@ -675,6 +777,7 @@ input {
   /* transform: translateY(-3vw); */
   text-align: center;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 .direction-container {
   display: inline-block;
