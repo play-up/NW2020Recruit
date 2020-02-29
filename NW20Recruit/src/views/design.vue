@@ -1,6 +1,6 @@
 <template>
     <div class="all" ref="all">
-        <Boolean :class="!isfly?'cbig':'lsmall'"></Boolean>
+        <Boolean :class="[!isfly?'':'lsmall', 'cbig']"></Boolean>
         <!-- <p :class="['title', {'show':showTitle}]">设计组</p> -->
         <div :class="['title', {'show':showTitle}]">
             <img class="word-img" src="@/assets/she.png" alt=""><img class="word-img" src="@/assets/ji.png" alt="">
@@ -22,7 +22,7 @@
         <div class="downBat"></div>
         <div :class="['next', {'hide':!showArrow}]">
             <img src="@/assets/pinkarrow.png" class="arrow"/>
-            <div class="shadow"></div>
+            <!-- <div class="shadow"></div> -->
         </div>
         <div class="bottom"></div>
     </div>
@@ -222,12 +222,13 @@ export default {
     height: 50.533rem;
     left: 8rem;
     top: 18.667rem; */
-    width: 255px;
-    height: 350px;
-    left: 40px;
-    top: 25px;
-    position: absolute;
-    transition: width 3s, height 3s, left 3s, top 3s linear;
+    /* width: 255px;
+    height: 350px; */
+    /* left: 40px;
+    top: 25px; */
+    transform: scale(0.55) translate(-400px, -530px);
+    transition: transform 3s linear;
+    /* transition: width 3s, height 3s, left 3s, top 3s linear; */
 }
 .landin {
     display: flex;
@@ -282,7 +283,7 @@ export default {
     margin: auto;
     animation: jump 1s linear 0s infinite;
 }
-.shadow{
+/* .shadow{
     height: 25px;
     background-color: rgba(20, 20, 20, 0.3);
     border-radius: 50%;
@@ -291,8 +292,8 @@ export default {
     right: 0;
     margin: auto;
     animation: shadow 1s linear 0s infinite;
-}
-@keyframes shadow {
+} */
+/* @keyframes shadow {
     0%, 100% {
         width: 60%;
         height: 10px;
@@ -301,7 +302,7 @@ export default {
         width: 35%;
         height: 8px;
     }
-}
+} */
 @keyframes jump {
     0%, 100% {
         top: -3px;
