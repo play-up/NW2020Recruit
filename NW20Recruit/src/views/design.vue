@@ -1,7 +1,10 @@
 <template>
-    <div class="all">
-        <Boolean :class="!isfly?'cbig':'lsmall'"></Boolean>
-        <p :class="['title', {'show':showTitle}]">设计组</p>
+    <div class="all" ref="all">
+        <Boolean :class="[!isfly?'':'lsmall', 'cbig']"></Boolean>
+        <!-- <p :class="['title', {'show':showTitle}]">设计组</p> -->
+        <div :class="['title', {'show':showTitle}]">
+            <img class="word-img" src="@/assets/she.png" alt=""><img class="word-img" src="@/assets/ji.png" alt="">
+        </div>
         <div class="upBat"></div>
         <div class="word">
             <p 
@@ -17,6 +20,10 @@
             </p>
         </div>
         <div class="downBat"></div>
+        <div :class="['next', {'hide':!showArrow}]">
+            <img src="@/assets/pinkarrow.png" class="arrow"/>
+            <!-- <div class="shadow"></div> -->
+        </div>
         <div class="bottom"></div>
     </div>
 </template>
@@ -44,7 +51,8 @@ export default {
                     '现你天马行空的绮梦。'
             ],
             showWord: false,
-            letters: []
+            letters: [],
+            showArrow: false
         }
     },
     methods: {
@@ -55,7 +63,7 @@ export default {
                 setTimeout(() => {
                     that.isfly = true;
                     resolve(3000);
-                }, 2000)
+                }, 3000)
             })
         },
         //停顿留有动画时间
@@ -95,14 +103,39 @@ export default {
                     }, 15);
                     if(i == that.words.length-1) {
                         clearInterval(showLetter)
-                        resolve();
+                        resolve(1000);
                     }
                 }, 1000);
+            })
+        },
+        goBack() {
+            let start, end;
+            console.log('goBack');
+            this.$refs.all.addEventListener('touchstart', (evt) => {
+                start = evt.touches[0].clientY;
+            })
+            this.$refs.all.addEventListener('touchmove', evt => {
+                end = evt.touches[0].clientY;
+            })
+            this.$refs.all.addEventListener('touchend', evt => {
+                // 上滑减小，下滑增加
+                if(end > start) {
+                    this.$router.push('/');
+                    console.log('返回首页');
+                }
             })
         }
     },
     mounted() {
-        this.fly().then(this.typTitle).then(this.rest).then(this.typPara);
+        this.fly()
+            .then(this.typTitle)
+            .then(this.rest)
+            .then(this.typPara)
+            .then(this.rest)
+            .then(() => {
+            this.showArrow = true;
+        });
+        this.goBack();
     }
 }
 </script>
@@ -145,7 +178,7 @@ export default {
     font-size: 12rem;
     color: white;
     position: absolute;
-    left: 300px;
+    left: 330px;
     height: 120px;
     opacity: 0;
     top: 260px;
@@ -189,17 +222,19 @@ export default {
     height: 50.533rem;
     left: 8rem;
     top: 18.667rem; */
-    width: 230px;
-    height: 322px;
-    left: 40px;
-    top: 40px;
-    position: absolute;
-    transition: width 3s, height 3s, left 3s, top 3s linear;
+    /* width: 255px;
+    height: 350px; */
+    /* left: 40px;
+    top: 25px; */
+    transform: scale(0.55) translate(-400px, -530px);
+    transition: transform 3s linear;
+    /* transition: width 3s, height 3s, left 3s, top 3s linear; */
 }
 .landin {
     display: flex;
     flex-wrap: nowrap;
     color: white;
+    align-items: center;
 }
 
 .landin>span {
@@ -228,5 +263,59 @@ export default {
     opacity: 1;
     -webkit-transform: translate(0, 0);
   }
+}
+.next{
+    width: 80px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: block;
+    bottom: 40px;
+    z-index: 10;
+}
+.arrow{
+    width: 60%;
+    display: block;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: auto;
+    animation: jump 1s linear 0s infinite;
+}
+/* .shadow{
+    height: 25px;
+    background-color: rgba(20, 20, 20, 0.3);
+    border-radius: 50%;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: auto;
+    animation: shadow 1s linear 0s infinite;
+} */
+/* @keyframes shadow {
+    0%, 100% {
+        width: 60%;
+        height: 10px;
+    }
+    50%{
+        width: 35%;
+        height: 8px;
+    }
+} */
+@keyframes jump {
+    0%, 100% {
+        top: -3px;
+    }
+    50% {
+        top: 0;
+    }
+}
+.hide{
+    bottom: -100px;
+}
+.word-img {
+    width: 100px;
+    height: 100px;
 }
 </style>

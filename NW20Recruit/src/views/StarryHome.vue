@@ -1,9 +1,15 @@
 <template>
   <div id="starry-home">
-    <moon v-if="true" />
-    <div class="moon-down-shadow" v-show="false"></div>
+    <moon v-if="true" 
+    @moonEvent = "moonEv"
+    />
+    <transition name="moon-shadow">
+      <div class="moon-down-shadow" 
+      v-show="ShadowShow"
+      ></div>
+    </transition>
     <stars />
-    <starry-text v-if="true" />
+    <starry-text  />
   </div>
 </template>
 
@@ -20,6 +26,16 @@ export default {
   },
   data() {
     return {
+    ShadowShow: false
+    }
+  },
+  methods: {
+    moonEv (state) {
+      if(state === 0) {
+        this.ShadowShow = true
+      } else if (state === 1) {
+        this.ShadowShow = false
+      }
     }
   },
   mounted() {
@@ -28,21 +44,30 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #starry-home {
   width: 100%;
   height: 100%;
   background: url('~assets/starry-back.png') no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
   position: relative;
 }
 .moon-down-shadow {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
   background: rgba(20, 19, 28, .68);
+}
+.moon-shadow-enter,.moon-shadow-leave-to {
+  opacity: 0;
+}
+.moon-shadow-leave,.moon-shadow-enter-to {
+  opacity: 1;
+}
+.moon-shadow-enter-active,.moon-shadow-leave-active {
+  transition: all 2s ease;
 }
 </style>
