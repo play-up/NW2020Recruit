@@ -12,7 +12,8 @@ export default new Vuex.Store({
     //postcard是否展示
     isPostShow:false,
     // 信封是否出现
-    isLetterShow:false
+    isLetterShow:false,
+    isFilterShow:false
   },
   mutations: {
     starryNext(state) {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     isLetterShow(state,val){
       state.isLetterShow=val
+    },
+    isFilterShow(state,val){
+      state.isFilterShow=val;
     }
   }
 });

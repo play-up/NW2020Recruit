@@ -10,7 +10,7 @@
     </div>
 
     <transition mode="out-in">
-      <post-card v-if="isShow" 
+      <post-card v-if="isPostShow" 
       @smaller="smaller" 
       :isShow="isShow"
       :class="{'hover1':rotate==1,'smaller1':isSmaller==1,
