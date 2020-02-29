@@ -6,6 +6,8 @@ import Boolean from '@/components/content/Boolean'
 import sBoolean from '@/components/content/sBoolean'
 import Backend from '@/views/Backend'
 import Planet from '@/components/content/Planet'
+import Frontend from '@/views/Frontend'
+import Steam from '@/components/content/Steam'
 
 Vue.use(Router)
 
@@ -32,11 +34,20 @@ export default new Router({
       path: "/backend",
       name: "Backend",
       component: Backend,
-      children:[{
-        path: "planet",
-      name: "Planet",
-      component: Planet
-      }]
+      // children: [{
+      //   path: "planet",
+      //   name: "Planet",
+      //   component: Planet
+      // }]
+    }, {
+      path: "/frontend",
+      name: "Frontend",
+      component: Frontend,
+      // children: [{
+      //   path: "steam",
+      //   name: "Steam",
+      //   component: Steam
+      // }]
     }
   ]
 });
