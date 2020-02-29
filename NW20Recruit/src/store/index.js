@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    starryCurrent: 0,
+    starryCurrent: -1,
     chooseNum:0
   },
   mutations: {
