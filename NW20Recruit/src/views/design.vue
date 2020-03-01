@@ -1,7 +1,7 @@
 <template>
     <div class="all" ref="all">
+        <loading v-if="loading"></loading>
         <Boolean :class="[!isfly?'':'lsmall', 'cbig']"></Boolean>
-        <!-- <p :class="['title', {'show':showTitle}]">设计组</p> -->
         <div :class="['title', {'show':showTitle}]">
             <img class="word-img" src="@/assets/she.png" alt=""><img class="word-img" src="@/assets/ji.png" alt="">
         </div>
@@ -20,20 +20,22 @@
             </p>
         </div>
         <div class="downBat"></div>
-        <div :class="['next', {'hide':!showArrow}]">
+        <div :class="['next', {'hide':!showArrow}]" @click="goNext">
             <img src="@/assets/pinkarrow.png" class="arrow"/>
-            <!-- <div class="shadow"></div> -->
         </div>
         <div class="bottom"></div>
+        <!-- <img v-if="true" style="opacity:0" src="~assets/frontend2.png" /> -->
     </div>
 </template>
 
 <script>
 import Boolean from '@/components/content/Boolean'
+import loading from '@/components/common/loading'
 export default {
     name: "design",
     components: {
-        Boolean
+        Boolean,
+        loading
     },
     data() {
         return {
@@ -52,7 +54,24 @@ export default {
             ],
             showWord: false,
             letters: [],
-            showArrow: false
+            showArrow: false,
+            imgUrl: [
+                require('@/assets/she.png'),
+                require('@/assets/ji.png'),
+                require('@/assets/pinkarrow.png'),
+                require('@/assets/d_background.png'),
+                require('@/assets/bat2.png'),
+                require('@/assets/letters.png'),
+                require('@/assets/boolean.png')
+            ],
+            loading: true,
+            nextImgUrl: [
+                require('@/assets/frontend2.png'),
+                require('@/assets/frontend1.png'),
+                require('@/assets/frontend.png'),
+                require('@/assets/steam.png'),
+                require('@/assets/steamPlanet.png')
+            ]
         }
     },
     methods: {
@@ -108,6 +127,7 @@ export default {
                 }, 1000);
             })
         },
+        //返回上一页
         goBack() {
             let start, end;
             console.log('goBack');
@@ -120,21 +140,59 @@ export default {
             this.$refs.all.addEventListener('touchend', evt => {
                 // 上滑减小，下滑增加
                 if(end > start) {
-                    this.$router.push('/');
+                    this.$router.go(-1);
                     console.log('返回首页');
                 }
             })
+        },
+        //进入下一个页面
+        goNext() {
+            this.$router.push('/frontend');
+        },
+        //加载图片资源
+        addPromise(url) {
+            return new Promise((reslove, reject) => {
+                let img = new Image();
+                img.src = url;
+                img.onload = () => {
+                    reslove(url);
+                }
+            })
+        },
+        //加载图片
+        loadImg(url) {
+            let arr = [];
+            for (let i = 0; i < url.length; i++) {
+                arr.push(this.addPromise(url[i]));
+            };
+            Promise.all(arr)
+            .then(() => {
+                this.loading = false;
+                this.anim();
+            })
+        },
+        //动画
+        anim() {
+            this.fly()
+                .then(this.typTitle)
+                .then(this.rest)
+                .then(this.typPara)
+                .then(this.rest)
+                .then(() => {
+                    return new Promise((resolve, reject) => {
+                        this.showArrow = true;
+                        resolve();
+                    })
+                })
+                .then(this.loadNext);
+        },
+        //加载下一页的动画
+        loadNext() {
+            this.loadImg(this.nextImgUrl);
         }
     },
     mounted() {
-        this.fly()
-            .then(this.typTitle)
-            .then(this.rest)
-            .then(this.typPara)
-            .then(this.rest)
-            .then(() => {
-            this.showArrow = true;
-        });
+        this.loadImg(this.imgUrl);
         this.goBack();
     }
 }
@@ -154,10 +212,11 @@ export default {
     top: 100px;  
 }
 .downBat{
-    background-image: url('~assets/bat1.png');
+    background-image: url('~assets/bat2.png');
     left: 12%;
     bottom: 20%;
     z-index: 3;
+    transform: rotateY(180deg);
 }
 .upBat, .downBat{
     width: 32%;
