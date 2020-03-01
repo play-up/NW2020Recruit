@@ -1,7 +1,7 @@
 <template>
   <div id="starry-home">
     <img src="~assets/hill.png" alt="hill" class="hill">
-    <loading v-if="loadingShow"/>
+    <!-- <loading v-if="loadingShow"/> -->
     <moon v-if="true" 
     @moonEvent = "moonEv"
     />
@@ -11,22 +11,21 @@
       ></div>
     </transition>
     <stars />
-    <starry-text v-if="true" />
-    <submit v-show="isSubmitShow"></submit>
+    <starry-text />
+    <!-- <submit v-show="isSubmitShow"></submit> -->
     <!-- 模拟取消后信封出现在首页 -->
     <!-- <div class="letter" v-if="isLetterShow" @click="showPostCard(true)">这是信封</div> -->
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState,mapMutations } from 'vuex'
 
 import Loading from 'components/common/Loading'
 import Moon from 'components/content/Moon'
 import Stars from 'components/content/Stars'
 import StarryText from 'components/content/StarryText'
 import submit from './submit'
-import { mapState,mapMutations } from 'vuex'
 
 export default {
   name: 'StarryHome',
@@ -40,7 +39,7 @@ export default {
   data() {
     return {
     ShadowShow: false,
-    loadingShow: true,
+    // loadingShow: true,
     }
   },
   methods: {
@@ -52,9 +51,6 @@ export default {
         this.ShadowShow = false
       }
     },
-    ...mapMutations({
-      
-    }),
     showPostCard(){
       //  console.log(this.isPostShow);
        
@@ -65,10 +61,10 @@ export default {
       ...mapState(['isSubmitShow','isLetterShow'])
   },
   mounted() {
-    window.onload = () => {
-      this.loadingShow = false
-      this.starryNext()
-    }
+    // window.onload = () => {
+    //   this.loadingShow = false
+    //   this.starryNext()
+    // }
   },
 }
 </script>
