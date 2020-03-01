@@ -17,6 +17,7 @@ export default new Vuex.Store({
     isFilterShow:false,
     //是否加载loading
     isLoading: false,
+    isRoll:0//信封是否翻转
   },
   mutations: {
     starryNext(state) { //首页进入下一个状态
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     },
     isFilterShow(state,val){
       state.isFilterShow=val;
+    },
+    isRoll(state,val){
+      state.isRoll=val
     }
   }
 });

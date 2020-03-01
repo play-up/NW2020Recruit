@@ -4,7 +4,6 @@ import StarryHome from "@/views/StarryHome";
 import design from '@/views/design'
 import Boolean from '@/components/content/Boolean'
 import sBoolean from '@/components/content/sBoolean'
-import submit from '@/views/submit'
 import Backend from '@/views/Backend'
 import Frontend from '@/views/Frontend'
 
@@ -23,25 +22,16 @@ const router = new Router({
       path: "/design",
       name: "design",
       component: design,
-      children: [
-        {
-          path: "boolean",
-          name: "Boolean",
-          component: Boolean
-        },
-        {
-          path: "sBoolean",
-          name: "sBoolean",
-          component: sBoolean
-        }
-      ]
-    },
-    {
-      path: "/submit",
-      name: "submit",
-      component: submit
-    },
-    {
+      children: [{
+        path: 'boolean',
+        name: "Boolean",
+        component: Boolean
+      }, {
+        path: 'sBoolean',
+        name: 'sBoolean',
+        component: sBoolean
+      }]
+    }, {
       path: "/backend",
       name: "Backend",
       component: Backend
