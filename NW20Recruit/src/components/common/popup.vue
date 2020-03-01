@@ -7,7 +7,7 @@
           <!-- 弹窗的提示信息 -->
           <slot name="main">提示信息</slot>
         </div>
-        <div class="yes" @click="yes">
+        <div class="yes" @touchstart="yes1" @touchend="yes2">
           <slot name="yes">确认按钮</slot>
         </div>
         <div class="no" @click="no">
@@ -52,6 +52,20 @@ export default {
           }, 300);
         });
     },
+    yes1(){
+      var that = this;
+      $(".yes").addClass("yes2");
+         that.$store.commit("isFilterShow", true);
+      
+    },
+    yes2(){
+      var that = this;
+      $(".yes").removeClass("yes2");
+          that.$store.commit("isFilterShow", false);
+          setTimeout(() => {
+            that.$emit("yes");
+          }, 300);
+    },
     no() {
       this.$emit("no");
     }
@@ -90,45 +104,33 @@ export default {
   line-height: 8vw;
 }
 .yes {
-  width: 24vw;
-  border-radius: 30px;
-  padding: 6px;
+  width: 26vw;
+  border-radius: 34px;
+  padding:1vw 1.4vw;
+      padding-left: 1.6vw;
   background: #665bb8;
-  border: 1px solid #37315f;
+  border: .5px solid #37315f;
   color: white;
-  font-size: 30px;
+  /* font-size: 34px; */
+  font-size: 0;
   margin: 0 auto;
-  transform: translateY(30vw);
-  box-shadow: 4px 2px, 4px 2px 1px #37315f;
+  transform: translateY(26vw);
+  box-shadow: 5px 3px, 5px 3px 0 .5px #37315f;
+  position: relative;
+  height: 7vw;
 }
-/* .yes:active {
-  width: 24vw;
-  border-radius: 30px;
-  padding:6px;
-  background: white;
-  border: .5px solid #665bb8;
-  color:#665bb8;
-  font-size: 30px;
-  margin: 0 auto;
-  transform: translateY(30vw);
-  box-shadow: #665bb8 4px 2px , 4px 2px 1px #37315f
-  } */
+.yes div{
+  line-height: 7vw
+}
 .yes2 {
-  width: 24vw;
-  border-radius: 30px;
-  padding: 6px;
   background: white;
-  border: 0.5px solid #665bb8;
   color: #665bb8;
-  font-size: 30px;
-  margin: 0 auto;
-  transform: translateY(30vw);
-  box-shadow: #665bb8 4px 2px, 4px 2px 1px #37315f;
+  box-shadow: #665bb8 5px 3px, 5px 3px .5px #37315f;
 }
 .no {
-  font-size: 12px;
-  color: gray;
-  transform: translateY(32vw);
+  font-size: 22px;
+  color: #666666;
+  transform: translateY(30vw);
 }
 /* .filter{
   background: rgba(0, 0, 0, 0.3);

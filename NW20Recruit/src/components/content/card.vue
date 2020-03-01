@@ -4,7 +4,7 @@
     :style="{'background-color':(isSmaller==0? 'rgba(0,0,0,0.25)':' rgba(0,0,0,0)')}"
 
   >
-    <div class="content" v-show="!isShow" @click.stop>
+    <div class="content" v-show="!isPostShow" @click.stop>
       <p class="text">你收到一张来自宇宙深处的明信片</p>
       <div class="image" @click="changeCom"></div>
     </div>
@@ -45,6 +45,9 @@ export default {
     changeCom() {
       this.isShow = !this.isShow;
       this.$store.commit('isPostShow',true)
+      setTimeout(()=>{
+        this.$store.commit('isRoll',1)
+      },1000)
     },
     smaller(val) {
       this.rotate = val;
@@ -137,7 +140,7 @@ export default {
     transform: rotateX(95deg) rotateY(-1deg) rotateZ(24deg)  scale(0.2);
   }
   100% {
-       top: 94vw;
+    top: 94vw;
     left: 74vw;
     transform: rotateX(58deg) rotateY(-12deg) rotateZ(36deg) scale(0.02);
   }
@@ -185,7 +188,7 @@ export default {
     top: 57vw;
     left: 30vw;
     /* transform: rotateX(61deg) rotateY(-27deg) rotateZ(-2deg) scale(0.06); */
-     transform: rotateX(40deg) rotateY(-14deg) rotateZ(-16deg)scale(0.06) ;
+     transform: rotateX(40deg) rotateY(-14deg) rotateZ(-16deg) scale(0.06)  ;
   }
 }
 

@@ -13,7 +13,8 @@ export default new Vuex.Store({
     isPostShow:false,
     // 信封是否出现
     isLetterShow:false,
-    isFilterShow:false
+    isFilterShow:false,
+    isRoll:0//信封是否翻转
   },
   mutations: {
     starryNext(state) {
@@ -33,6 +34,9 @@ export default new Vuex.Store({
     },
     isFilterShow(state,val){
       state.isFilterShow=val;
+    },
+    isRoll(state,val){
+      state.isRoll=val
     }
   }
 });

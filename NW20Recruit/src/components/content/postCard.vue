@@ -4,11 +4,12 @@
     <div
       class="front"
       ref="front"
-      @click="roll"
       :style="{'transform':(isRoll==1?'rotateY(180deg)':'rotateY(0deg)')}"
     >
-      <div class="pic"></div>
-      <p class="text">愿你找到属于自己的星球</p>
+      <img class="pic" src="../../assets/post-pic.jpg" />
+      <img src="../../assets/post-text.png" alt="" class="post-text">
+      <img src="../../assets/post-name.png" alt="" class="post-name">
+      <!-- <p class="text">愿你找到属于自己的星球</p> -->
     </div>
 
     <!-- 背面卡片 -->
@@ -17,7 +18,7 @@
       ref="back"
       :style="{'transform':(isRoll==1?'rotateY(0deg)':'rotateY(180deg)')}"
     >
-      <div class="top"></div>
+      <img class="top" src="../../assets/nw2020.png" />
       <form @submit.prevent="submitForm($event)">
         <ul class="form">
           <li class="name">
@@ -84,13 +85,14 @@
             </div>
           </li>
           <li>
-            <input
-              type="sumbit"
+            <!-- <input
+              type="submit"
               class="submit"
               @click="submit();return false;"
-              value="提交"
               readonly="readonly"
-            />
+              src="../../assets/submit.png"
+            /> -->
+            <img src="../../assets/submit.png" alt=""  @click="submit();return false;" class="submit">
           </li>
         </ul>
 
@@ -114,7 +116,7 @@
           <p>{{remindArr[remindIndex].content1}}</p>
           <p>{{remindArr[remindIndex].content2}}</p>
         </div>
-        <div slot="yes">{{remindArr[remindIndex].sureBtn}}</div>
+        <div slot="yes"><span class="next-text">{{remindArr[remindIndex].sureBtn}}</span> <span class="icon">></span> </div>
         <div slot="no">{{remindArr[remindIndex].rejectBtn}}</div>
       </popup>
     </div>
@@ -125,7 +127,7 @@
 import store from "@/store";
 import popup from "../common/popup";
 import $ from 'jquery';
-
+import { mapState,mapMutations } from 'vuex'
 
 export default {
   name: "postCard",
@@ -209,7 +211,7 @@ export default {
           isRight: 0
         }
       ],
-      isRoll: 0,
+      // isRoll: 0,
       isSmaller: 0,
       isSeel: 0, //是否盖章
       SexIndex: false,
@@ -222,11 +224,17 @@ export default {
   },
   watch: {
     // 当已经点击了提交并且成功后，不可以点击页面返回主页
-    isAlive() {
-      if (this.isAlive == false) {
-        document.body.removeEventListener("click", this._close);
-      }
-    }
+    // isAlive() {
+    //   if (this.isAlive == false) {
+    //     document.body.removeEventListener("click", this._close);
+    //   }else{
+    //      document.body.addEventListener("click", this._close);
+    //   }
+    // }
+  },
+  computed:{
+     ...mapState(['isRoll'])
+
   },
   methods: {
     // 整理数据
@@ -282,11 +290,13 @@ export default {
     },
     // 点击后盖章，卡片翻转到正面且向父组件传值，使卡片缩小且飞向指定位置
     roll2() {
+      
+      document.body.removeEventListener("click", this._close);
       this.isSeel = 1;
       setTimeout(() => {
-        this.isAlive = false;
+        // this.isAlive = false;
         // 1s后卡片翻转
-        this.isRoll = 0;
+        this.$store.commit("isRoll",false) ;
         // 再过1s之后卡片再变小
         // this.isSmaller = 1;
         this.isSmaller = this.dirArr[this.DirIndex].id;
@@ -297,11 +307,15 @@ export default {
           setTimeout(() => {
             this.$store.commit("chooseNum", this.isSmaller);
 
-            //动画执行完成后，报名表组件消失
+            //动画执行完成后，报名表组件消失,所有动画清空
             setTimeout(() => {
+              this.$emit("smaller", null);
+               this.isSeel = 0;
+              //  this.isAlive = true;
               this.$store.commit("isSubmitShow", false);
+              this.$store.commit("isPostShow", false);
+              this.$store.commit('isLetterShow',true);
             });
-            // console.log(this.$store.state.isBling);
           }, 3000);
         }, 1000);
       }, 1500);
@@ -320,17 +334,17 @@ export default {
 
         return true;
       } else if (!this.judeName(this.formData.name)) {
-        console.log("请输入正确的姓名");
+        // console.log("请输入正确的姓名");
         return true;
       }
-      if (this.sex == "") {
-        console.log("请选择性别");
+      if (this.formData.sex == "") {
+        // console.log("请选择性别");
         return true;
       }
       for (var i = 0; i < this.propArr.length; i++) {
         let index = this.propArr[i].prop;
         if (this.formData[index] == "") {
-          console.log("请填写" + this.propArr[i].content);
+          // console.log("请填写" + this.propArr[i].content);
           return true;
         } else if (
           index == "phone" &&
@@ -340,9 +354,12 @@ export default {
           return true;
         }
       }
-      if (this.direction == "") {
+      if (this.formData.direction == "") {
         console.log("请选择方向！");
 
+        return true;
+      }
+      if(this.formData.introduce==''){
         return true;
       }
     },
@@ -384,18 +401,17 @@ export default {
     },
     yes() {
       this.isRemindShow = false;
-      console.log(this.remindIndex);
       if (this.remindIndex == 2) this.moreSubmit(); //如果是继续提交按钮被点击，则触发这个方法
     },
     no() {
       this.isRemindShow = false;
       if (this.remindIndex == 0) {
-        //   this.$router.push({
-        //   path: "/"
-        // });
         // 报名表这个组件消失
         this.$store.commit("isSubmitShow", false);
+        this.$store.commit("isPostShow", false);
+        // this.isAlive=false;
         this.$store.commit("isLetterShow", true);
+        this.$store.commit('isRoll',0)
       }
     }
   },
@@ -434,6 +450,8 @@ export default {
     }else if(ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1) {
         // alert('android端');
     }
+
+    
   },
   beforeMount() {
     this._close = e => {
@@ -441,18 +459,16 @@ export default {
       if (this.$el.contains(e.target)) {
         return;
       }
-      //  console.log('hahah');
       this.isRemindShow = true; //如果点击了则弹窗出现
       this.remindIndex = 0;
-      // this.$router.push({
-      //   path: "/"
-      // });
     };
-    document.body.addEventListener("click", this._close);
+    // 两秒之后转到报名页面才监听事件
+    setTimeout(()=>{
+      document.body.addEventListener("click", this._close);
+    },1500)
   },
   beforeDestroy() {
     document.body.removeEventListener("click", this._close);
-    // console.log('该组件');
   }
 };
 </script>
@@ -461,6 +477,17 @@ export default {
 ul {
   text-decoration: none;
   list-style: none;
+}
+.icon{
+  font-size: 5.5vw;
+  font-weight: 300;
+  vertical-align: middle;
+}
+.next-text{
+      font-size: 4.55vw;
+    vertical-align: middle;
+    margin-left: 2px;
+    font-weight: 300;
 }
 .right {
   position: absolute;
@@ -507,8 +534,8 @@ ul {
 .postcard {
   position: absolute;
   width: 90vw;
-  /* height: 75vh; */
-  height: 75%;
+  height:135vw;
+  /* height: 75%; */
   /* height: 100vw; */
   /* right: 50%; */
   left: 50%;
@@ -517,11 +544,25 @@ ul {
   color: #282828;
 }
 .pic {
-  width: 90%;
-  height: 33vh;
-  background: #4b4b4b;
-  margin: 0 auto;
-  transform: translateY(3vh);
+     width: 90%;
+    /* margin: 0 auto; */
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,4vw);
+}
+.post-text{
+      width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 28vw);
+}
+.post-name{
+     width: 21%;
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(36vw);
 }
 .text {
   transform: translateY(13vh);
@@ -535,8 +576,8 @@ input {
 .front,
 .back {
   width: 100%;
-  /* height: 75vh; */
-  height: 140vw;
+  height: 135vw;;
+  /* height: 140vw; */
   position: absolute;
   top: 0;
   left: 0;
@@ -547,27 +588,17 @@ input {
 }
 .front {
   text-align: center;
-  /* background: #c8d1e9; */
 }
 .back {
-  /* background: url("../../assets/bg.png") no-repeat;
-  background-size: cover; */
   transform: rotateY(180deg);
   padding: 3vw 6vw;
   box-sizing: border-box;
 }
-/* .postcard:hover .back {
-  transform: rotateY(0deg);
-}
-.postcard:hover .front {
-  transform: rotateY(180deg);
-} */
-
 .top {
-  width: 30vw;
-  height: 15vw;
+  width: 36vw;
+  /* height: 15vw;
   background: url("../../assets/nw2020.png") no-repeat;
-  background-size: 100% 100%;
+  background-size: 100% 100%; */
   margin-left: -2vw;
 }
 .bottom {
@@ -577,6 +608,7 @@ input {
   transform: translateX(-50%);
 }
 .form {
+  transform: translateY(-8px)
 }
 .form li {
   box-sizing: border-box;
@@ -617,7 +649,7 @@ input {
   background: url("../../assets/underline.png") no-repeat;
   background-size: 100% 100%;
   width: 100%;
-  height: 3px;
+  height: 4px;
   bottom: 0;
   left: 0;
 }
@@ -638,7 +670,7 @@ input {
   background-size: 100% 100%;
 }
 .underline3 {
-  width: 26vw;
+  width: 27vw;
 }
 .underline3::after {
   background: url("../../assets/underline3.png") no-repeat;
@@ -669,17 +701,18 @@ input {
 }
 .sex span,
 .direction span {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 2.4vw;
-  margin: auto;
-  display: block;
-  width: 24px;
-  height: 24px;
-  border: 0.5px solid #4b3b36;
-  border-radius: 50%;
-  cursor: pointer;
+     position: absolute;
+    top: 0;
+    bottom: 0;
+        left: 0.8vw;
+    margin: auto;
+    display: block;
+    width: 6.4vw;
+    height: 6.4vw;
+    border: 1px solid #4b3b36;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: scale(.5);
 }
 
 .sex input,
@@ -687,22 +720,24 @@ input {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 2.4vw;
+     left: 0.8vw;
   margin: auto; /* 这里及以上的定位，可以让该元素竖直居中。(top: 0; bottom: 0;) */
   opacity: 0;
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 6.4vw;
+    height: 6.4vw;
+    transform: scale(.5);
   cursor: pointer;
   outline: none;
   z-index: 3;
 }
 .direction span,
 .direction input {
-  left: 53px;
+  left: 5.067vw;
+    top: .1vw;
 }
 .dir {
-  font-size: 24px;
+  font-size: 2.933vw;
 }
 .active::after {
   background: url("../../assets/right.png") no-repeat;
@@ -711,6 +746,9 @@ input {
   height: 26px;
   content: "";
   position: absolute;
+      transform: scale(2);
+    left: 2.2vw;
+    top: 2vw;
 }
 .female label {
   background: url("../../assets/female.png") no-repeat;
@@ -751,7 +789,7 @@ input {
   background: url("../../assets/bgtext.png") no-repeat;
   background-size: 100% 100%;
   box-sizing: border-box;
-  padding-top: 3vw;
+  padding-top: 1.5vw;
   padding-bottom: 6vw;
   padding-left: 2vw;
   padding-right: 2vw;
@@ -769,15 +807,19 @@ input {
   border: none;
   outline: none;
   width: 21vw;
-  height: 15vw;
-  background: url("../../assets/submit.png") no-repeat;
+  /* height: 15vw;
+  background: url("../../assets/submit.png") no-repeat; */
   background-size: 100% 100%;
   font-size: 36px;
   float: right;
-  /* transform: translateY(-3vw); */
+  opacity: 0.6;
+  transform: translateY(-2vw);
   text-align: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+.submit:active{
+  opacity: 0.9;
 }
 .direction-container {
   display: inline-block;
