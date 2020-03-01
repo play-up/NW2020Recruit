@@ -18,7 +18,6 @@ export default {
     return {};
   },
   mounted() {
-    console.log(this.imgHeight);
   }
 };
 </script>
@@ -45,7 +44,7 @@ export default {
   bottom: 57%;
   right: 55%;
   animation: planetFade 0.5s linear both;
-  animation-delay: 3s;
+  animation-delay: 2s;
 }
 .steamPlanet img {
   height: 100%;

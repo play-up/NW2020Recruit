@@ -3,12 +3,54 @@
     <div class="steamBox">
       <steam class="steam"></steam>
     </div>
-    <div class="title" v-if="showText">
+    <div class="title title1" v-if="showTitle">
       <img src="~assets/frontend2.png" />
       <img src="~assets/frontend1.png" />
     </div>
-    <div class="content" v-if="showText">{{content}}</div>
-    <div class="mask"></div>
+    <div class="title title2" v-if="showTitle">
+      <img src="~assets/frontend2.png" />
+      <img src="~assets/frontend1.png" />
+    </div>
+    <div class="title title3" v-if="showTitle">
+      <img src="~assets/frontend2.png" />
+      <img src="~assets/frontend1.png" />
+    </div>
+    <div class="title title4" v-if="showTitle">
+      <img src="~assets/frontend2.png" />
+      <img src="~assets/frontend1.png" />
+    </div>
+    <div class="title title5" v-if="showTitle">
+      <img src="~assets/frontend2.png" />
+      <img src="~assets/frontend1.png" />
+    </div>
+    <div class="title title6" v-if="showTitle">
+      <img src="~assets/frontend2.png" />
+      <img src="~assets/frontend1.png" />
+    </div>
+    <div class="title title7" v-if="showTitle">
+      <img src="~assets/frontend2.png" />
+      <img src="~assets/frontend1.png" />
+    </div>
+    <div class="title title8" v-if="showTitle">
+      <img src="~assets/frontend2.png" />
+      <img src="~assets/frontend1.png" />
+    </div>
+    <div class="title title9" v-if="showTitle">
+      <img src="~assets/frontend2.png" />
+      <img src="~assets/frontend1.png" />
+    </div>
+    <div class="title title10" v-if="showTitle">
+      <img src="~assets/frontend2.png" />
+      <img src="~assets/frontend1.png" />
+    </div>
+    <div class="title" v-if="showCompleteTitle">
+      <img src="~assets/frontend2.png" />
+      <img src="~assets/frontend1.png" />
+    </div>
+    <div class="content" v-if="showContent">{{content}}</div>
+    <router-link to="/backend" tag="div" class="next" v-show="showIcon">
+      <img src="~assets/frontend_next.png" />
+    </router-link>
   </div>
 </template>
 
@@ -22,13 +64,23 @@ export default {
   data() {
     return {
       content:
-        "驱动器的前端驱动器的前端驱动器的前端驱动器的前端驱动器的前端驱动器的前端驱动器的前端驱动器的前端我好饿啊我好饿啊我好饿啊我好饿啊我好饿啊我好饿啊我好饿啊我好饿啊我好饿啊",
-      showText: false
+        "基于CSS 、HTML、JavaScript三件套，使用Vue作为框架开发各种各样的网页。前端一直在发展,我们一直在进步。我们并不局限于前端，我们还要学会利用Node.js进行后台开发，利用node express实现高并发http中间件,最终走向全栈。",
+      showTitle: false,
+      showCompleteTitle: false,
+      showContent: false,
+      showIcon: false
     };
   },
   mounted() {
     setTimeout(() => {
-      this.showText = true;
+      this.showTitle = true;
+    }, 2000);
+    setTimeout(() => {
+      this.showContent = true;
+      this.showCompleteTitle = true;
+    }, 5000);
+    setTimeout(() => {
+      this.showIcon = true;
     }, 5000);
   }
 };
@@ -51,8 +103,9 @@ export default {
   bottom: 34.5%;
   right: 28%;
   overflow: hidden;
-  animation: steamFade 2s linear backwards;
+  animation: steamFade 1s linear backwards;
   animation-delay: 1s;
+  z-index: 0;
 }
 .steam {
   height: 540px;
@@ -71,35 +124,279 @@ export default {
 }
 .title {
   position: absolute;
-  top: 20%;
+  top: 23%;
   right: 100px;
+  z-index: 1;
+}
+.title1 {
+  clip-path: polygon(0 0, 25% 0, 12.5% 50%, 0 50%);
+  animation: title1_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+}
+.title2 {
+  clip-path: polygon(12.5% 50%, 0 50%, 0 100%);
+  animation: title2_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+}
+.title3 {
+  clip-path: polygon(25% 0, 50% 0, 37.5% 50%, 12.5% 50%);
+  animation: title3_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+}
+.title4 {
+  clip-path: polygon(37.5% 50%, 12.5% 50%, 0 100%, 25% 100%);
+  animation: title4_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+}
+.title5 {
+  clip-path: polygon(50% 0, 37.5% 50%, 62.5% 50%, 75% 0);
+  animation: title5_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+}
+.title6 {
+  clip-path: polygon(37.5% 50%, 62.5% 50%, 50% 100%, 25% 100%);
+  animation: title6_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+}
+.title7 {
+  clip-path: polygon(75% 0, 100% 0, 87.5% 50%, 62.5% 50%);
+  animation: title7_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+}
+.title8 {
+  clip-path: polygon(87.5% 50%, 62.5% 50%, 50% 100%, 75% 100%);
+  animation: title8_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+}
+.title9 {
+  clip-path: polygon(100% 0, 100% 50%, 87.5% 50%);
+  animation: title9_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+}
+.title10 {
+  clip-path: polygon(100% 50%, 87.5% 50%, 75% 100%, 100% 100%);
+  animation: title10_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+}
+@keyframes title1_animate {
+  0% {
+    opacity: 0;
+    transform: rotateX(-130deg) rotateY(-115deg) rotateZ(27deg)
+      translateZ(331px);
+  }
+  10% {
+    opacity: 0;
+    transform: rotateX(-130deg) rotateY(-115deg) rotateZ(27deg)
+      translateZ(331px);
+  }
+  90% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+}
+@keyframes title2_animate {
+  0% {
+    opacity: 0;
+    transform: rotateX(291deg) rotateY(-371deg) rotateZ(473deg)
+      translateZ(-43px);
+  }
+  10% {
+    opacity: 0;
+    transform: rotateX(291deg) rotateY(-371deg) rotateZ(473deg)
+      translateZ(-43px);
+  }
+  90% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+}
+@keyframes title3_animate {
+  0% {
+    opacity: 0;
+    transform: rotateX(132deg) rotateY(-304deg) rotateZ(181deg)
+      translateZ(-1268px);
+  }
+  10% {
+    opacity: 0;
+    transform: rotateX(132deg) rotateY(-304deg) rotateZ(181deg)
+      translateZ(-1268px);
+  }
+  90% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+}
+@keyframes title4_animate {
+  0% {
+    opacity: 0;
+    transform: rotateX(233deg) rotateY(-182deg) rotateZ(-368deg)
+      translateZ(88px);
+  }
+  10% {
+    opacity: 0;
+    transform: rotateX(233deg) rotateY(-182deg) rotateZ(-368deg)
+      translateZ(88px);
+  }
+  90% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+}
+@keyframes title5_animate {
+  0% {
+    opacity: 0;
+    transform: rotateX(72deg) rotateY(263deg) rotateZ(222deg)
+      translateZ(-2301px);
+  }
+  10% {
+    opacity: 0;
+    transform: rotateX(72deg) rotateY(263deg) rotateZ(222deg)
+      translateZ(-2301px);
+  }
+  90% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+}
+@keyframes title6_animate {
+  0% {
+    opacity: 0;
+    transform: rotateX(-314deg) rotateY(9deg) rotateZ(488deg)
+      translateZ(-1831px);
+  }
+  10% {
+    opacity: 0;
+    transform: rotateX(-314deg) rotateY(9deg) rotateZ(488deg)
+      translateZ(-1831px);
+  }
+  90% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+}
+@keyframes title7_animate {
+  0% {
+    opacity: 0;
+    transform: rotateX(-402deg) rotateY(-479deg) rotateZ(-370deg)
+      translateZ(-1587px);
+  }
+  10% {
+    opacity: 0;
+    transform: rotateX(-402deg) rotateY(-479deg) rotateZ(-370deg)
+      translateZ(-1587px);
+  }
+  90% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+}
+@keyframes title8_animate {
+  0% {
+    opacity: 0;
+    transform: rotateX(311deg) rotateY(-218deg) rotateZ(97deg) translateZ(127px);
+  }
+  10% {
+    opacity: 0;
+    transform: rotateX(311deg) rotateY(-218deg) rotateZ(97deg) translateZ(127px);
+  }
+  90% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+}
+@keyframes title9_animate {
+  0% {
+    opacity: 0;
+    transform: rotateX(249deg) rotateY(-60deg) rotateZ(-100deg)
+      translateZ(307px);
+  }
+  10% {
+    opacity: 0;
+    transform: rotateX(249deg) rotateY(-60deg) rotateZ(-100deg)
+      translateZ(307px);
+  }
+  90% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+}
+@keyframes title10_animate {
+  0% {
+    opacity: 0;
+    transform: rotateX(30deg) rotateY(29deg) rotateZ(134deg) translateZ(-1405px);
+  }
+  10% {
+    opacity: 0;
+    transform: rotateX(30deg) rotateY(29deg) rotateZ(134deg) translateZ(-1405px);
+  }
+  90% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) rotateY(0deg) rotateZ(0deg) translateZ(0px);
+  }
 }
 .title img {
   height: 96px;
 }
 .content {
-  font-size: 40px;
+  font-size: 30px;
   font-family: "微软雅黑";
   color: white;
   line-height: 50px;
   position: absolute;
-  top: 40%;
+  top: 45%;
   margin: 0 60px;
+  z-index: 1;
 }
-.mask {
-  height: 100%;
-  width: 100%;
-  background: #00000055;
-  position: fixed;
-  animation: maskFade 1s linear both;
-  animation-delay: 4s;
+.next {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: float 1s linear infinite;
+  z-index: 1;
 }
-@keyframes maskFade {
-  from {
-    opacity: 0;
+.next img {
+  height: 50px;
+}
+@keyframes float {
+  0% {
+    transform: translateY(0);
   }
-  to {
-    opacity: 1;
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 </style>
