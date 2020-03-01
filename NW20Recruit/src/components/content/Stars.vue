@@ -70,7 +70,7 @@ export default {
       ...mapMutations(['starryNext']),
       starClick () {
           console.log(this.starryCurrent);
-          
+        this.$router.replace('/design')
       }
   },
 }
@@ -81,20 +81,22 @@ export default {
     position: absolute;
 }
 .design-star {
-    top: 50%;
+    /* top: 50%;
+    transform: translateY(-303px); */
     left: 23vw;
-    transform: translateY(-303px);
+    top: 28%;
 }
 .back-star {
-    top: 50%;
+    /* top: 50%;
+    transform: translateY(-30px); */
     left: 66vw;
-    transform: translateY(-30px);
-
+    top: 47.5%
 }
 .front-star {
-    top: 50%;
+    /* top: 50%;
+    transform: translateY(100px); */
     left: 18vw;
-    transform: translateY(100px);
+    top: 57.5%;
 }
 .design-star img {
     width: 156px;

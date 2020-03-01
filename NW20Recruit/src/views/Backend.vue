@@ -2,25 +2,26 @@
   <div class="backend">
     <div class="container">
       <div class="title">
-        <p
-          v-for="(letter, index) in letters_title"
-          :class="{'letters_title_1': index % 2 == 0,'letters_title_2': index % 2 != 0}"
-          :style="`animation-delay:${index * 0.05}s`"
-          :key="index"
-        >{{letter}}</p>
+        <transition-group name="titleAppear" @after-enter="afterEnter">
+          <img class="titleImg1" src="~assets/backend2.png" key="1" v-show="showTitle" />
+          <img class="titleImg2" src="~assets/backend1.png" key="2" v-show="showTitle" />
+        </transition-group>
       </div>
       <div class="planet">
         <planet></planet>
       </div>
-      <div id="content">
+      <div id="content" v-show="showContent">
         <p
           v-for="(letter, index) in letters_content"
           :class="{'letters_content_1': index % 2 == 0,'letters_content_2': index % 2 != 0}"
-          :style="`animation-delay:${index * 0.05 + 1.5}s`"
+          :style="`animation-delay:${index * 0.05}s`"
           :key="index"
         >{{letter}}</p>
       </div>
     </div>
+    <router-link to="/" tag="div" class="next" v-show="showIcon">
+      <img src="~assets/frontend_next.png" />
+    </router-link>
   </div>
 </template>
 
@@ -33,21 +34,31 @@ export default {
   },
   data() {
     return {
-      title: "后台",
       content:
         "后台组致力于使用java语言，专注于主流先进框架的学习与应用。致力于Web后端API开发。Java就是轮子多，在这里我们将要掌握多种“轮子”的使用方法，提高代码性能，搭建更加合理的架构。同时我们也会学习如何与服务器交互。",
       letters_title: [],
-      letters_content: []
+      letters_content: [],
+      showTitle: false,
+      showContent: false,
+      showIcon: false
     };
   },
   methods: {
     splitTexts(value) {
       return value.split("");
+    },
+    afterEnter() {
+      setTimeout(() => {
+        this.showContent = true;
+      }, 500);
+      setTimeout(() => {
+        this.showIcon = true;
+      }, 8000);
     }
   },
   mounted() {
-    this.letters_title = this.splitTexts(this.title);
     this.letters_content = this.splitTexts(this.content);
+    this.showTitle = !this.showTitle;
   }
 };
 </script>
@@ -68,17 +79,15 @@ export default {
   transform: translateY(50%);
 }
 .title {
-  font-size: 96px;
-  font-family: "微软雅黑";
-  color: white;
   position: absolute;
-  /* top: 326px; */
   top: 205px;
   left: 60px;
 }
+.title img {
+  height: 96px;
+}
 .planet {
   position: absolute;
-  /* top: 121px; */
   right: 14px;
 }
 #content {
@@ -88,7 +97,6 @@ export default {
   color: white;
   line-height: 50px;
   position: absolute;
-  /* top: 600px; */
   top: 480px;
   right: 60px;
 }
@@ -122,12 +130,10 @@ export default {
     transform: translateX(0) translateY(0);
   }
 }
-.letters_title_1 {
-  display: inline-block;
+.titleImg1 {
   animation: landInTop_title 1s ease-out both;
 }
-.letters_title_2 {
-  display: inline-block;
+.titleImg2 {
   animation: landInBottom_title 1s ease-out both;
 }
 @keyframes landInTop_title {
@@ -150,6 +156,27 @@ export default {
   to {
     opacity: 1;
     transform: translateX(0) translateY(0);
+  }
+}
+.next {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: float 1s linear infinite;
+}
+.next img {
+  height: 50px;
+}
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0);
   }
 }
 </style>
