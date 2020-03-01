@@ -1,11 +1,5 @@
 <template>
   <div id="starry-home">
-<<<<<<< HEAD
-    <img src="~assets/hill.png" alt="hill" class="hill">
-    <!-- <loading v-if="loadingShow"/> -->
-    <moon v-if="true" 
-    @moonEvent = "moonEv"
-=======
     <img src="~assets/hill.png" alt="hill" class="hill" />
     <!-- 信封 -->
     <img
@@ -15,7 +9,6 @@
       v-if="isLetterShow"
       @click="showPostCard"
       @click.stop
->>>>>>> jinjin
     />
     <loading v-if="loadingShow" />
     <moon v-if="true" @moonEvent="moonEv" />
@@ -23,15 +16,8 @@
       <div class="moon-down-shadow" v-show="ShadowShow"></div>
     </transition>
     <stars />
-<<<<<<< HEAD
-    <starry-text />
-    <!-- <submit v-show="isSubmitShow"></submit> -->
-    <!-- 模拟取消后信封出现在首页 -->
-    <div class="letter" v-if="isLetterShow" @click="showPostCard" @click.stop>这是信封</div>
-=======
     <starry-text v-if="true" />
     <submit v-show="isSubmitShow"></submit>
->>>>>>> jinjin
   </div>
 </template>
 
