@@ -10,7 +10,7 @@
     </div>
 
     <transition mode="out-in">
-      <post-card v-if="isShow" 
+      <post-card v-if="isPostShow" 
       @smaller="smaller" 
       :isShow="isShow"
       :class="{'hover1':rotate==1,'smaller1':isSmaller==1,
@@ -22,6 +22,9 @@
 </template>
 
 <script>
+import { mapState,mapMutations } from 'vuex'
+import store from "@/store";
+
 import postCard from "./postCard";
 export default {
   name: "card",
@@ -35,9 +38,13 @@ export default {
       rotate: 0
     };
   },
+  computed:{
+ ...mapState(['isPostShow'])
+  },
   methods: {
     changeCom() {
       this.isShow = !this.isShow;
+      this.$store.commit('isPostShow',true)
     },
     smaller(val) {
       this.rotate = val;
@@ -46,10 +53,7 @@ export default {
         this.isSmaller = val;
       }, 1000);
     },
-    cancel(){
-      // console.log('...');
-      
-    }
+    // ...mapMutations(['isPostShow,true']),
   },
   mounted(){
     document.getElementsByClassName("card")[0].style.height = window.innerHeight+'px';

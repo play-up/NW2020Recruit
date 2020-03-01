@@ -10,6 +10,7 @@
           alt="" 
           :class="{'star-light': starryCurrent === 2}"
           @click="starClick()">
+          <div :class="{'bling1 ':chooseNum==1}"></div>
       </div>
       <div class="back-star star">
           <!-- <tip-r 
@@ -20,6 +21,7 @@
           v-show="backShow" /> -->
           <img src="~assets/back-star.png" 
           alt="" >
+          <div :class="{'bling2 ':chooseNum==2}"></div>
       </div>
       <div class="front-star star">
           <!-- <tip-r 
@@ -31,6 +33,7 @@
           /> -->
           <img src="~assets/front-star.png" 
           alt="" >
+          <div :class="{'bling3 ':chooseNum==3}"></div>
       </div>
   </div>
 </template>
@@ -59,7 +62,7 @@ export default {
       TipR,
   },
   computed: {
-      ...mapState(['starryCurrent'])
+      ...mapState(['starryCurrent','chooseNum'])
   },
   watch: {
   },
@@ -67,7 +70,7 @@ export default {
       ...mapMutations(['starryNext']),
       starClick () {
           console.log(this.starryCurrent);
-          
+        this.$router.replace('/design')
       }
   },
 }
@@ -78,20 +81,22 @@ export default {
     position: absolute;
 }
 .design-star {
-    top: 50%;
+    /* top: 50%;
+    transform: translateY(-303px); */
     left: 23vw;
-    transform: translateY(-303px);
+    top: 28%;
 }
 .back-star {
-    top: 50%;
+    /* top: 50%;
+    transform: translateY(-30px); */
     left: 66vw;
-    transform: translateY(-30px);
-
+    top: 47.5%
 }
 .front-star {
-    top: 50%;
+    /* top: 50%;
+    transform: translateY(100px); */
     left: 18vw;
-    transform: translateY(100px);
+    top: 57.5%;
 }
 .design-star img {
     width: 156px;
@@ -105,6 +110,43 @@ export default {
 }
 .star-light {
     animation: star-light 2s ease 0.5s infinite alternate;
+}
+.bling1,
+.bling2,
+.bling3 {
+  background-image: url("~assets/shine.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 5vw;
+  height: 7vw;
+  right: 0.5vw;
+  top: 5.067vw;
+  position: absolute;
+  animation: opacity-change 1s ease-in-out forwards;
+}
+@keyframes opacity-change {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.bling2 {
+  width: 4vw;
+  height: 6vw;
+  right: 1.5vw;
+  top: 2vw;
+}
+.bling3 {
+  width: 3vw;
+  height: 4vw;
+  right: 0vw;
+  top: 1vw;
 }
 @keyframes star-light {
     0% {
