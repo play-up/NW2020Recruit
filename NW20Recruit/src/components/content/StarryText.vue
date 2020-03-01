@@ -221,7 +221,7 @@ export default {
   transition: transform 0.5s ease;
 }
 #starry-text .starry-text2-drop span {
-  transform: translateY(0);
+  transform: translateY(1.5px);
 }
 .starry-text2 span:nth-child(1) {
   transition-delay: 0s

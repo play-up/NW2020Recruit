@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    starryCurrent: 0,
+    //首页状态
+    starryCurrent: -1,
     chooseNum:0,
     // submit组件是否展示
     isSubmitShow:true,
@@ -13,11 +14,16 @@ export default new Vuex.Store({
     isPostShow:false,
     // 信封是否出现
     isLetterShow:false,
-    isFilterShow:false
+    isFilterShow:false,
+    //是否加载loading
+    isLoading: false,
   },
   mutations: {
-    starryNext(state) {
+    starryNext(state) { //首页进入下一个状态
       state.starryCurrent++;
+    },
+    updateLoading(state,payload) { //更新loading状态
+      state.isLoading = payload.isLoading
     },
     chooseNum(state,num){
       state.chooseNum = num;
