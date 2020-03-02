@@ -16,7 +16,7 @@
           alt="" 
           :class="{'star-light': starryCurrent === 2}"
           @click="starClick()">
-          <div :class="{'bling1 ':chooseNum==1}"></div>
+          <div :class="{'bling1 ':chooseNum==1&&isBlingShow}" ></div>
       </div>
       <div class="back-star star">
           <!-- <tip-r 
@@ -27,7 +27,7 @@
           v-show="backShow" /> -->
           <img src="~assets/back-star.png" 
           alt="" >
-          <div :class="{'bling2 ':chooseNum==2}"></div>
+          <div :class="{'bling2 ':chooseNum==2&&isBlingShow}"></div>
       </div>
       <div class="front-star star">
           <!-- <tip-r 
@@ -39,7 +39,7 @@
           /> -->
           <img src="~assets/front-star.png" 
           alt="" >
-          <div :class="{'bling3 ':chooseNum==3}"></div>
+          <div :class="{'bling3 ':chooseNum==3&&isBlingShow}"></div>
       </div>
   </div>
 </template>
@@ -65,7 +65,7 @@ export default {
       }
   },
   computed: {
-      ...mapState(['starryCurrent','chooseNum'])
+      ...mapState(['starryCurrent','chooseNum','isBlingShow'])
   },
   watch: {
   },
