@@ -1,13 +1,13 @@
 <template>
     <div class="all" ref="all">
-        <loading v-if="loading"></loading>
+        <Loading v-if="loading"></Loading>
         <Boolean :class="[!isfly?'':'lsmall', 'cbig']"></Boolean>
         <div :class="['title', {'show':showTitle}]">
             <img class="word-img" src="@/assets/she.png" alt=""><img class="word-img" src="@/assets/ji.png" alt="">
         </div>
         <div class="upBat"></div>
-        <div class="word">
-            <p 
+        <div class="word" v-if="showWord">
+            <!-- <p 
                 v-for="(word, index) in words" 
                 :key="index"
                 class="landin"
@@ -17,41 +17,47 @@
                     :key="i"
                     :style="`animationDelay:${i * 0.02}s`"
                 >{{letter}}</span>
-            </p>
+            </p> -->
+            <p 
+                v-for="(word, index) in words" 
+                :key="index"
+                class="landin"
+                :style="`animationDelay:${index * 0.05}s`"
+            >{{word}}</p>
         </div>
         <div class="downBat"></div>
         <div :class="['next', {'hide':!showArrow}]" @click="goNext">
             <img src="@/assets/pinkarrow.png" class="arrow"/>
         </div>
         <div class="bottom"></div>
-        <!-- <img v-if="true" style="opacity:0" src="~assets/frontend2.png" /> -->
     </div>
 </template>
 
 <script>
 import Boolean from '@/components/content/Boolean'
-import loading from '@/components/common/loading'
+import Loading from '@/components/common/Loading'
 export default {
     name: "design",
     components: {
         Boolean,
-        loading
+        Loading
     },
     data() {
         return {
             isfly: false,
             istitle: false,
             showTitle: false,
-            words: ['不同于传统画师，UI设计师除了要给用户带来最',
-                    '优的视觉效果，同时需要明确产品功能，安排界',
-                    '面布局，制定交互逻辑，创造流畅的动态效果，',
-                    '从而带来最佳的用户体验。',
-                    '当然，我们设计组并不局限于UI设计，还会涉及',
-                    '到平面，海报，插图设计等，从用笔纸作画，到',
-                    '用PhotoShop处理图像，Illustrator绘制图案，',
-                    'AfterEffect制定交互……工具多如繁星，只为实',
-                    '现你天马行空的绮梦。'
-            ],
+            // words: ['不同于传统画师，UI设计师除了要给用户带来最',
+            //         '优的视觉效果，同时需要明确产品功能，安排界',
+            //         '面布局，制定交互逻辑，创造流畅的动态效果，',
+            //         '从而带来最佳的用户体验。',
+            //         '当然，我们设计组并不局限于UI设计，还会涉及',
+            //         '到平面，海报，插图设计等，从用笔纸作画，到',
+            //         '用PhotoShop处理图像，Illustrator绘制图案，',
+            //         'AfterEffect制定交互……工具多如繁星，只为实',
+            //         '现你天马行空的绮梦。'
+            // ],
+            words: '不同于传统画师，UI设计师除了要给用户带来最优的视觉效果，同时需要明确产品功能，安排界面布局，制定交互逻辑，创造流畅的动态效果从而带来最佳的用户体验。当然，我们设计组并不局限于UI设计，还会涉及到平面，海报，插图设计等，从用笔纸作画，到用PhotoShop处理图像，Illustrator绘制图案，AfterEffect制定交互……工具多如繁星，只为实现你天马行空的绮梦。',
             showWord: false,
             letters: [],
             showArrow: false,
@@ -106,25 +112,32 @@ export default {
         //显示出正文
         typPara() {
             let that = this;
-            let i = 0;
+            // let i = 0;
+            // return new Promise((resolve, reject) => {
+            //     let showLetter = setInterval(() => {
+            //         let letter = this.words[i].split('');
+            //         that.letters.push([])
+            //         let j = 0;
+            //         //嵌套定时器
+            //         let sTimer = setInterval(() => {
+            //             that.letters[i].push(letter[j++]);
+            //             if(j == letter.length) {
+            //                 i++;
+            //                 clearInterval(sTimer);
+            //             }
+            //         }, 15);
+            //         if(i == that.words.length-1) {
+            //             clearInterval(showLetter)
+            //             resolve(1000);
+            //         }
+            //     }, 1000);
+            // })
             return new Promise((resolve, reject) => {
-                let showLetter = setInterval(() => {
-                    let letter = this.words[i].split('');
-                    that.letters.push([])
-                    let j = 0;
-                    //嵌套定时器
-                    let sTimer = setInterval(() => {
-                        that.letters[i].push(letter[j++]);
-                        if(j == letter.length) {
-                            i++;
-                            clearInterval(sTimer);
-                        }
-                    }, 15);
-                    if(i == that.words.length-1) {
-                        clearInterval(showLetter)
-                        resolve(1000);
-                    }
-                }, 1000);
+                this.showWord = true;
+                console.log(this.words);
+                this.words = this.words.split("");
+                console.log(this.words)
+                resolve(9300);
             })
         },
         //返回上一页
@@ -254,16 +267,18 @@ export default {
     color: white;
     font-size: 4rem;
     top: 380px;
-    position: absolute;
-    display: inline-block;
+    position: relative;
+    display: block;
     z-index: 4;
+    width: 650px;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 .word>p{
-    /* display: inline-block; */
     position: relative;
     left: 0;
     right: 0;
-    margin-left: 8vw;
 }
 .none{
     display: none;
@@ -290,10 +305,12 @@ export default {
     /* transition: width 3s, height 3s, left 3s, top 3s linear; */
 }
 .landin {
-    display: flex;
-    flex-wrap: nowrap;
+    /* display: flex; */
+    /* flex-wrap: nowrap; */
+    display: inline-block;
+    margin: 0;
     color: white;
-    align-items: center;
+    animation: landIn 0.2s ease-out both;
 }
 
 .landin>span {
@@ -310,17 +327,6 @@ export default {
   to {
     opacity: 1;
     transform: translate(0, 0);
-  }
-}
-@-webkit-keyframes landIn {
-  from {
-    opacity: 0;
-    -webkit-transform: translate(0, -2vw);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: translate(0, 0);
   }
 }
 .next{
