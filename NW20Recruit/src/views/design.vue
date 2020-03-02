@@ -197,17 +197,17 @@ export default {
 .all{
     width: 100%;
     height: 100%;
-    background-image: url('~assets/test-bg.jpg');
+    background-image: url('/static/img/d_background.png');
     background-size: 100% 100%;
     position: relative;
 }
 .upBat{
-    background-image: url('~assets/bat2.png');
+    background-image: url('/static/img/bat2.png');
     right: 0;
     top: 100px;  
 }
 .downBat{
-    background-image: url('~assets/bat2.png');
+    background-image: url('/static/img/bat2.png');
     left: 12%;
     bottom: 20%;
     z-index: 3;

@@ -39,7 +39,9 @@ export default {
       e.preventDefault(); 
     }, {passive: false});
     window.onload = () => {
+      
       this.isLoading = false
+      console.log(this.isLoading);
       // this.updateLoading({isLoading: false})
       this.starryNext()
     }
@@ -56,7 +58,7 @@ export default {
         else {
             //竖屏
            that.isHscreen = false
-           that.$router.go(0)
+          //  that.$router.go(0)
         }
     }
   },
