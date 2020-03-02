@@ -3,7 +3,8 @@
         <Loading v-if="loading"></Loading>
         <Boolean :class="[!isfly?'':'lsmall', 'cbig']"></Boolean>
         <div :class="['title', {'show':showTitle}]">
-            <img class="word-img" src="@/assets/she.png" alt=""><img class="word-img" src="@/assets/ji.png" alt="">
+            <img class="word-img" src="@/assets/sheji.png" alt="">
+            <!-- <img class="word-img" src="@/assets/ji.png" alt=""> -->
         </div>
         <div class="upBat"></div>
         <div class="word" v-if="showWord">
@@ -62,13 +63,12 @@ export default {
             letters: [],
             showArrow: false,
             imgUrl: [
-                require('@/assets/she.png'),
-                require('@/assets/ji.png'),
+                require('@/assets/sheji.png'),
                 require('@/assets/pinkarrow.png'),
-                require('@/assets/d_background.png'),
+                require('@/assets/test-bg.jpg'),
                 require('@/assets/bat2.png'),
                 require('@/assets/letters.png'),
-                require('@/assets/boolean.png')
+                require('@/assets/test-ball.png')
             ],
             loading: true,
             nextImgUrl: [
@@ -112,26 +112,6 @@ export default {
         //显示出正文
         typPara() {
             let that = this;
-            // let i = 0;
-            // return new Promise((resolve, reject) => {
-            //     let showLetter = setInterval(() => {
-            //         let letter = this.words[i].split('');
-            //         that.letters.push([])
-            //         let j = 0;
-            //         //嵌套定时器
-            //         let sTimer = setInterval(() => {
-            //             that.letters[i].push(letter[j++]);
-            //             if(j == letter.length) {
-            //                 i++;
-            //                 clearInterval(sTimer);
-            //             }
-            //         }, 15);
-            //         if(i == that.words.length-1) {
-            //             clearInterval(showLetter)
-            //             resolve(1000);
-            //         }
-            //     }, 1000);
-            // })
             return new Promise((resolve, reject) => {
                 this.showWord = true;
                 if(typeof this.words === 'String'){
@@ -173,7 +153,7 @@ export default {
             })
         },
         //加载图片
-        loadImg(url) {
+        loadImg(url, anim) {
             let arr = [];
             for (let i = 0; i < url.length; i++) {
                 arr.push(this.addPromise(url[i]));
@@ -181,7 +161,9 @@ export default {
             Promise.all(arr)
             .then(() => {
                 this.loading = false;
-                this.anim();
+                if(anim) {
+                    this.anim();
+                }
             })
         },
         //动画
@@ -197,15 +179,15 @@ export default {
                         resolve();
                     })
                 })
-                .then(this.loadNext);
+                // .then(this.loadNext);
         },
         //加载下一页的动画
         loadNext() {
-            this.loadImg(this.nextImgUrl);
+            this.loadImg(this.nextImgUrl, false);
         }
     },
     mounted() {
-        this.loadImg(this.imgUrl);
+        this.loadImg(this.imgUrl, true);
         this.goBack();
     }
 }
@@ -259,7 +241,7 @@ export default {
     white-space: nowrap;
 }
 .show{
-    top: 200px;
+    top: 230px;
     opacity: 1;
     transition: opacity 0.5s, top 0.5s linear;
 }
@@ -380,7 +362,7 @@ export default {
     bottom: -100px;
 }
 .word-img {
-    width: 100px;
+    width: 220px;
     height: 100px;
 }
 </style>

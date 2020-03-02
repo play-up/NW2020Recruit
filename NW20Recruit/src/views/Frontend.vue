@@ -43,14 +43,22 @@
       <img src="~assets/frontend2.png" />
       <img src="~assets/frontend1.png" />
     </div>
-    <div class="title" v-if="showCompleteTitle">
+    <div class="title completeTitle" v-if="showCompleteTitle">
       <img src="~assets/frontend2.png" />
       <img src="~assets/frontend1.png" />
     </div>
-    <div class="content" v-if="showContent">{{content}}</div>
+    <div class="content" v-if="showContent">
+      <p
+        v-for="(letter, index) in content"
+        class="letter"
+        :style="`animation-delay:${index * 0.05}s`"
+        :key="index"
+      >{{letter}}</p>
+    </div>
     <router-link to="/backend" tag="div" class="next" v-show="showIcon">
       <img src="~assets/frontend_next.png" />
     </router-link>
+    <!-- <img src="../../static/backend.png" v-show="false"> -->
   </div>
 </template>
 
@@ -64,20 +72,39 @@ export default {
   data() {
     return {
       content:
-        "基于CSS 、HTML、JavaScript三件套，使用Vue作为框架开发各种各样的网页。前端一直在发展,我们一直在进步。我们并不局限于前端，我们还要学会利用Node.js进行后台开发，利用node express实现高并发http中间件,最终走向全栈。",
+        "基于 CSS 、 HTML 、 JavaScript 三件套，使用 Vue 作为框架开发各种各样的网页。前端一直在发展,我们一直在进步。我们并不局限于前端，我们还要学会利用 Node.js 进行后台开发，利用 node express 实现高并发 http 中间件,最终走向全栈。",
       showTitle: false,
       showCompleteTitle: false,
       showContent: false,
       showIcon: false
     };
   },
+  methods: {
+    async loadImg() {
+      let imgs = [
+        "/static/img/backend.png",
+        "/static/img/bigPlanet.png",
+        "/static/img/backend1.png",
+        "/static/img/backend2.png",
+        "/static/img/frontend_next.png"
+      ];
+      for (let img of imgs) {
+        let image = new Image();
+        image.src = img;
+        image.onload = () => {};
+      }
+    }
+  },
   mounted() {
+    this.loadImg();
     setTimeout(() => {
       this.showTitle = true;
     }, 2000);
     setTimeout(() => {
-      this.showContent = true;
       this.showCompleteTitle = true;
+    }, 4600);
+    setTimeout(() => {
+      this.showContent = true;
     }, 5000);
     setTimeout(() => {
       this.showIcon = true;
@@ -90,7 +117,7 @@ export default {
 .frontend {
   height: 100%;
   width: 100%;
-  background-image: url("~assets/frontend.png");
+  background-image: url(~assets/frontend.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -128,45 +155,49 @@ export default {
   right: 100px;
   z-index: 1;
 }
+.completeTitle {
+  opacity: 0.8;
+}
+/* cubic-bezier(0.36, 0.1, 0.16, 1) */
 .title1 {
   clip-path: polygon(0 0, 25% 0, 12.5% 50%, 0 50%);
-  animation: title1_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+  animation: title1_animate 2s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
 }
 .title2 {
   clip-path: polygon(12.5% 50%, 0 50%, 0 100%);
-  animation: title2_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+  animation: title2_animate 2s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
 }
 .title3 {
   clip-path: polygon(25% 0, 50% 0, 37.5% 50%, 12.5% 50%);
-  animation: title3_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+  animation: title3_animate 2s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
 }
 .title4 {
   clip-path: polygon(37.5% 50%, 12.5% 50%, 0 100%, 25% 100%);
-  animation: title4_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+  animation: title4_animate 2s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
 }
 .title5 {
   clip-path: polygon(50% 0, 37.5% 50%, 62.5% 50%, 75% 0);
-  animation: title5_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+  animation: title5_animate 2s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
 }
 .title6 {
   clip-path: polygon(37.5% 50%, 62.5% 50%, 50% 100%, 25% 100%);
-  animation: title6_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+  animation: title6_animate 2s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
 }
 .title7 {
   clip-path: polygon(75% 0, 100% 0, 87.5% 50%, 62.5% 50%);
-  animation: title7_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+  animation: title7_animate 2s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
 }
 .title8 {
   clip-path: polygon(87.5% 50%, 62.5% 50%, 50% 100%, 75% 100%);
-  animation: title8_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+  animation: title8_animate 2s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
 }
 .title9 {
   clip-path: polygon(100% 0, 100% 50%, 87.5% 50%);
-  animation: title9_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+  animation: title9_animate 2s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
 }
 .title10 {
   clip-path: polygon(100% 50%, 87.5% 50%, 75% 100%, 100% 100%);
-  animation: title10_animate 3s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
+  animation: title10_animate 2s cubic-bezier(0.36, 0.1, 0.16, 1) forwards;
 }
 @keyframes title1_animate {
   0% {
@@ -376,6 +407,28 @@ export default {
   top: 45%;
   margin: 0 60px;
   z-index: 1;
+}
+.letter {
+  display: inline-block;
+  min-width: 5px;
+  animation: letterFade 2s linear both;
+}
+@keyframes letterFade {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translate3d(0, -10px, 0);
+  }
+  25% {
+    opacity: 1;
+    transform: translate3d(0, -10px, 0);
+  }
+  30% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 .next {
   position: absolute;
