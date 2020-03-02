@@ -56,11 +56,11 @@ export default {
       this.$store.commit("isPostShow", true);
       this.$store.commit("isSubmitShow", true);
       this.$store.commit("isLetterShow", false);
-       this.$store.commit("isBlingShow", false);
+      this.$store.commit("isBlingShow", false);
       
        setTimeout(()=>{
         this.$store.commit('isRoll',1)
-      },1000)
+      },500)
     }
   },
 
@@ -73,7 +73,6 @@ export default {
       "/static/img/bat1.png",
       "/static/img/bat2.png",
       "/static/img/castle.png",
-      
     ]
     for( let img of imgs) {
       let image = new Image()

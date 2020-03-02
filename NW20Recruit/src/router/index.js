@@ -50,9 +50,10 @@ const router = new Router({
 // })
 router.afterEach((to,from,next)=>{
     // 从后台到首页，往vuex传值，判断submit组件是否出现
-    if(to.path=='/'&&from.path=='/backend')
+    if(from.path=='/backend')
     {
       store.commit('isSubmitShow',true)
+    
   
     }
 })
