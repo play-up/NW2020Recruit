@@ -32,7 +32,7 @@ export default {
 .bigPlanet {
   height: 100%;
   width: 100%;
-  background-image: url(~assets/bigPlanet.png);
+  background-image: url(/static/img/bigPlanet.png);
   background-position: center center;
   background-size: cover;
 }
