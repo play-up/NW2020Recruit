@@ -72,6 +72,23 @@ export default {
     //   this.loadingShow = false
     //   this.starryNext()
     // }
+    let imgs = [
+      "/static/img/d_background.png",
+      "/static/img/bat1.png",
+      "/static/img/bat2.png",
+      "/static/img/castle.png"
+    ]
+    for( let img of imgs) {
+      let image = new Image()
+      image.src = img
+      image.onload=()=>{
+        console.log('预加载了')
+      }
+      image.onerror = () => {
+        console.log('预加载失败');
+        
+      };
+    }
   },
 }
 </script>
