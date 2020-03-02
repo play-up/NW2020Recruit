@@ -7,8 +7,6 @@
           <span>迎</span>
           <span>进</span>
           <span>入</span>
-        </p>
-        <p class="starry-text2" :class="{'starry-text2-drop': isDrop}">
           <span>N</span>
           <span>i</span>
           <span>g</span>
@@ -22,13 +20,9 @@
           <span>t</span>
           <span>c</span>
           <span>h</span>
+          <span>星</span>
+          <span>系</span>
         </p>
-        <div class="typing-box">
-          <p class="starry-text3" :class="{'starry-text3-typing': isTyping}" @click="drop" >
-            <span>星</span>
-            <span>系</span>
-          </p>
-        </div>
       </div>
     </div>
   </transition>
@@ -58,19 +52,11 @@ export default {
           this.isCome = true
           clearTimeout(come)
         },30)
-        let drop = setTimeout(()=>{
-          this.isDrop = true
-          clearTimeout(drop)
-        },1000)
-        let typing = setTimeout(()=>{
-          this.isTyping = true
-          clearTimeout(typing)
-        },3200)
         let nextCurrent = setTimeout(()=>{
           this.StarryTextShow = false
           this.starryNext()//进入下一个状态 
           clearTimeout(nextCurrent)
-        },7000)
+        },2000)
       }
     }
   },
@@ -125,29 +111,6 @@ export default {
     }
   },
   mounted() {
-    // this.letGo()
-    // this.letGo().then(that=>{
-    //       let drop = setTimeout(()=>{
-    //         that.isDrop = true
-    //         // clearTimeout(drop)
-    //         return 2
-    //       },1000)
-    // }).then(result=>{
-    //   console.log(result);
-      
-    //       let typing = setTimeout(()=>{
-    //         that.isTyping = true
-    //         clearTimeout(typing)
-    //         return that
-    //       },3200)
-    // }).then(that=>{
-    //       let nextCurrent = setTimeout(()=>{
-    //         that.StarryTextShow = false
-    //         that.starryNext()//进入下一个状态 
-    //         clearTimeout(nextCurrent)
-    //       },3000)
-    // })
-
   },
 }
 </script>
@@ -156,136 +119,100 @@ export default {
 #starry-text {
     width: 100%;
     position: absolute;
-    top: 50%;
+    top: 52%;
     transform: translateY(-120px);
 }
 #starry-text .text-box {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
     font-size: 0;
     font-family: "Microsoft YaHei" sans-serif;
-    color: #afaa95;
-    transform: translateX(40px);
+    color: #ffffff;
+    
 }
 #starry-text .text-box p {
   overflow: hidden;
   white-space: nowrap;
   font-size: 0;
+  margin: 0 auto;
 }
 #starry-text .text-box p span {
   display: inline-block;
-  font-size: 34px;
+  font-size: 28px;
   font-weight: 400;
   letter-spacing: 0.2vw;
+  text-shadow: 1px 0px 2px wheat;
 }
 #starry-text .text-box p .text-s {
   letter-spacing: 0.9vw;
 }
-/* 欢迎进入*/
+/* 欢迎进入NW星球*/
 .starry-text1 {
-  width: 143px;
+  width: 411px;
 }
 .starry-text1 span:nth-child(1) {
-  transform: translateX(150px);
+  transform: translateX(420px);
 }
 .starry-text1 span:nth-child(2) {
-  transform: translateX(180px);
+  transform: translateX(450px);
 }
 .starry-text1 span:nth-child(3) {
-  transform: translateX(210px);
+  transform: translateX(480px);
 }
 .starry-text1 span:nth-child(4) {
-  transform: translateX(240px);
+  transform: translateX(510px);
+}
+.starry-text1 span:nth-child(5) {
+  transform: translateX(540px);
+}
+.starry-text1 span:nth-child(6) {
+  transform: translateX(570px);
+}
+.starry-text1 span:nth-child(7) {
+  transform: translateX(600px);
+}
+.starry-text1 span:nth-child(8) {
+  transform: translateX(630px);
+}
+.starry-text1 span:nth-child(9) {
+  transform: translateX(670px);
+}
+.starry-text1 span:nth-child(10) {
+  transform: translateX(700px);
+}
+.starry-text1 span:nth-child(11) {
+  transform: translateX(730px);
+}
+.starry-text1 span:nth-child(12) {
+  transform: translateX(760px);
+}
+.starry-text1 span:nth-child(13) {
+  transform: translateX(790px);
+}
+.starry-text1 span:nth-child(14) {
+  transform: translateX(820px);
+}
+.starry-text1 span:nth-child(15) {
+  transform: translateX(850px);
+}
+.starry-text1 span:nth-child(16) {
+  transform: translateX(880px);
+}
+.starry-text1 span:nth-child(17) {
+  transform: translateX(910px);
+}
+.starry-text1 span:nth-child(18) {
+  transform: translateX(940px);
+}
+.starry-text1 span:nth-child(19) {
+  transform: translateX(970px);
+}
+.starry-text1 span:nth-child(20) {
+  transform: translateX(1000px);
 }
 #starry-text .starry-text1-come span {/* 欢迎进入 优先级不够加了个id的 */
   transform: translateX(0px);
   transition: transform 1s ease;
 }
-/* Night's Watch */
-.starry-text2 {
-  width: 260px;
-  margin-right: 1px;
-  box-sizing: border-box;
-}
-.starry-text2 span {
-  display:inline-block;
-  transform: translateY(-48px);
-  transition: transform 0.5s ease;
-}
-#starry-text .starry-text2-drop span {
-  transform: translateY(1.5px);
-}
-.starry-text2 span:nth-child(1) {
-  transition-delay: 0s
-}
-.starry-text2 span:nth-child(2) {
-  transition-delay: 0.1s
-}
-.starry-text2 span:nth-child(3) {
-  transition-delay: 0.2s
-}
-.starry-text2 span:nth-child(4) {
-  transition-delay: 0.3s
-}
-.starry-text2 span:nth-child(5) {
-  transition-delay: 0.4s
-}
-.starry-text2 span:nth-child(6) {
-  transition-delay: 0.5s
-}
-.starry-text2 span:nth-child(7) {
-  transition-delay: 0.6s
-}
-.starry-text2 span:nth-child(8) {
-  transition-delay: 0.7s
-}
-.starry-text2 span:nth-child(9) {
-  transition-delay: 0.8s
-}
-.starry-text2 span:nth-child(10) {
-  transition-delay: 0.9s
-}
-.starry-text2 span:nth-child(11) {
-  transition-delay: 1s
-}
-.starry-text2 span:nth-child(12) {
-  transition-delay: 1.1s
-}
-.starry-text2 span:nth-child(13) {
-  transition-delay: 1.2s
-}
-/* 星球 */
-.typing-box {
-  position: relative;
-  width: 68px;
-}
-.starry-text3 {
-  position: absolute;
-  left: 0;
-  font-family: "Microsoft YaHei" sans-serif ;
-  font-size: 0;
-  animation: blink-caret .5s step-end infinite alternate;
-}
-.starry-text3 span{
-  display: inline-block;
-  /* width: 0;typing 2s steps(3,end) infinite, */
-  width: 0;
-  /* font-size: 34px; */
-  transition: width 0.01s step-end;
-}
-.starry-text3 span:nth-child(1) {
-  transition-delay: 1s;
-}
-.starry-text3 span:nth-child(2) {
-  transition-delay: 2s;
-}
-.starry-text3-typing {
-  border-right: 1.1px solid;
-}
-.starry-text3-typing span {
-  width: 34px;
-}
+
 /* 整个组件淡入淡出 */
 .starry-text-fade-enter,.starry-text-fade-leave-to {
   opacity: 0;
