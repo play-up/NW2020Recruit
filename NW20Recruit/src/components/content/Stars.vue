@@ -1,6 +1,6 @@
 <template>
   <div id="stars">
-      <div class="design-star star">
+      <div class="design-star star" @click="starClick()">
           <!-- <tip-r 
           :text="designText"  
           :tipWidth="designWidth"
@@ -15,7 +15,7 @@
           <img src="~assets/design-star.png" 
           alt="" 
           :class="{'star-light': starryCurrent === 2}"
-          @click="starClick()">
+          >
           <div :class="{'bling1 ':chooseNum==1}"></div>
       </div>
       <div class="back-star star">
