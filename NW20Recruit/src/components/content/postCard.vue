@@ -7,8 +7,8 @@
       :style="{'transform':(isRoll==1?'rotateY(180deg)':'rotateY(0deg)')}"
     >
       <img class="pic" src="../../assets/post-pic.jpg" />
-      <img src="../../assets/post-text.png" alt="" class="post-text">
-      <img src="../../assets/post-name.png" alt="" class="post-name">
+      <img src="../../assets/post-text.png" alt class="post-text" />
+      <img src="../../assets/post-name.png" alt class="post-name" />
       <!-- <p class="text">愿你找到属于自己的星球</p> -->
     </div>
 
@@ -28,7 +28,9 @@
             </div>
             <div class="sex">
               <div :class="item.class" v-for="(item,index) in sexArr" :key="item.id">
-                <label :for="item.id"></label>
+                <!-- <label :for="item.id"><img :src="item.src" alt=""></label> -->
+                <img :src="item.src" alt="">
+                <!-- <label for="item.id" style="font-family:KaiTi ">{{item.content}}</label> -->
                 <input
                   type="radio"
                   :id="item.id"
@@ -91,8 +93,8 @@
               @click="submit();return false;"
               readonly="readonly"
               src="../../assets/submit.png"
-            /> -->
-            <img src="../../assets/submit.png" alt=""  @click="submit();return false;" class="submit">
+            />-->
+            <img src="../../assets/submit.png" alt @click="submit();return false;" class="submit" />
           </li>
         </ul>
 
@@ -109,14 +111,17 @@
 
       <p class="bottom">Night's Watch</p>
     </div>
-    
+
     <div class="remind">
       <popup :remind-show="this.isRemindShow" @yes="yes" @no="no">
         <div slot="main">
           <p>{{remindArr[remindIndex].content1}}</p>
           <p>{{remindArr[remindIndex].content2}}</p>
         </div>
-        <div slot="yes"><span class="next-text">{{remindArr[remindIndex].sureBtn}}</span> <span class="icon">></span> </div>
+        <div slot="yes">
+          <span class="next-text">{{remindArr[remindIndex].sureBtn}}</span>
+          <span class="icon">></span>
+        </div>
         <div slot="no">{{remindArr[remindIndex].rejectBtn}}</div>
       </popup>
     </div>
@@ -126,8 +131,8 @@
 <script>
 import store from "@/store";
 import popup from "../common/popup";
-import $ from 'jquery';
-import { mapState,mapMutations } from 'vuex'
+import $ from "jquery";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "postCard",
@@ -185,13 +190,18 @@ export default {
           class: "male",
           id: "male",
           isRight: 0,
-          value: "男"
+          value: "男",
+          
+          src:require('../../assets/male.png'),
+          content:'♂'
         },
         {
           class: "female",
           id: "female",
           isRight: 0,
-          value: "女"
+          value: "女",
+          src:require('../../assets/female.png'),
+          content:'♀'
         }
       ],
       dirArr: [
@@ -232,9 +242,8 @@ export default {
     //   }
     // }
   },
-  computed:{
-     ...mapState(['isRoll'])
-
+  computed: {
+    ...mapState(["isRoll"])
   },
   methods: {
     // 整理数据
@@ -290,31 +299,35 @@ export default {
     },
     // 点击后盖章，卡片翻转到正面且向父组件传值，使卡片缩小且飞向指定位置
     roll2() {
-      
       document.body.removeEventListener("click", this._close);
       this.isSeel = 1;
       setTimeout(() => {
         // this.isAlive = false;
         // 1s后卡片翻转
-        this.$store.commit("isRoll",false) ;
+        this.$store.commit("isRoll", false);
         // 再过1s之后卡片再变小
         // this.isSmaller = 1;
         this.isSmaller = this.dirArr[this.DirIndex].id;
+        // this.$store.commit("isBlingShow", true);
+
         setTimeout(() => {
           this.$emit("smaller", this.isSmaller);
           // console.log(this.isSmaller);
 
           setTimeout(() => {
             this.$store.commit("chooseNum", this.isSmaller);
-
+            this.$store.commit("isBlingShow", true);
             //动画执行完成后，报名表组件消失,所有动画清空
             setTimeout(() => {
               this.$emit("smaller", null);
-               this.isSeel = 0;
+              this.isSeel = 0;
               //  this.isAlive = true;
               this.$store.commit("isSubmitShow", false);
               this.$store.commit("isPostShow", false);
-              this.$store.commit('isLetterShow',true);
+              setTimeout(()=>{
+                  this.$store.commit("isLetterShow", true);
+              },1000)
+              
             });
           }, 3000);
         }, 1000);
@@ -331,7 +344,6 @@ export default {
     // 判断是否都输入且是否输入合法
     judgeInsure() {
       if (this.formData.name == "") {
-
         return true;
       } else if (!this.judeName(this.formData.name)) {
         // console.log("请输入正确的姓名");
@@ -359,7 +371,7 @@ export default {
 
         return true;
       }
-      if(this.formData.introduce==''){
+      if (this.formData.introduce == "") {
         return true;
       }
     },
@@ -411,7 +423,7 @@ export default {
         this.$store.commit("isPostShow", false);
         // this.isAlive=false;
         this.$store.commit("isLetterShow", true);
-        this.$store.commit('isRoll',0)
+        this.$store.commit("isRoll", 0);
       }
     }
   },
@@ -433,28 +445,28 @@ export default {
     let ua = window.navigator.userAgent;
     let app = window.navigator.appVersion;
     //$alert('浏览器版本: ' + app + '\n' + '用户代理: ' + ua);
-    if(!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
-        // alert('ios端');
-        $("input,textarea").on("blur",function () {
-            var currentPosition,timer;
-            var speed=1;
-            timer=setInterval(function(){
-                currentPosition=document.documentElement.scrollTop || document.body.scrollTop;
-                currentPosition-=speed; 
-                window.scrollTo(0,currentPosition);//页面向上滚动
-                currentPosition+=speed;
-                window.scrollTo(0,currentPosition);//页面向下滚动
-                clearInterval(timer);
-            },100);
-        })
-    }else if(ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1) {
-        // alert('android端');
+    if (!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+      // alert('ios端');
+      $("input,textarea").on("blur", function() {
+        var currentPosition, timer;
+        var speed = 1;
+        timer = setInterval(function() {
+          currentPosition =
+            document.documentElement.scrollTop || document.body.scrollTop;
+          currentPosition -= speed;
+          window.scrollTo(0, currentPosition); //页面向上滚动
+          currentPosition += speed;
+          window.scrollTo(0, currentPosition); //页面向下滚动
+          clearInterval(timer);
+        }, 100);
+      });
+    } else if (ua.indexOf("Android") > -1 || ua.indexOf("Adr") > -1) {
+      // alert('android端');
     }
-
-    
   },
   beforeMount() {
     this._close = e => {
+      // alert('...')
       // 如果点击发生在当前组件内部，则不处理
       if (this.$el.contains(e.target)) {
         return;
@@ -463,9 +475,10 @@ export default {
       this.remindIndex = 0;
     };
     // 两秒之后转到报名页面才监听事件
-    setTimeout(()=>{
+    setTimeout(() => {
       document.body.addEventListener("click", this._close);
-    },1500)
+      document.body.addEventListener("touchstart", this._close);
+    }, 1500);
   },
   beforeDestroy() {
     document.body.removeEventListener("click", this._close);
@@ -478,16 +491,16 @@ ul {
   text-decoration: none;
   list-style: none;
 }
-.icon{
+.icon {
   font-size: 5.5vw;
   font-weight: 300;
   vertical-align: middle;
 }
-.next-text{
-      font-size: 4.55vw;
-    vertical-align: middle;
-    margin-left: 2px;
-    font-weight: 300;
+.next-text {
+  font-size: 4.55vw;
+  vertical-align: middle;
+  margin-left: 2px;
+  font-weight: 300;
 }
 .right {
   position: absolute;
@@ -510,84 +523,85 @@ ul {
 .none {
   position: absolute;
   z-index: -1;
-  opacity: 0;
+  /* opacity: 0; */
+  display: none;
+  cursor: pointer;
 }
 .seal {
   position: absolute;
   right: 2vw;
   top: 12vw;
-  width: 24vw;
-  animation: fadeInBig 1s forwards;
+  width: 27vw;
+  display: block;
+  animation: fadeInOpacity .8s forwards ,fadeInBig .3s .3s forwards;
+  /* opacity: 1; */
   opacity: 0;
   z-index: 10;
 }
-@keyframes fadeInBig {
-  from {
+
+@keyframes fadeInOpacity {
+  0% {
     opacity: 0;
-    transform: scale(3);
+    transform: scale(1.6);
   }
-  to {
+  100%{
+    /* transform: scale(1); */
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1.6);
+  }
+}
+@keyframes fadeInBig{
+  0%{
+    transform: scale(1.6)
+  }
+  100%{
+    transform: scale(1)
   }
 }
 .postcard {
   position: absolute;
   width: 90vw;
-  height:135vw;
-  /* height: 75%; */
-  /* height: 100vw; */
-  /* right: 50%; */
+  height: 135vw;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   color: #282828;
 }
 .pic {
-     width: 90%;
-    /* margin: 0 auto; */
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%,4vw);
+  width: 90%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 4vw);
 }
-.post-text{
-      width: 80%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, 28vw);
+.post-text {
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 28vw);
 }
-.post-name{
-     width: 21%;
-    position: absolute;
-    top: 50%;
-    right: 10%;
-    transform: translateY(36vw);
-}
-.text {
-  transform: translateY(13vh);
-  display: inline-block;
-  text-align: center;
-  font-size: 12px;
+.post-name {
+  width: 21%;
+  position: absolute;
+  top: 50%;
+  right: 6%;
+  transform: translateY(36vw);
 }
 input {
   color: #282828;
+  font-size: 24px;
 }
 .front,
 .back {
   width: 100%;
-  height: 135vw;;
-  /* height: 140vw; */
+  height: 135vw;
   position: absolute;
   top: 0;
   left: 0;
   transition: all 1s;
   background: url("../../assets/postcard.png") no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
   backface-visibility: hidden;
-}
-.front {
-  text-align: center;
 }
 .back {
   transform: rotateY(180deg);
@@ -596,10 +610,7 @@ input {
 }
 .top {
   width: 36vw;
-  /* height: 15vw;
-  background: url("../../assets/nw2020.png") no-repeat;
-  background-size: 100% 100%; */
-  margin-left: -2vw;
+  margin-left: -10px;
 }
 .bottom {
   bottom: 2vw;
@@ -608,14 +619,16 @@ input {
   transform: translateX(-50%);
 }
 .form {
-  transform: translateY(-8px)
+  /* transform: translateY(-8px); */
+  position: relative;
+  top: -8px
 }
 .form li {
   box-sizing: border-box;
   padding-top: 3vw;
 }
 .form label {
-  font-size: 2.933vw;
+  font-size: 24px;
 }
 .form input[type="text"] {
   outline: none;
@@ -684,16 +697,17 @@ input {
   display: inline-block;
   height: 24px;
   line-height: 24px;
-  margin-right: 8vw;
+  margin-right: 9vw;
 }
-.sex label {
-  display: block;
-  height: 2.8vw;
-  /* width: 24px; */
-  width: 1.467vw;
-  line-height: 24px;
-  cursor: pointer;
+.male img{
+  width: 12.5px;
   display: inline-block;
+  vertical-align: top;
+}
+.female img{
+  width: 15px;
+  display: inline-block;
+  vertical-align: top;
 }
 .sex {
   display: inline-block;
@@ -701,18 +715,19 @@ input {
 }
 .sex span,
 .direction span {
-     position: absolute;
-    top: 0;
-    bottom: 0;
-        left: 0.8vw;
-    margin: auto;
-    display: block;
-    width: 6.4vw;
-    height: 6.4vw;
-    border: 1px solid #4b3b36;
-    border-radius: 50%;
-    cursor: pointer;
-    transform: scale(.5);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0.8vw;
+  margin: auto;
+  display: block;
+  width: 6.4vw;
+  height: 6.4vw;
+  border: 2px solid #4b3b36;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: scale(0.5);
+  display: inline-block;
 }
 
 .sex input,
@@ -720,24 +735,30 @@ input {
   position: absolute;
   top: 0;
   bottom: 0;
-     left: 0.8vw;
+  left: 0.8vw;
   margin: auto; /* 这里及以上的定位，可以让该元素竖直居中。(top: 0; bottom: 0;) */
   opacity: 0;
   display: block;
   width: 6.4vw;
-    height: 6.4vw;
-    transform: scale(.5);
+  height: 6.4vw;
   cursor: pointer;
   outline: none;
   z-index: 3;
+  transform: scale(0.5);
+  display: inline-block;
+  /* vertical-align: top; */
+}
+.direction label{
+  display: inline-block;
+  /* vertical-align: middle; */
 }
 .direction span,
 .direction input {
-  left: 5.067vw;
-    top: .1vw;
+      margin-left: 36px;
+  display: inline-block
 }
 .dir {
-  font-size: 2.933vw;
+  font-size: 24px;
 }
 .active::after {
   background: url("../../assets/right.png") no-repeat;
@@ -746,17 +767,9 @@ input {
   height: 26px;
   content: "";
   position: absolute;
-      transform: scale(2);
-    left: 2.2vw;
-    top: 2vw;
-}
-.female label {
-  background: url("../../assets/female.png") no-repeat;
-  background-size: 100% 100%;
-}
-.male label {
-  background: url("../../assets/male.png") no-repeat;
-  background-size: 100% 100%;
+  transform: scale(2);
+  left: 2.2vw;
+  top: 2vw;
 }
 .decoration {
   position: relative;
@@ -818,7 +831,7 @@ input {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.submit:active{
+.submit:active {
   opacity: 0.9;
 }
 .direction-container {

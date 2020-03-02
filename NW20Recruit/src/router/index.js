@@ -55,6 +55,14 @@ router.beforeEach((to,from,next)=>{
 })
 
 router.afterEach((to,from,next)=>{
+  // 从后台到首页，往vuex传值，判断submit组件是否出现
+  if(to.path=='/'&&from.path=='/backend')
+  {
+    store.commit('isSubmitShow',true)
+    
+  }
+  
+  
   // Vue.nextTick(()=>{
   //   console.log('loading false')
   //   store.commit("updateLoading", { isLoading: false });
