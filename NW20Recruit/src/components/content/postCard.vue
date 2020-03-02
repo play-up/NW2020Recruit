@@ -4,11 +4,12 @@
     <div
       class="front"
       ref="front"
-      @click="roll"
       :style="{'transform':(isRoll==1?'rotateY(180deg)':'rotateY(0deg)')}"
     >
-      <div class="pic"></div>
-      <p class="text">愿你找到属于自己的星球</p>
+      <img class="pic" src="../../assets/post-pic.jpg" />
+      <img src="../../assets/post-text.png" alt class="post-text" />
+      <img src="../../assets/post-name.png" alt class="post-name" />
+      <!-- <p class="text">愿你找到属于自己的星球</p> -->
     </div>
 
     <!-- 背面卡片 -->
@@ -17,7 +18,7 @@
       ref="back"
       :style="{'transform':(isRoll==1?'rotateY(0deg)':'rotateY(180deg)')}"
     >
-      <div class="top"></div>
+      <img class="top" src="../../assets/nw2020.png" />
       <form @submit.prevent="submitForm($event)">
         <ul class="form">
           <li class="name">
@@ -27,7 +28,9 @@
             </div>
             <div class="sex">
               <div :class="item.class" v-for="(item,index) in sexArr" :key="item.id">
-                <label :for="item.id"></label>
+                <!-- <label :for="item.id"><img :src="item.src" alt=""></label> -->
+                <img :src="item.src" alt="">
+                <!-- <label for="item.id" style="font-family:KaiTi ">{{item.content}}</label> -->
                 <input
                   type="radio"
                   :id="item.id"
@@ -41,7 +44,7 @@
               </div>
             </div>
           </li>
-          <li v-for="(item,index) in propArr" :key="item.index">
+          <li v-for="(item,index) in propArr" :key="index">
             <label :for="item.prop">{{item.content}}</label>
             <div :class="'underline'+item.num">
               <input type="text" :id="item.prop" required="required" v-model="formData[item.prop]" />
@@ -84,13 +87,14 @@
             </div>
           </li>
           <li>
-            <input
-              type="sumbit"
+            <!-- <input
+              type="submit"
               class="submit"
               @click="submit();return false;"
-              value="提交"
               readonly="readonly"
-            />
+              src="../../assets/submit.png"
+            />-->
+            <img src="../../assets/submit.png" alt @click="submit();return false;" class="submit" />
           </li>
         </ul>
 
@@ -107,14 +111,17 @@
 
       <p class="bottom">Night's Watch</p>
     </div>
-    
+
     <div class="remind">
       <popup :remind-show="this.isRemindShow" @yes="yes" @no="no">
         <div slot="main">
           <p>{{remindArr[remindIndex].content1}}</p>
           <p>{{remindArr[remindIndex].content2}}</p>
         </div>
-        <div slot="yes">{{remindArr[remindIndex].sureBtn}}</div>
+        <div slot="yes">
+          <span class="next-text">{{remindArr[remindIndex].sureBtn}}</span>
+          <span class="icon">></span>
+        </div>
         <div slot="no">{{remindArr[remindIndex].rejectBtn}}</div>
       </popup>
     </div>
@@ -124,8 +131,8 @@
 <script>
 import store from "@/store";
 import popup from "../common/popup";
-import $ from 'jquery';
-
+import $ from "jquery";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "postCard",
@@ -183,13 +190,18 @@ export default {
           class: "male",
           id: "male",
           isRight: 0,
-          value: "男"
+          value: "男",
+          
+          src:require('../../assets/male.png'),
+          content:'♂'
         },
         {
           class: "female",
           id: "female",
           isRight: 0,
-          value: "女"
+          value: "女",
+          src:require('../../assets/female.png'),
+          content:'♀'
         }
       ],
       dirArr: [
@@ -209,7 +221,7 @@ export default {
           isRight: 0
         }
       ],
-      isRoll: 0,
+      // isRoll: 0,
       isSmaller: 0,
       isSeel: 0, //是否盖章
       SexIndex: false,
@@ -221,12 +233,9 @@ export default {
     };
   },
   watch: {
-    // 当已经点击了提交并且成功后，不可以点击页面返回主页
-    isAlive() {
-      if (this.isAlive == false) {
-        document.body.removeEventListener("click", this._close);
-      }
-    }
+  },
+  computed: {
+    ...mapState(["isRoll"])
   },
   methods: {
     // 整理数据
@@ -282,26 +291,35 @@ export default {
     },
     // 点击后盖章，卡片翻转到正面且向父组件传值，使卡片缩小且飞向指定位置
     roll2() {
+      // 取消body上的监听事件
+      document.body.removeEventListener("click", this._close);
       this.isSeel = 1;
       setTimeout(() => {
-        this.isAlive = false;
+        // this.isAlive = false;
         // 1s后卡片翻转
-        this.isRoll = 0;
-        // 再过1s之后卡片再变小
-        // this.isSmaller = 1;
+        this.$store.commit("isRoll", false);
         this.isSmaller = this.dirArr[this.DirIndex].id;
+        // this.$store.commit("isBlingShow", true);
+
         setTimeout(() => {
           this.$emit("smaller", this.isSmaller);
           // console.log(this.isSmaller);
 
           setTimeout(() => {
             this.$store.commit("chooseNum", this.isSmaller);
-
-            //动画执行完成后，报名表组件消失
+            this.$store.commit("isBlingShow", true);
+            //动画执行完成后，报名表组件消失,所有动画清空
             setTimeout(() => {
+              this.$emit("smaller", null);
+              this.isSeel = 0;
+              //  this.isAlive = true;
               this.$store.commit("isSubmitShow", false);
+              this.$store.commit("isPostShow", false);
+              setTimeout(()=>{
+                  this.$store.commit("isLetterShow", true);
+              },1000)
+              
             });
-            // console.log(this.$store.state.isBling);
           }, 3000);
         }, 1000);
       }, 1500);
@@ -317,32 +335,34 @@ export default {
     // 判断是否都输入且是否输入合法
     judgeInsure() {
       if (this.formData.name == "") {
-
         return true;
       } else if (!this.judeName(this.formData.name)) {
-        console.log("请输入正确的姓名");
+        // console.log("请输入正确的姓名");
         return true;
       }
-      if (this.sex == "") {
-        console.log("请选择性别");
+      if (this.formData.sex == "") {
+        // console.log("请选择性别");
         return true;
       }
       for (var i = 0; i < this.propArr.length; i++) {
         let index = this.propArr[i].prop;
         if (this.formData[index] == "") {
-          console.log("请填写" + this.propArr[i].content);
+          // console.log("请填写" + this.propArr[i].content);
           return true;
         } else if (
           index == "phone" &&
           !this.judgePhoneNo(this.formData[index])
         ) {
-          console.log("请输入正确的手机号");
+          // console.log("请输入正确的手机号");
           return true;
         }
       }
-      if (this.direction == "") {
+      if (this.formData.direction == "") {
         console.log("请选择方向！");
 
+        return true;
+      }
+      if (this.formData.introduce == "") {
         return true;
       }
     },
@@ -360,7 +380,11 @@ export default {
     moreSubmit() {
       this.$axios.post("/update", this.formData).then(res => {
         this.backStatus = res.data.code;
-        this.roll2();
+         if (this.backStatus == 5) {
+          // 当存入数据库失败时
+          this.isRemindShow = true;
+          this.remindIndex = 3;
+        }else this.roll2();
       });
     },
     submitForm() {
@@ -384,18 +408,17 @@ export default {
     },
     yes() {
       this.isRemindShow = false;
-      console.log(this.remindIndex);
       if (this.remindIndex == 2) this.moreSubmit(); //如果是继续提交按钮被点击，则触发这个方法
     },
     no() {
       this.isRemindShow = false;
       if (this.remindIndex == 0) {
-        //   this.$router.push({
-        //   path: "/"
-        // });
         // 报名表这个组件消失
         this.$store.commit("isSubmitShow", false);
+        this.$store.commit("isPostShow", false);
+        // this.isAlive=false;
         this.$store.commit("isLetterShow", true);
+        this.$store.commit("isRoll", 0);
       }
     }
   },
@@ -417,42 +440,43 @@ export default {
     let ua = window.navigator.userAgent;
     let app = window.navigator.appVersion;
     //$alert('浏览器版本: ' + app + '\n' + '用户代理: ' + ua);
-    if(!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
-        // alert('ios端');
-        $("input,textarea").on("blur",function () {
-            var currentPosition,timer;
-            var speed=1;
-            timer=setInterval(function(){
-                currentPosition=document.documentElement.scrollTop || document.body.scrollTop;
-                currentPosition-=speed; 
-                window.scrollTo(0,currentPosition);//页面向上滚动
-                currentPosition+=speed;
-                window.scrollTo(0,currentPosition);//页面向下滚动
-                clearInterval(timer);
-            },100);
-        })
-    }else if(ua.indexOf('Android') > -1 || ua.indexOf('Adr') > -1) {
-        // alert('android端');
+    if (!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+      // alert('ios端');
+      $("input,textarea").on("blur", function() {
+        var currentPosition, timer;
+        var speed = 1;
+        timer = setInterval(function() {
+          currentPosition =
+            document.documentElement.scrollTop || document.body.scrollTop;
+          currentPosition -= speed;
+          window.scrollTo(0, currentPosition); //页面向上滚动
+          currentPosition += speed;
+          window.scrollTo(0, currentPosition); //页面向下滚动
+          clearInterval(timer);
+        }, 100);
+      });
+    } else if (ua.indexOf("Android") > -1 || ua.indexOf("Adr") > -1) {
+      // alert('android端');
     }
   },
   beforeMount() {
     this._close = e => {
+      // alert('...')
       // 如果点击发生在当前组件内部，则不处理
       if (this.$el.contains(e.target)) {
         return;
       }
-      //  console.log('hahah');
       this.isRemindShow = true; //如果点击了则弹窗出现
       this.remindIndex = 0;
-      // this.$router.push({
-      //   path: "/"
-      // });
     };
-    document.body.addEventListener("click", this._close);
+    // 两秒之后转到报名页面才监听事件
+    setTimeout(() => {
+      document.body.addEventListener("click", this._close);
+      document.body.addEventListener("touchstart", this._close);
+    }, 1500);
   },
   beforeDestroy() {
     document.body.removeEventListener("click", this._close);
-    // console.log('该组件');
   }
 };
 </script>
@@ -461,6 +485,17 @@ export default {
 ul {
   text-decoration: none;
   list-style: none;
+}
+.icon {
+  font-size: 5.5vw;
+  font-weight: 300;
+  vertical-align: middle;
+}
+.next-text {
+  font-size: 4.55vw;
+  vertical-align: middle;
+  margin-left: 2px;
+  font-weight: 300;
 }
 .right {
   position: absolute;
@@ -483,34 +518,45 @@ ul {
 .none {
   position: absolute;
   z-index: -1;
-  opacity: 0;
+  /* opacity: 0; */
+  display: none;
+  cursor: pointer;
 }
 .seal {
   position: absolute;
   right: 2vw;
   top: 12vw;
-  width: 24vw;
-  animation: fadeInBig 1s forwards;
+  width: 27vw;
+  display: block;
+  animation: fadeInOpacity .8s forwards ,fadeInBig .3s .3s forwards;
+  /* opacity: 1; */
   opacity: 0;
   z-index: 10;
 }
-@keyframes fadeInBig {
-  from {
+
+@keyframes fadeInOpacity {
+  0% {
     opacity: 0;
-    transform: scale(3);
+    transform: scale(1.6);
   }
-  to {
+  100%{
+    /* transform: scale(1); */
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1.6);
+  }
+}
+@keyframes fadeInBig{
+  0%{
+    transform: scale(1.6)
+  }
+  100%{
+    transform: scale(1)
   }
 }
 .postcard {
   position: absolute;
   width: 90vw;
-  /* height: 75vh; */
-  height: 75%;
-  /* height: 100vw; */
-  /* right: 50%; */
+  height: 135vw;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -518,57 +564,48 @@ ul {
 }
 .pic {
   width: 90%;
-  height: 33vh;
-  background: #4b4b4b;
-  margin: 0 auto;
-  transform: translateY(3vh);
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 4vw);
 }
-.text {
-  transform: translateY(13vh);
-  display: inline-block;
-  text-align: center;
-  font-size: 12px;
+.post-text {
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 28vw);
+}
+.post-name {
+  width: 21%;
+  position: absolute;
+  top: 50%;
+  right: 6%;
+  transform: translateY(36vw);
 }
 input {
   color: #282828;
+  font-size: 24px;
 }
 .front,
 .back {
   width: 100%;
-  /* height: 75vh; */
-  height: 140vw;
+  height: 135vw;
   position: absolute;
   top: 0;
   left: 0;
   transition: all 1s;
   background: url("../../assets/postcard.png") no-repeat;
-  background-size: cover;
+  background-size: 100% 100%;
   backface-visibility: hidden;
 }
-.front {
-  text-align: center;
-  /* background: #c8d1e9; */
-}
 .back {
-  /* background: url("../../assets/bg.png") no-repeat;
-  background-size: cover; */
   transform: rotateY(180deg);
   padding: 3vw 6vw;
   box-sizing: border-box;
 }
-/* .postcard:hover .back {
-  transform: rotateY(0deg);
-}
-.postcard:hover .front {
-  transform: rotateY(180deg);
-} */
-
 .top {
-  width: 30vw;
-  height: 15vw;
-  background: url("../../assets/nw2020.png") no-repeat;
-  background-size: 100% 100%;
-  margin-left: -2vw;
+  width: 36vw;
+  margin-left: -10px;
 }
 .bottom {
   bottom: 2vw;
@@ -577,13 +614,16 @@ input {
   transform: translateX(-50%);
 }
 .form {
+  /* transform: translateY(-8px); */
+  position: relative;
+  top: -8px
 }
 .form li {
   box-sizing: border-box;
   padding-top: 3vw;
 }
 .form label {
-  font-size: 2.933vw;
+  font-size: 24px;
 }
 .form input[type="text"] {
   outline: none;
@@ -617,7 +657,7 @@ input {
   background: url("../../assets/underline.png") no-repeat;
   background-size: 100% 100%;
   width: 100%;
-  height: 3px;
+  height: 4px;
   bottom: 0;
   left: 0;
 }
@@ -638,7 +678,7 @@ input {
   background-size: 100% 100%;
 }
 .underline3 {
-  width: 26vw;
+  width: 27vw;
 }
 .underline3::after {
   background: url("../../assets/underline3.png") no-repeat;
@@ -652,16 +692,17 @@ input {
   display: inline-block;
   height: 24px;
   line-height: 24px;
-  margin-right: 8vw;
+  margin-right: 9vw;
 }
-.sex label {
-  display: block;
-  height: 2.8vw;
-  /* width: 24px; */
-  width: 1.467vw;
-  line-height: 24px;
-  cursor: pointer;
+.male img{
+  width: 12.5px;
   display: inline-block;
+  vertical-align: top;
+}
+.female img{
+  width: 15px;
+  display: inline-block;
+  vertical-align: top;
 }
 .sex {
   display: inline-block;
@@ -672,14 +713,16 @@ input {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 2.4vw;
+  left: 0.8vw;
   margin: auto;
   display: block;
-  width: 24px;
-  height: 24px;
-  border: 0.5px solid #4b3b36;
+  width: 6.4vw;
+  height: 6.4vw;
+  border: 2px solid #4b3b36;
   border-radius: 50%;
   cursor: pointer;
+  transform: scale(0.5);
+  display: inline-block;
 }
 
 .sex input,
@@ -687,19 +730,27 @@ input {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 2.4vw;
+  left: 0.8vw;
   margin: auto; /* 这里及以上的定位，可以让该元素竖直居中。(top: 0; bottom: 0;) */
   opacity: 0;
   display: block;
-  width: 24px;
-  height: 24px;
+  width: 6.4vw;
+  height: 6.4vw;
   cursor: pointer;
   outline: none;
   z-index: 3;
+  transform: scale(0.5);
+  display: inline-block;
+  /* vertical-align: top; */
+}
+.direction label{
+  display: inline-block;
+  /* vertical-align: middle; */
 }
 .direction span,
 .direction input {
-  left: 53px;
+      margin-left: 36px;
+  display: inline-block
 }
 .dir {
   font-size: 24px;
@@ -711,14 +762,9 @@ input {
   height: 26px;
   content: "";
   position: absolute;
-}
-.female label {
-  background: url("../../assets/female.png") no-repeat;
-  background-size: 100% 100%;
-}
-.male label {
-  background: url("../../assets/male.png") no-repeat;
-  background-size: 100% 100%;
+  transform: scale(2);
+  left: 2.2vw;
+  top: 2vw;
 }
 .decoration {
   position: relative;
@@ -751,7 +797,7 @@ input {
   background: url("../../assets/bgtext.png") no-repeat;
   background-size: 100% 100%;
   box-sizing: border-box;
-  padding-top: 3vw;
+  padding-top: 1.5vw;
   padding-bottom: 6vw;
   padding-left: 2vw;
   padding-right: 2vw;
@@ -769,15 +815,19 @@ input {
   border: none;
   outline: none;
   width: 21vw;
-  height: 15vw;
-  background: url("../../assets/submit.png") no-repeat;
+  /* height: 15vw;
+  background: url("../../assets/submit.png") no-repeat; */
   background-size: 100% 100%;
   font-size: 36px;
   float: right;
-  /* transform: translateY(-3vw); */
+  opacity: 0.6;
+  transform: translateY(-2vw);
   text-align: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+.submit:active {
+  opacity: 0.9;
 }
 .direction-container {
   display: inline-block;

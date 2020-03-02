@@ -4,7 +4,6 @@ import StarryHome from "@/views/StarryHome";
 import design from '@/views/design'
 import Boolean from '@/components/content/Boolean'
 import sBoolean from '@/components/content/sBoolean'
-import submit from '@/views/submit'
 import Backend from '@/views/Backend'
 import Frontend from '@/views/Frontend'
 
@@ -23,25 +22,16 @@ const router = new Router({
       path: "/design",
       name: "design",
       component: design,
-      children: [
-        {
-          path: "boolean",
-          name: "Boolean",
-          component: Boolean
-        },
-        {
-          path: "sBoolean",
-          name: "sBoolean",
-          component: sBoolean
-        }
-      ]
-    },
-    {
-      path: "/submit",
-      name: "submit",
-      component: submit
-    },
-    {
+      children: [{
+        path: 'boolean',
+        name: "Boolean",
+        component: Boolean
+      }, {
+        path: 'sBoolean',
+        name: 'sBoolean',
+        component: sBoolean
+      }]
+    }, {
       path: "/backend",
       name: "Backend",
       component: Backend
@@ -54,17 +44,19 @@ const router = new Router({
   ]
 });
 
-router.beforeEach((to,from,next)=>{
-  store.commit('updateLoading',{isLoading: true})
-  Vue.nextTick(() => {
-    console.log('loading false')
-    store.commit("updateLoading", { isLoading: false });
-  })
-  console.log('loading true')
-  next()
-})
-
+// router.beforeEach((to,from,next)=>{
+//   store.commit('updateLoading',{isLoading: true})
+//   next()
+// })
 router.afterEach((to,from,next)=>{
+    // 从后台到首页，往vuex传值，判断submit组件是否出现
+    if(to.path=='/'&&from.path=='/backend')
+    {
+      store.commit('isSubmitShow',true)
+  
+    }
+})
+// router.afterEach((to,from,next)=>{
   // Vue.nextTick(()=>{
   //   console.log('loading false')
   //   store.commit("updateLoading", { isLoading: false });
@@ -72,5 +64,5 @@ router.afterEach((to,from,next)=>{
   // window.onload = () => {
   //   store.commit("updateLoading", { isLoading: false });
   // }
-})
+// })
 export default router

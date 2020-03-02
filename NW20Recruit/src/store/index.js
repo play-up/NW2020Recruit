@@ -9,7 +9,7 @@ export default new Vuex.Store({
     starryCurrent: -1,
     chooseNum:0,
     // submit组件是否展示
-    isSubmitShow:true,
+    isSubmitShow:false,
     //postcard是否展示
     isPostShow:false,
     // 信封是否出现
@@ -17,6 +17,8 @@ export default new Vuex.Store({
     isFilterShow:false,
     //是否加载loading
     isLoading: false,
+    isRoll:0,//信封是否翻转
+    isBlingShow:false
   },
   mutations: {
     starryNext(state) { //首页进入下一个状态
@@ -39,6 +41,12 @@ export default new Vuex.Store({
     },
     isFilterShow(state,val){
       state.isFilterShow=val;
+    },
+    isRoll(state,val){
+      state.isRoll=val
+    },
+    isBlingShow(state,val){
+      state.isBlingShow=val
     }
   }
 });
