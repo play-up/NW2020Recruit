@@ -26,7 +26,7 @@
         >
         <img src="~assets/line.png" alt="adawd" class="line-moon">
         <transition name="moon-notice-fade" >
-            <span class="moon-notice" v-if="starryCurrent === 1">点击/下拉</span>
+            <span class="moon-notice" v-if="starryCurrent === 1&&drop===0">点击/下拉</span>
         </transition>
     </div>
     

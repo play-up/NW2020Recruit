@@ -10,7 +10,6 @@
       @click="showPostCard"
       @click.stop
     />
-    <loading v-if="loadingShow" />
     <moon v-if="true" @moonEvent="moonEv" />
     <transition name="moon-shadow">
       <div class="moon-down-shadow" v-show="ShadowShow"></div>
@@ -25,7 +24,7 @@
 import Loading from 'components/common/Loading'
 import Moon from 'components/content/Moon'
 import Stars from 'components/content/Stars'
-import StarryText from 'components/content/StarryText'
+import StarryText from 'components/content/StarryText3'
 import submit from './submit'
 import store from '@/store'
 import { mapState,mapMutations } from 'vuex'
@@ -42,7 +41,6 @@ export default {
   data() {
     return {
       ShadowShow: false,
-      loadingShow: true
     };
   },
   methods: {
@@ -70,10 +68,6 @@ export default {
     ...mapState(["isSubmitShow", "isLetterShow"])
   },
   mounted() {
-    // window.onload = () => {
-    //   this.loadingShow = false
-    //   this.starryNext()
-    // }
     let imgs = [
       "/static/img/d_background.png",
       "/static/img/bat1.png",

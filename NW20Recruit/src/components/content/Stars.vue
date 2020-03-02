@@ -6,6 +6,12 @@
           :tipWidth="designWidth"
           v-show="designShow"
           /> -->
+          <transition name="next-text">
+              <p 
+              class="next-status-text"
+              v-if="starryCurrent === 2"
+              >前往下一站</p>
+          </transition>
           <img src="~assets/design-star.png" 
           alt="" 
           :class="{'star-light': starryCurrent === 2}"
@@ -41,7 +47,7 @@
 <script>
 import { mapState,mapMutations } from 'vuex'
 
-import TipR from 'components/common/TipR'
+// import TipR from 'components/common/TipR'
 export default {
   name: 'Stars',
   data() {
@@ -57,9 +63,6 @@ export default {
           timer1: {}, //定义两个定时器
           timer2: {}
       }
-  },
-  components: {
-      TipR,
   },
   computed: {
       ...mapState(['starryCurrent','chooseNum','isBlingShow'])
@@ -85,6 +88,48 @@ export default {
     transform: translateY(-303px); */
     left: 23vw;
     top: 28%;
+}
+.next-status-text {
+    font-size: 20px;
+    color: white;
+    white-space: nowrap;
+    position: absolute;
+    top: -20px;
+    left: 60px;
+    /* transform-origin: left; */
+    animation: text-beat 2s linear 2s infinite reverse;
+}
+.next-text-enter,.next-text-leave-to {
+  opacity: 0;
+}
+.next-text-leave,.next-text-enter-to {
+  opacity: 1;
+}
+.next-text-enter-active,.next-text-leave-active {
+  transition: all 2s ease 2;
+}
+@keyframes text-beat {
+    0% {
+        transform:  rotate(0deg)
+    }
+    10% {
+        transform:  rotate(1deg)
+    }
+    20% {
+        transform:  rotate(-1deg)
+    }
+    30% {
+        transform:  rotate(1deg)
+    }
+    40% {
+        transform:  rotate(-1deg)
+    }
+    50% {
+        transform:  rotate(0deg)
+    }
+    100% {
+        transform:  rotate(0deg)
+    }
 }
 .back-star {
     /* top: 50%;
@@ -150,24 +195,24 @@ export default {
 }
 @keyframes star-light {
     0% {
-        -webkit-filter: drop-shadow(0 0 0.2px white) brightness(100%);
-        filter: drop-shadow(0 0 0.2px white) brightness(100%);
+        -webkit-filter: drop-shadow(0 0 0.1px white) brightness(100%);
+        filter: drop-shadow(0 0 0.1px white) brightness(100%);
     }
     25% {
-        -webkit-filter: drop-shadow(0 0 0.5px white) brightness(102%);
-        filter: drop-shadow(0 0 0.5px white) brightness(102%);
+        -webkit-filter: drop-shadow(0 0 0.7px white) brightness(102%);
+        filter: drop-shadow(0 0 0.7px white) brightness(102%);
     }
     50% {
-        -webkit-filter: drop-shadow(0 0 0.8px white) brightness(105%);
-        filter: drop-shadow(0 0 0.8px white) brightness(105%);
+        -webkit-filter: drop-shadow(0 0 1.5px white) brightness(103%);
+        filter: drop-shadow(0 0 1.5px white) brightness(103%);
     }
     75% {
-        -webkit-filter: drop-shadow(0 0 0.5px white) brightness(102%);
-        filter: drop-shadow(0 0 0.5px white) brightness(102%);
+        -webkit-filter: drop-shadow(0 0 0.7px white) brightness(102%);
+        filter: drop-shadow(0 0 0.7px white) brightness(102%);
     }
     100% {
-        -webkit-filter: drop-shadow(0 0 0.2px white) brightness(101%);
-        filter: drop-shadow(0 0 0.2px white) brightness(101%);
+        -webkit-filter: drop-shadow(0 0 0.1px white) brightness(101%);
+        filter: drop-shadow(0 0 0.1px white) brightness(101%);
     }
 }
 </style>
