@@ -16,7 +16,7 @@ export default new Vuex.Store({
     isLetterShow:false,
     isFilterShow:false,
     //是否加载loading
-    isLoading: false,
+    isLoading: true,
   },
   mutations: {
     starryNext(state) { //首页进入下一个状态

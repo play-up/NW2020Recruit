@@ -168,7 +168,7 @@ export default {
 .bottom{
     width: 100%;
     height: 23%;
-    background-image: url('~assets/castle.png');
+    background-image: url('/static/img/castle.png');
     background-size: 100% 100%;
     position: absolute;
     bottom: 0;

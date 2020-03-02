@@ -54,23 +54,15 @@ const router = new Router({
   ]
 });
 
-router.beforeEach((to,from,next)=>{
-  store.commit('updateLoading',{isLoading: true})
-  Vue.nextTick(() => {
-    console.log('loading false')
-    store.commit("updateLoading", { isLoading: false });
-  })
-  console.log('loading true')
-  next()
-})
+// router.beforeEach((to,from,next)=>{
+//   store.commit('updateLoading',{isLoading: true})
+//   next()
+// })
 
-router.afterEach((to,from,next)=>{
-  // Vue.nextTick(()=>{
-  //   console.log('loading false')
-  //   store.commit("updateLoading", { isLoading: false });
-  // })
-  // window.onload = () => {
-  //   store.commit("updateLoading", { isLoading: false });
-  // }
-})
+// router.afterEach((to,from)=>{
+//     Vue.nextTick(() => {
+//       store.commit("updateLoading", { isLoading: false });
+//     });
+//   // store.commit("updateLoading", { isLoading: false });
+// })
 export default router
