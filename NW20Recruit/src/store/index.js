@@ -9,7 +9,7 @@ export default new Vuex.Store({
     starryCurrent: -1,
     chooseNum:0,
     // submit组件是否展示
-    isSubmitShow:true,
+    isSubmitShow:false,
     //postcard是否展示
     isPostShow:false,
     // 信封是否出现

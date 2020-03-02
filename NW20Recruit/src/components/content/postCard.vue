@@ -233,14 +233,6 @@ export default {
     };
   },
   watch: {
-    // 当已经点击了提交并且成功后，不可以点击页面返回主页
-    // isAlive() {
-    //   if (this.isAlive == false) {
-    //     document.body.removeEventListener("click", this._close);
-    //   }else{
-    //      document.body.addEventListener("click", this._close);
-    //   }
-    // }
   },
   computed: {
     ...mapState(["isRoll"])
@@ -299,14 +291,13 @@ export default {
     },
     // 点击后盖章，卡片翻转到正面且向父组件传值，使卡片缩小且飞向指定位置
     roll2() {
+      // 取消body上的监听事件
       document.body.removeEventListener("click", this._close);
       this.isSeel = 1;
       setTimeout(() => {
         // this.isAlive = false;
         // 1s后卡片翻转
         this.$store.commit("isRoll", false);
-        // 再过1s之后卡片再变小
-        // this.isSmaller = 1;
         this.isSmaller = this.dirArr[this.DirIndex].id;
         // this.$store.commit("isBlingShow", true);
 
@@ -362,7 +353,7 @@ export default {
           index == "phone" &&
           !this.judgePhoneNo(this.formData[index])
         ) {
-          console.log("请输入正确的手机号");
+          // console.log("请输入正确的手机号");
           return true;
         }
       }
@@ -389,7 +380,11 @@ export default {
     moreSubmit() {
       this.$axios.post("/update", this.formData).then(res => {
         this.backStatus = res.data.code;
-        this.roll2();
+         if (this.backStatus == 5) {
+          // 当存入数据库失败时
+          this.isRemindShow = true;
+          this.remindIndex = 3;
+        }else this.roll2();
       });
     },
     submitForm() {

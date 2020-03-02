@@ -72,7 +72,8 @@ export default {
       "/static/img/d_background.png",
       "/static/img/bat1.png",
       "/static/img/bat2.png",
-      "/static/img/castle.png"
+      "/static/img/castle.png",
+      
     ]
     for( let img of imgs) {
       let image = new Image()
