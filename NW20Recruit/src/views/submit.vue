@@ -27,9 +27,7 @@ export default {
   },
   mounted(){
      document.getElementsByTagName("body")[0].style.height = window.innerHeight+'px';
- document.body.addEventListener("click", function(){
-   console.log('body')
- });
+
   }
 
 

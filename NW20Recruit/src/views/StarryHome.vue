@@ -10,7 +10,7 @@
       @click="showPostCard"
       @click.stop
     />
-    <loading v-if="loadingShow" />
+    <!-- <loading v-if="loadingShow" /> -->
     <moon v-if="true" @moonEvent="moonEv" />
     <transition name="moon-shadow">
       <div class="moon-down-shadow" v-show="ShadowShow"></div>
@@ -78,7 +78,8 @@ export default {
       "/static/img/d_background.png",
       "/static/img/bat1.png",
       "/static/img/bat2.png",
-      "/static/img/castle.png"
+      "/static/img/castle.png",
+      
     ]
     for( let img of imgs) {
       let image = new Image()
