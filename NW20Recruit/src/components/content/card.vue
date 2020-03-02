@@ -140,8 +140,8 @@ export default {
     transform: rotateX(95deg) rotateY(-1deg) rotateZ(24deg)  scale(0.2);
   }
   100% {
-    top: 94vw;
-    left: 74vw;
+    left: 77vw;
+    top: 49%;
     transform: rotateX(58deg) rotateY(-12deg) rotateZ(36deg) scale(0.02);
   }
 }
@@ -169,8 +169,8 @@ export default {
     opacity: 1;
   }
   100% {
-    top: 108vw;
-    left: 22vw;
+    left: 18vw;
+    top: 60%;
     /* transform: rotateX(51deg) rotateY(-48deg) rotateZ(-43deg) scale(0.05); */
     transform: rotateX(43deg) rotateY(-42deg) rotateZ(-49deg) scale(0.03);
     opacity: 0;
@@ -185,8 +185,8 @@ export default {
     transform:rotateX(89deg) rotateY(-27deg) rotateZ(-2deg) scale(0.3);
   }
   100% {
-    top: 57vw;
-    left: 30vw;
+    top: 30%;;
+    left: 27vw;
     /* transform: rotateX(61deg) rotateY(-27deg) rotateZ(-2deg) scale(0.06); */
      transform: rotateX(40deg) rotateY(-14deg) rotateZ(-16deg) scale(0.06)  ;
   }
@@ -194,25 +194,14 @@ export default {
 
 
 @keyframes shine {
-  0% {
-    -webkit-filter: drop-shadow(0px 0px 0px white) brightness(100%); /* Chrome, Safari, Opera */
-    filter: drop-shadow(0px 0px 1px white) brightness(120%);
-  }
-  25% {
-    -webkit-filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%); /* Chrome, Safari, Opera */
-    filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%);
+   0% {
+    filter: drop-shadow(0px 0px 1px white) brightness(100%);
   }
   50% {
-    -webkit-filter: drop-shadow(0.5px 0.5px 2px white) brightness(140%); /* Chrome, Safari, Opera */
-    filter: drop-shadow(0.5px 0.5px 2px white) brightness(140%);
-  }
-  75% {
-    -webkit-filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%); /* Chrome, Safari, Opera */
-    filter: drop-shadow(0.3px 0.3px 1px white) brightness(130%);
+    filter: drop-shadow(0 0 3px white) brightness(105%);
   }
   100% {
-    -webkit-filter: drop-shadow(0px 0px 1px white) brightness(120%); /* Chrome, Safari, Opera */
-    filter: drop-shadow(0px 0px 1px white) brightness(120%);
+    filter: drop-shadow(0px 0px 1px white) brightness(100%);
   }
 }
 </style>

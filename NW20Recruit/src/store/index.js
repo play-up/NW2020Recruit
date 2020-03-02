@@ -17,7 +17,8 @@ export default new Vuex.Store({
     isFilterShow:false,
     //是否加载loading
     isLoading: false,
-    isRoll:0//信封是否翻转
+    isRoll:0,//信封是否翻转
+    isBlingShow:false
   },
   mutations: {
     starryNext(state) { //首页进入下一个状态
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     },
     isRoll(state,val){
       state.isRoll=val
+    },
+    isBlingShow(state,val){
+      state.isBlingShow=val
     }
   }
 });

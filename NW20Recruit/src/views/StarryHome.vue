@@ -58,6 +58,8 @@ export default {
       this.$store.commit("isPostShow", true);
       this.$store.commit("isSubmitShow", true);
       this.$store.commit("isLetterShow", false);
+       this.$store.commit("isBlingShow", false);
+      
        setTimeout(()=>{
         this.$store.commit('isRoll',1)
       },1000)
