@@ -125,7 +125,7 @@ export default {
     top: -740px;
     z-index: 10;
     /* animation: box 1s linear 0 infinite normal;    cubic-bezier(0.165, 0.84, 0.44, 1)*/
-    transition: all 1s ease;
+    transition: transform 1s ease;
     /* transform: translate(0,0); */
 }
 .moon-wrap-down {
