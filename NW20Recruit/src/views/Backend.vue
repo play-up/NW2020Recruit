@@ -3,8 +3,8 @@
     <div class="container">
       <div class="title">
         <transition-group name="titleAppear" @after-enter="afterEnter">
-          <img class="titleImg1" src="~assets/backend2.png" key="1" v-show="showTitle" />
-          <img class="titleImg2" src="~assets/backend1.png" key="2" v-show="showTitle" />
+          <img class="titleImg1" src="/static/img/backend2.png" key="1" v-show="showTitle" />
+          <img class="titleImg2" src="/static/img/backend1.png" key="2" v-show="showTitle" />
         </transition-group>
       </div>
       <div class="planet">
@@ -67,7 +67,7 @@ export default {
 .backend {
   height: 100%;
   width: 100%;
-  background-image: url("~assets/backend.png");
+  background-image: url(/static/img/backend.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
