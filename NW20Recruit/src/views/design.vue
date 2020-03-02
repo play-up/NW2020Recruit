@@ -134,16 +134,15 @@ export default {
             // })
             return new Promise((resolve, reject) => {
                 this.showWord = true;
-                console.log(this.words);
-                this.words = this.words.split("");
-                console.log(this.words)
+                if(typeof this.words === 'String'){
+                    this.words = this.words.split("");
+                }
                 resolve(9300);
             })
         },
         //返回上一页
         goBack() {
             let start, end;
-            console.log('goBack');
             this.$refs.all.addEventListener('touchstart', (evt) => {
                 start = evt.touches[0].clientY;
             })
@@ -153,8 +152,9 @@ export default {
             this.$refs.all.addEventListener('touchend', evt => {
                 // 上滑减小，下滑增加
                 if(end > start) {
-                    this.$router.go(-1);
-                    console.log('返回首页');
+                    this.$router.push('/');
+                } else if(end < start) {
+                    this.$router.push('/frontend');
                 }
             })
         },
