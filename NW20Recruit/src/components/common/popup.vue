@@ -80,7 +80,7 @@ export default {
   z-index: 10000;
 }
 .popup {
-  background: url("../../assets/cancelBg.png") no-repeat;
+  background: url("/static/img/cancelBg.png") no-repeat;
   background-size: 100% 100%;
   width: 78vw;
   height: 78vw;
@@ -107,7 +107,7 @@ export default {
   width: 26vw;
   border-radius: 34px;
   padding:1vw 1.4vw;
-      padding-left: 1.6vw;
+  padding-left: 1.6vw;
   background: #665bb8;
   border: .5px solid #37315f;
   color: white;

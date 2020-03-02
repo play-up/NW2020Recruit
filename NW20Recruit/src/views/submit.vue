@@ -1,5 +1,5 @@
 <template>
-  <div id="submitPage" v-if="starryCurrent == 3">
+  <div id="submitPage" >
     <card></card>
     <div v-show="isFilterShow" class="filter"></div>
   </div>
@@ -23,7 +23,7 @@ export default {
     }
   },
   computed:{
-    ...mapState(['isFilterShow','starryCurrent'])
+    ...mapState(['isFilterShow'])
   },
   mounted(){
      document.getElementsByTagName("body")[0].style.height = window.innerHeight+'px';
