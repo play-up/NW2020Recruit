@@ -42,7 +42,7 @@
               </div>
             </div>
           </li>
-          <li v-for="(item,index) in propArr" :key="item.index">
+          <li v-for="(item,index) in propArr" :key="index">
             <label :for="item.prop">{{item.content}}</label>
             <div :class="'underline'+item.num">
               <input type="text" :id="item.prop" required="required" v-model="formData[item.prop]" />
