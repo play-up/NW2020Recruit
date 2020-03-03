@@ -10,12 +10,12 @@
       @click="showPostCard"
       @click.stop
     />
-    <moon v-if="true" @moonEvent="moonEv" />
+    <moon @moonEvent="moonEv" />
     <transition name="moon-shadow">
       <div class="moon-down-shadow" v-show="ShadowShow"></div>
     </transition>
     <stars />
-    <starry-text v-if="true" />
+    <starry-text />
     <submit v-show="isSubmitShow"></submit>
   </div>
 </template>
@@ -57,10 +57,9 @@ export default {
       this.$store.commit("isSubmitShow", true);
       this.$store.commit("isLetterShow", false);
       this.$store.commit("isBlingShow", false);
-      
        setTimeout(()=>{
         this.$store.commit('isRoll',1)
-      },2000)
+      },1000)
     }
   },
 
@@ -72,7 +71,7 @@ export default {
       "/static/img/d_background.png",
       "/static/img/bat1.png",
       "/static/img/bat2.png",
-      "/static/img/castle.png",
+      "/static/img/castle.png"
     ]
     for( let img of imgs) {
       let image = new Image()
@@ -98,6 +97,7 @@ export default {
   left: 56vw;
   transform: rotate(-10deg);
   animation: letter-light 2.5s 1s ease infinite alternate,letter-opacity 1s forwards;
+
 }
 #starry-home {
   width: 100%;

@@ -72,8 +72,9 @@ export default {
   methods: {
       ...mapMutations(['starryNext']),
       starClick () {
-          console.log(this.starryCurrent);
-        this.$router.replace('/design')
+            if(this.starryCurrent >= 2) {
+            this.$router.replace('/design')
+            }
       }
   },
 }
@@ -113,16 +114,16 @@ export default {
         transform:  rotate(0deg)
     }
     10% {
-        transform:  rotate(1deg)
+        transform:  rotate(2deg)
     }
     20% {
-        transform:  rotate(-1deg)
+        transform:  rotate(-2deg)
     }
     30% {
-        transform:  rotate(1deg)
+        transform:  rotate(2deg)
     }
     40% {
-        transform:  rotate(-1deg)
+        transform:  rotate(-2deg)
     }
     50% {
         transform:  rotate(0deg)

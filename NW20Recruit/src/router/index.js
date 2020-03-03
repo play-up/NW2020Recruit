@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import StarryHome from "@/views/StarryHome";
+// import StarryHome from "@/views/StarryHome";
 import design from '@/views/design'
 import Boolean from '@/components/content/Boolean'
 import sBoolean from '@/components/content/sBoolean'
@@ -16,22 +16,26 @@ const router = new Router({
     {
       path: "/",
       name: "StarryHome",
-      component: StarryHome
+      component: () => import("@/views/StarryHome")
     },
     {
       path: "/design",
       name: "design",
       component: design,
-      children: [{
-        path: 'boolean',
-        name: "Boolean",
-        component: Boolean
-      }, {
-        path: 'sBoolean',
-        name: 'sBoolean',
-        component: sBoolean
-      }]
-    }, {
+      children: [
+        {
+          path: "boolean",
+          name: "Boolean",
+          component: Boolean
+        },
+        {
+          path: "sBoolean",
+          name: "sBoolean",
+          component: sBoolean
+        }
+      ]
+    },
+    {
       path: "/backend",
       name: "Backend",
       component: Backend
@@ -44,26 +48,21 @@ const router = new Router({
   ]
 });
 
-// router.beforeEach((to,from,next)=>{
-//   store.commit('updateLoading',{isLoading: true})
-//   next()
-// })
-// router.afterEach((to,from,next)=>{
-//     // 从后台到首页，往vuex传值，判断submit组件是否出现
-//     if(from.path=='/backend')
-//     {
-//       store.commit('isSubmitShow',true)
-    
-  
-//     }
-// })
-// router.afterEach((to,from,next)=>{
-  // Vue.nextTick(()=>{
-  //   console.log('loading false')
-  //   store.commit("updateLoading", { isLoading: false });
-  // })
-  // window.onload = () => {
-  //   store.commit("updateLoading", { isLoading: false });
-  // }
-// })
+
+router.beforeEach((to,from,next)=>{
+    store.commit("updateLoading", { isLoading: true });
+        // Vue.nextTick(() => {
+        //   console.log("loading false");
+        //   store.commit("updateLoading", { isLoading: false });
+        // });
+  next()
+})
+router.afterEach((to,from)=>{
+    // 从后台到首页，往vuex传值，判断submit组件是否出现
+  store.commit("updateLoading", { isLoading: false });
+    if(to.path=='/'&&from.path=='/backend')
+    {
+      store.commit('isSubmitShow',true)
+    }
+})
 export default router
