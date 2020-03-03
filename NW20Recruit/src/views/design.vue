@@ -3,8 +3,8 @@
         <!-- <Loading v-if="loading"></Loading> -->
         <Boolean :class="[!isfly?'':'lsmall', 'cbig']"></Boolean>
         <div :class="['title', {'show':showTitle}]">
-            <img class="word-img" src="@/assets/sheji.png" alt="">
-            <!-- <img class="word-img" src="@/assets/ji.png" alt=""> -->
+            <img class="word-img" src="http://recruit.zqyy.site/sheji.png" alt="">
+            <!-- <img class="word-img" src="http://recruit.zqyy.site/ji.png" alt=""> -->
         </div>
         <div class="upBat"></div>
         <div class="word" v-if="showWord">
@@ -28,7 +28,7 @@
         </div>
         <div class="downBat"></div>
         <div :class="['next', {'hide':!showArrow}]" @click="goNext">
-            <img src="@/assets/pinkarrow.png" class="arrow"/>
+            <img src="http://recruit.zqyy.site/pinkarrow.png" class="arrow"/>
         </div>
         <div class="bottom"></div>
     </div>
@@ -63,20 +63,20 @@ export default {
             letters: [],
             showArrow: false,
             imgUrl: [
-                require('@/assets/sheji.png'),
-                require('@/assets/pinkarrow.png'),
-                '/static/img/test-bg.jpg',
-                '/static/img/bat2.png',
-                require('@/assets/letters.png'),
-                require('@/assets/test-ball.png')
+                'http://recruit.zqyy.site/sheji.png',
+                'http://recruit.zqyy.site/pinkarrow.png',
+                'http://recruit.zqyy.site/test-bg.jpg',
+                'http://recruit.zqyy.site/bat2.png',
+                'http://recruit.zqyy.site/letters.png',
+                'http://recruit.zqyy.site/test-ball.png'
             ],
             loading: true,
             nextImgUrl: [
-                require('@/assets/frontend2.png'),
-                require('@/assets/frontend1.png'),
-                require('@/assets/frontend.png'),
-                require('@/assets/steam.png'),
-                require('@/assets/steamPlanet.png')
+                'http://recruit.zqyy.site/frontend2.png',
+                'http://recruit.zqyy.site/frontend1.png',
+                'http://recruit.zqyy.site/frontend.png',
+                'http://recruit.zqyy.site/steam.png',
+                'http://recruit.zqyy.site/steamPlanet.png'
             ]
         }
     },
@@ -132,15 +132,15 @@ export default {
             this.$refs.all.addEventListener('touchend', evt => {
                 // 上滑减小，下滑增加
                 if(end > start) {
-                    this.$router.push('/');
+                    this.$router.replace('/');
                 } else if(end < start) {
-                    this.$router.push('/frontend');
+                    this.$router.replace('/frontend');
                 }
             })
         },
         //进入下一个页面
         goNext() {
-            this.$router.push('/frontend');
+            this.$router.replace('/frontend');
         },
         //加载图片资源
         addPromise(url) {
@@ -201,17 +201,17 @@ export default {
 .all{
     width: 100%;
     height: 100%;
-    background-image: url('/static/img/test-bg.jpg');
+    background-image: url('http://recruit.zqyy.site/test-bg.jpg');
     background-size: 100% 100%;
     position: relative;
 }
 .upBat{
-    background-image: url('/static/img/bat2.png');
+    background-image: url('http://recruit.zqyy.site/bat2.png');
     right: 0;
     top: 100px;  
 }
 .downBat{
-    background-image: url('/static/img/bat2.png');
+    background-image: url('http://recruit.zqyy.site/bat2.png');
     left: 12%;
     bottom: 20%;
     z-index: 3;
@@ -226,7 +226,7 @@ export default {
 .bottom{
     width: 100%;
     height: 23%;
-    background-image: url('/static/img/castle.png');
+    background-image: url('http://recruit.zqyy.site/castle.png');
     background-size: 100% 100%;
     position: absolute;
     bottom: 0;
@@ -322,7 +322,7 @@ export default {
     right: 0;
     margin: auto;
     display: block;
-    bottom: 40px;
+    bottom: 100px;
     z-index: 10;
 }
 .arrow{
@@ -363,7 +363,7 @@ export default {
     }
 }
 .hide{
-    bottom: -100px;
+    display: none;
 }
 .word-img {
     width: 220px;

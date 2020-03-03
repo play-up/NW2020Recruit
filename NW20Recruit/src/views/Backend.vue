@@ -1,10 +1,20 @@
 <template>
-  <div class="backend">
+  <div class="backend" ref="all">
     <div class="container">
       <div class="title">
         <transition-group name="titleAppear" @after-enter="afterEnter">
-          <img class="titleImg1" src="/static/img/backend2.png" key="1" v-show="showTitle" />
-          <img class="titleImg2" src="/static/img/backend1.png" key="2" v-show="showTitle" />
+          <img
+            class="titleImg1"
+            src="http://recruit.zqyy.site/backend2.png"
+            key="1"
+            v-show="showTitle"
+          />
+          <img
+            class="titleImg2"
+            src="http://recruit.zqyy.site/backend1.png"
+            key="2"
+            v-show="showTitle"
+          />
         </transition-group>
       </div>
       <div class="planet">
@@ -19,9 +29,9 @@
         >{{letter}}</p>
       </div>
     </div>
-    <router-link to="/" tag="div" class="next" v-show="showIcon">
-      <img src="~assets/frontend_next.png" @click="toStarryHome" />
-    </router-link>
+    <div class="next" v-show="showIcon" @click="toNextPage">
+      <img src="http://recruit.zqyy.site/frontend_next.png" @click="toStarryHome" />
+    </div>
   </div>
 </template>
 
@@ -60,29 +70,50 @@ export default {
       }, 500);
       setTimeout(() => {
         this.showIcon = true;
-      }, 8000);
+      }, 6000);
     },
     toStarryHome() {
       console.log(this.starryCurrent);
-      this.$store.commit('isSubmitShow',true);
+      this.$store.commit("isSubmitShow", true);
       this.$store.commit("isBlingShow", false);
       this.$store.commit("isLetterShow", false);
       if (this.starryCurrent === 2) {
         this.starryNext();
         console.log(this.starryCurrent);
       }
+    },
+    toNextPage() {
+      this.$router.replace("/");
+    },
+    goBack() {
+      let start, end;
+      this.$refs.all.addEventListener("touchstart", evt => {
+        start = evt.touches[0].clientY;
+      });
+      this.$refs.all.addEventListener("touchmove", evt => {
+        end = evt.touches[0].clientY;
+      });
+      this.$refs.all.addEventListener("touchend", evt => {
+        // 上滑减小，下滑增加
+        if (end > start) {
+          this.$router.replace("/frontend");
+        } else if (end < start) {
+          this.$router.replace("/");
+        }
+      });
     }
   },
   mounted() {
+    this.goBack();
     this.letters_content = this.splitTexts(this.content);
     this.showTitle = !this.showTitle;
     let imgs = [
-      "/static/img/postcard.png",
-      "/static/img/cancelBg.png",
-      "/static/img/code.png",
-      "/static/img/post-pic.jpg",
-      "/static/img/submit.png",
-      "/static/img/nw2020.png"
+      "http://recruit.zqyy.site/postcard.png",
+      "http://recruit.zqyy.site/cancelBg.png",
+      "http://recruit.zqyy.site/code.png",
+      "http://recruit.zqyy.site/post-pic.jpg",
+      "http://recruit.zqyy.site/submit.png",
+      "http://recruit.zqyy.site/nw2020.png"
     ];
     for (let img of imgs) {
       let image = new Image();
@@ -93,6 +124,16 @@ export default {
       image.onerror = () => {
         console.log("预加载失败");
       };
+      for (let img of imgs) {
+        let image = new Image();
+        image.src = img;
+        image.onload = () => {
+          console.log("预加载了");
+        };
+        image.onerror = () => {
+          console.log("预加载失败");
+        };
+      }
     }
   }
 };
@@ -102,7 +143,7 @@ export default {
 .backend {
   height: 100%;
   width: 100%;
-  background-image: url(/static/img/backend.png);
+  background-image: url(http://recruit.zqyy.site/backend.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -195,20 +236,20 @@ export default {
 }
 .next {
   position: absolute;
-  bottom: 100px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   animation: float 1s linear infinite;
 }
 .next img {
-  height: 50px;
+  width: 48px;
 }
 @keyframes float {
   0% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(10px);
+    transform: translateY(3px);
   }
   100% {
     transform: translateY(0);

@@ -1,51 +1,51 @@
 <template>
-  <div class="frontend">
+  <div class="frontend" ref="all">
     <div class="steamBox">
       <steam class="steam"></steam>
     </div>
     <div class="title title1" v-if="showTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="title title2" v-if="showTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="title title3" v-if="showTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="title title4" v-if="showTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="title title5" v-if="showTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="title title6" v-if="showTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="title title7" v-if="showTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="title title8" v-if="showTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="title title9" v-if="showTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="title title10" v-if="showTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="title completeTitle" v-if="showCompleteTitle">
-      <img src="~assets/frontend2.png" />
-      <img src="~assets/frontend1.png" />
+      <img src="http://recruit.zqyy.site/frontend2.png" />
+      <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="content" v-if="showContent">
       <p
@@ -55,10 +55,9 @@
         :key="index"
       >{{letter}}</p>
     </div>
-    <router-link to="/backend" tag="div" class="next" v-show="showIcon">
-      <img src="~assets/frontend_next.png" />
-    </router-link>
-    <!-- <img src="../../static/backend.png" v-show="false"> -->
+    <div class="next" @click="toNextPage" v-show="showIcon">
+      <img src="http://recruit.zqyy.site/frontend_next.png" />
+    </div>
   </div>
 </template>
 
@@ -82,20 +81,41 @@ export default {
   methods: {
     async loadImg() {
       let imgs = [
-        "/static/img/backend.png",
-        "/static/img/bigPlanet.png",
-        "/static/img/backend1.png",
-        "/static/img/backend2.png",
-        "/static/img/frontend_next.png"
+        "http://recruit.zqyy.site/backend.png",
+        "http://recruit.zqyy.site/bigPlanet.png",
+        "http://recruit.zqyy.site/backend1.png",
+        "http://recruit.zqyy.site/backend2.png",
+        "http://recruit.zqyy.site/frontend_next.png"
       ];
       for (let img of imgs) {
         let image = new Image();
         image.src = img;
         image.onload = () => {};
       }
+    },
+    toNextPage() {
+      this.$router.replace("/backend");
+    },
+    goBack() {
+      let start, end;
+      this.$refs.all.addEventListener("touchstart", evt => {
+        start = evt.touches[0].clientY;
+      });
+      this.$refs.all.addEventListener("touchmove", evt => {
+        end = evt.touches[0].clientY;
+      });
+      this.$refs.all.addEventListener("touchend", evt => {
+        // 上滑减小，下滑增加
+        if (end > start) {
+          this.$router.replace("/design");
+        } else if (end < start) {
+          this.$router.replace("/backend");
+        }
+      });
     }
   },
   mounted() {
+    this.goBack();
     this.loadImg();
     setTimeout(() => {
       this.showTitle = true;
@@ -105,9 +125,9 @@ export default {
     }, 4600);
     setTimeout(() => {
       this.showContent = true;
-    }, 5000);
-    setTimeout(() => {
-      this.showIcon = true;
+      setTimeout(() => {
+        this.showIcon = true;
+      }, 7500);
     }, 5000);
   }
 };
@@ -117,7 +137,7 @@ export default {
 .frontend {
   height: 100%;
   width: 100%;
-  background-image: url(~assets/frontend.png);
+  background-image: url(http://recruit.zqyy.site/frontend.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;
@@ -404,7 +424,7 @@ export default {
   color: white;
   line-height: 50px;
   position: absolute;
-  top: 45%;
+  top: 41%;
   margin: 0 60px;
   z-index: 1;
 }
@@ -432,14 +452,13 @@ export default {
 }
 .next {
   position: absolute;
-  bottom: 100px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   animation: float 1s linear infinite;
-  z-index: 1;
 }
 .next img {
-  height: 50px;
+  width: 48px;
 }
 @keyframes float {
   0% {
