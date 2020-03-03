@@ -452,14 +452,13 @@ export default {
 }
 .next {
   position: absolute;
-  bottom: 100px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   animation: float 1s linear infinite;
-  z-index: 1;
 }
 .next img {
-  height: 50px;
+  width: 48px;
 }
 @keyframes float {
   0% {
