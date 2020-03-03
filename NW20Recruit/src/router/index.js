@@ -62,7 +62,8 @@ router.afterEach((to,from)=>{
   store.commit("updateLoading", { isLoading: false });
     if(to.path=='/'&&from.path=='/backend')
     {
-      store.commit('isSubmitShow',true)
+    store.commit('isSubmitShow',true);
+    store.commit("isLetterShow", false);
     }
 })
 export default router

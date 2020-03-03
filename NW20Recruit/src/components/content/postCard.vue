@@ -157,7 +157,7 @@ export default {
           rejectBtn: "忍痛拒绝"
         },
         {
-          content1: "您的报名表未填写完整,",
+          content1: "您的报名表填写不正确,",
           content2: "不能提交哦QAQ",
           sureBtn: "继续报名"
         },
@@ -176,7 +176,8 @@ export default {
           content1: "您的手机号未填写正确",
           content2: "不能提交哦QAQ",
           sureBtn: "继续填写"
-        }
+        },
+
       ],
       formData: {
         name: "", //名字
@@ -408,22 +409,22 @@ export default {
     // 判断是否都输入且是否输入合法
     judgeInsure() {
       if (this.formData.name == "") {
-         this.remindIndex=1;
+        //  this.remindIndex=1;
         return true;
       } else if (!this.judeName(this.formData.name)) {
         // console.log("请输入正确的姓名");
-         this.remindIndex=1;
+        //  this.remindIndex=1;
         return true;
       }
       if (this.formData.sex == "") {
         // console.log("请选择性别");
-         this.remindIndex=1;
+        //  this.remindIndex=1;
         return true;
       }
       for (var i = 0; i < this.propArr.length; i++) {
         let index = this.propArr[i].prop;
         if (this.formData[index] == "") {
-           this.remindIndex=1;
+          //  this.remindIndex=1;
           // console.log("请填写" + this.propArr[i].content);
           return true;
         } else if (
@@ -431,18 +432,18 @@ export default {
           !this.judgePhoneNo(this.formData[index])
         ) {
           // console.log("请输入正确的手机号");
-          this.remindIndex=4;
+          // this.remindIndex=4;
           return true;
         }
       }
       if (this.formData.direction == "") {
-         this.remindIndex=1;
+        //  this.remindIndex=1;
         console.log("请选择方向！");
 
         return true;
       }
       if (this.formData.introduce == "") {
-         this.remindIndex=1;
+        //  this.remindIndex=1;
         return true;
       }
     },
@@ -450,7 +451,7 @@ export default {
       // this.judgeInsure();
       // 输入不合法时,提示框出现，显示报名表是否填写完整
       if (this.judgeInsure()) {
-        // this.remindIndex = 1;
+        this.remindIndex = 1;
         this.isRemindShow = true;
         
      
@@ -950,6 +951,7 @@ input {
   height: 100%;
   font-size: 22px;
   color: #282828;
+  line-height: 28px;
 }
 .submit {
   border: none;
