@@ -10,7 +10,7 @@
               <p 
               class="next-status-text"
               v-if="starryCurrent === 2"
-              >前往下一站</p>
+              >前往第一站</p>
           </transition>
           <img src="~assets/design-star.png" 
           alt="" 
@@ -107,7 +107,7 @@ export default {
   opacity: 1;
 }
 .next-text-enter-active,.next-text-leave-active {
-  transition: all 2s ease 2;
+  transition: all 2s ease .5s;
 }
 @keyframes text-beat {
     0% {

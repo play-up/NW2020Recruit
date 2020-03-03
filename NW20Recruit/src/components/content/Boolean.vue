@@ -79,7 +79,7 @@ export default {
 .down{
     height: 76%;
     width: 100%;
-    background-image: url('~assets/test-ball.png');
+    background-image: url('/static/img/test-ball.png');
     background-size: 100% 100%;
 }
 @keyframes boolean {
