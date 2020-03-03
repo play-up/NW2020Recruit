@@ -576,7 +576,7 @@ export default {
     setTimeout(() => {
       document.body.addEventListener("click", this._close);
       // 在ipad上得加这个才能监听？奇了怪了
-      document.body.addEventListener("touchstart", this._close);
+      // document.body.addEventListener("touchstart", this._close);
     }, 1500);
   },
   beforeDestroy() {
