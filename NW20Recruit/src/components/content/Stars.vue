@@ -1,6 +1,6 @@
 <template>
   <div id="stars">
-      <div class="design-star star">
+      <div class="design-star star" @click="starClick()">
           <!-- <tip-r 
           :text="designText"  
           :tipWidth="designWidth"
@@ -15,7 +15,7 @@
           <img src="~assets/design-star.png" 
           alt="" 
           :class="{'star-light': starryCurrent === 2}"
-          @click="starClick()">
+          >
           <div :class="{'bling1 ':chooseNum==1&&isBlingShow}" ></div>
       </div>
       <div class="back-star star">
@@ -72,8 +72,9 @@ export default {
   methods: {
       ...mapMutations(['starryNext']),
       starClick () {
-          console.log(this.starryCurrent);
-        this.$router.replace('/design')
+            if(this.starryCurrent >= 2) {
+            this.$router.replace('/design')
+            }
       }
   },
 }
@@ -113,16 +114,16 @@ export default {
         transform:  rotate(0deg)
     }
     10% {
-        transform:  rotate(1deg)
+        transform:  rotate(2deg)
     }
     20% {
-        transform:  rotate(-1deg)
+        transform:  rotate(-2deg)
     }
     30% {
-        transform:  rotate(1deg)
+        transform:  rotate(2deg)
     }
     40% {
-        transform:  rotate(-1deg)
+        transform:  rotate(-2deg)
     }
     50% {
         transform:  rotate(0deg)

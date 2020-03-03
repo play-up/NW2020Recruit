@@ -20,15 +20,15 @@
       </div>
     </div>
     <router-link to="/" tag="div" class="next" v-show="showIcon">
-      <img src="~assets/frontend_next.png" @click="toStarryHome"/>
+      <img src="~assets/frontend_next.png" @click="toStarryHome" />
     </router-link>
   </div>
 </template>
 
 <script>
 import Planet from "@/components/content/Planet";
-
-import { mapState,mapMutations } from 'vuex'
+import store from "@/store";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "Backend",
@@ -62,31 +62,36 @@ export default {
         this.showIcon = true;
       }, 6000);
     },
-    toStarryHome () {
+    toStarryHome() {
       console.log(this.starryCurrent);
-      
-      if(this.starryCurrent === 2) {
-          this.starryNext()
-      console.log(this.starryCurrent);
-
+      this.$store.commit('isSubmitShow',true);
+      this.$store.commit("isBlingShow", false);
+      this.$store.commit("isLetterShow", false);
+      if (this.starryCurrent === 2) {
+        this.starryNext();
+        console.log(this.starryCurrent);
       }
     }
-    
   },
   mounted() {
     this.letters_content = this.splitTexts(this.content);
     this.showTitle = !this.showTitle;
     let imgs = [
-    ]
-    for( let img of imgs) {
-      let image = new Image()
-      image.src = img
-      image.onload=()=>{
-        console.log('预加载了')
-      }
+      "/static/img/postcard.png",
+      "/static/img/cancelBg.png",
+      "/static/img/code.png",
+      "/static/img/post-pic.jpg",
+      "/static/img/submit.png",
+      "/static/img/nw2020.png"
+    ];
+    for (let img of imgs) {
+      let image = new Image();
+      image.src = img;
+      image.onload = () => {
+        console.log("预加载了");
+      };
       image.onerror = () => {
-        console.log('预加载失败');
-        
+        console.log("预加载失败");
       };
     }
   }

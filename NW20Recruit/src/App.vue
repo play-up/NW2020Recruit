@@ -23,12 +23,22 @@ export default {
   },
   data() {
     return {
-      isLoading: true,
+      // isLoading: true,
       isHscreen: false
     }
   },
+  watch: {
+    $route: {
+      handler (val,oldVal) {
+        this.$nextTick(()=>{
+            this.updateLoading({isLoading: false})
+        })
+      },
+      deep: true
+    }
+  },
   computed: {
-    // ...mapState(['isLoading'])
+    ...mapState(['isLoading'])
   },
   methods: {
     ...mapMutations(['starryNext','updateLoading'])
@@ -40,9 +50,9 @@ export default {
     }, {passive: false});
     window.onload = () => {
       
-      this.isLoading = false
+      // this.isLoading = false
       console.log(this.isLoading);
-      // this.updateLoading({isLoading: false})
+      this.updateLoading({isLoading: false})
       this.starryNext()
     }
     
@@ -80,19 +90,22 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
+  background: black;
 }
 .router-enter {
-  /* transform: translate3d(-90%,90%,0) scale(0.2); */
-  opacity: 0;
+  /* transform: translate3d(-100%,0,0); */
+  opacity: 0
 }
 .router-leave-to {
-  opacity: 0.5;
+  opacity: .1;
+  /* transform: translate3d(100%,0,0); */
 }
 .router-leave,.router-enter-to {
-  /* transform: translate3d(0,0,0) scale(1); */
   opacity: 1;
+  /* transform: translate3d(0,0,0) scale(1); */
 }
 .router-enter-active, .router-leave-active {
-  transition: opacity 1s ease;
+  transition: opacity 3s ease;
+  position: absolute !important;
 }
 </style>

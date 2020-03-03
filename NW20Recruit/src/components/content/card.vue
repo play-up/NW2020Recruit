@@ -47,7 +47,7 @@ export default {
       this.$store.commit('isPostShow',true)
       setTimeout(()=>{
         this.$store.commit('isRoll',1)
-      },1000)
+      },2000)
     },
     smaller(val) {
       this.rotate = val;
@@ -169,7 +169,7 @@ export default {
     opacity: 1;
   }
   100% {
-    left: 18vw;
+    left: 21vw;
     top: 60%;
     /* transform: rotateX(51deg) rotateY(-48deg) rotateZ(-43deg) scale(0.05); */
     transform: rotateX(43deg) rotateY(-42deg) rotateZ(-49deg) scale(0.03);
@@ -180,15 +180,16 @@ export default {
   0% {
     transform: rotateX(61deg) rotateY(-27deg) rotateZ(-15deg) ;
   }
-  30% {
+  35% {
     /* transform: rotateX(84deg) rotateY(-24deg) rotateZ(-4deg) scale(0.3); */
-    transform:rotateX(89deg) rotateY(-27deg) rotateZ(-2deg) scale(0.3);
+    transform:rotateX(88deg) rotateY(-27deg) rotateZ(-2deg) scale(0.3);
   }
   100% {
-    top: 30%;;
+    top: 31%;;
     left: 27vw;
     /* transform: rotateX(61deg) rotateY(-27deg) rotateZ(-2deg) scale(0.06); */
      transform: rotateX(40deg) rotateY(-14deg) rotateZ(-16deg) scale(0.06)  ;
+     
   }
 }
 

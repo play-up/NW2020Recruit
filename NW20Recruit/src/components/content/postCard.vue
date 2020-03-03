@@ -6,7 +6,7 @@
       ref="front"
       :style="{'transform':(isRoll==1?'rotateY(180deg)':'rotateY(0deg)')}"
     >
-      <img class="pic" src="../../assets/post-pic.jpg" />
+      <img class="pic" src="/static/img/post-pic.jpg" />
       <img src="../../assets/post-text.png" alt class="post-text" />
       <img src="../../assets/post-name.png" alt class="post-name" />
       <!-- <p class="text">愿你找到属于自己的星球</p> -->
@@ -18,7 +18,7 @@
       ref="back"
       :style="{'transform':(isRoll==1?'rotateY(0deg)':'rotateY(180deg)')}"
     >
-      <img class="top" src="../../assets/nw2020.png" />
+      <img class="top" src="/static/img/nw2020.png" />
       <form @submit.prevent="submitForm($event)">
         <ul class="form">
           <li class="name">
@@ -29,7 +29,7 @@
             <div class="sex">
               <div :class="item.class" v-for="(item,index) in sexArr" :key="item.id">
                 <!-- <label :for="item.id"><img :src="item.src" alt=""></label> -->
-                <img :src="item.src" alt="">
+                <img :src="item.src" alt />
                 <!-- <label for="item.id" style="font-family:KaiTi ">{{item.content}}</label> -->
                 <input
                   type="radio"
@@ -94,13 +94,14 @@
               readonly="readonly"
               src="../../assets/submit.png"
             />-->
-            <img src="../../assets/submit.png" alt @click="submit();return false;" class="submit" />
+            <!-- <img src="/static/img/submit.png" alt @click="submit();return false;" class="submit" /> -->
+            <img src="/static/img/submit.png" alt @click="submit()" class="submit" />
           </li>
         </ul>
 
         <div class="right">
           <div class="code">
-            <img src="~assets/code.png" alt />
+            <img src="/static/img/code.png" alt />
             <div class="code-text">招新咨询群</div>
           </div>
           <div>
@@ -125,6 +126,8 @@
         <div slot="no">{{remindArr[remindIndex].rejectBtn}}</div>
       </popup>
     </div>
+    <!-- 点击之后出现一个蒙版，导致组件不可以被点击 -->
+    <div class="box" v-if="isBoxShow"></div>
   </div>
 </template>
 
@@ -144,30 +147,37 @@ export default {
   },
   data() {
     return {
+      isBoxShow:false,
       remindIndex: 0,
       remindArr: [
         {
-          content1: "你的报名表尚未提交,",
+          content1: "您的报名表尚未提交,",
           content2: "确认残忍离开吗QAQ",
           sureBtn: "继续报名",
           rejectBtn: "忍痛拒绝"
         },
         {
-          content1: "你的报名表未填写完整,",
+          content1: "您的报名表填写不正确,",
           content2: "不能提交哦QAQ",
           sureBtn: "继续报名"
         },
         {
-          content1: "你的报名表已提交过一次了,",
+          content1: "您的报名表已提交过一次了,",
           content2: "确认继续提交吗?",
           sureBtn: "继续提交",
           rejectBtn: "忍痛拒绝"
         },
         {
           content1: "提交信息未成功哦",
-          content2: "请重新提交QAQ",
+          content2: "重新提交QAQ",
           sureBtn: "继续报名"
-        }
+        },
+         {
+          content1: "您的手机号未填写正确",
+          content2: "不能提交哦QAQ",
+          sureBtn: "继续填写"
+        },
+
       ],
       formData: {
         name: "", //名字
@@ -191,17 +201,17 @@ export default {
           id: "male",
           isRight: 0,
           value: "男",
-          
-          src:require('../../assets/male.png'),
-          content:'♂'
+
+          src: require("../../assets/male.png"),
+          content: "♂"
         },
         {
           class: "female",
           id: "female",
           isRight: 0,
           value: "女",
-          src:require('../../assets/female.png'),
-          content:'♀'
+          src: require("../../assets/female.png"),
+          content: "♀"
         }
       ],
       dirArr: [
@@ -232,8 +242,7 @@ export default {
       isRemindShow: false //弹窗是否要出现
     };
   },
-  watch: {
-  },
+  watch: {},
   computed: {
     ...mapState(["isRoll"])
   },
@@ -241,7 +250,7 @@ export default {
     // 整理数据
     collectingData() {
       let formData = JSON.stringify(this.formData);
-      // 将学号，手机号专程数字型
+      // 将学号，手机号转为数字型
       this.formData.studentid = parseInt(this.formData.studentid);
       this.formData.phone = parseInt(this.formData.phone);
       this.formData.sex = 1;
@@ -280,15 +289,6 @@ export default {
         this.DirIndex = index;
       }
     },
-    // 点击后卡片翻转到背面
-    roll() {
-      let front = this.$refs.front;
-      let back = this.$refs.back;
-      // 当弹窗没有出来的时候，点击才可以翻转到背面
-      if (this.isRemindShow == false) {
-        this.isRoll = 1;
-      }
-    },
     // 点击后盖章，卡片翻转到正面且向父组件传值，使卡片缩小且飞向指定位置
     roll2() {
       // 取消body上的监听事件
@@ -315,14 +315,88 @@ export default {
               //  this.isAlive = true;
               this.$store.commit("isSubmitShow", false);
               this.$store.commit("isPostShow", false);
-              setTimeout(()=>{
-                  this.$store.commit("isLetterShow", true);
-              },1000)
-              
+              setTimeout(() => {
+                this.$store.commit("isLetterShow", true);
+              }, 1000);
             });
           }, 3000);
         }, 1000);
       }, 1500);
+    },
+    //动画第一步——取消body上的监听事件+盖章
+    takeSeel() {
+      let that = this;
+      return new Promise((resolve, reject) => {
+        document.body.removeEventListener("click", this._close);
+        this.isSeel = 1;
+        resolve(1500);
+      });
+    },
+    // 第二步——卡片翻转并向vuex传值飞到哪个星球
+    rollFly(ms) {
+      let that = this;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          this.$store.commit("isRoll", false);
+          this.isSmaller = this.dirArr[this.DirIndex].id;
+          resolve(1000);
+        }, ms);
+      });
+    },
+    // 第三步——向父组件传值飞到哪个星球,3s后对应的星球才发亮，resolve(3000)
+    flyStar(ms) {
+      let that = this;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          this.$emit("smaller", this.isSmaller);
+          resolve(3200);
+        }, ms);
+      });
+    },
+    // 第四步——对应的星球发亮
+    starBling(ms) {
+      let that = this;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          this.$store.commit("chooseNum", this.isSmaller);
+          this.$store.commit("isBlingShow", true);
+          resolve(1000);
+        }, ms);
+      });
+    },
+    // 第五步——动画执行完成后，该组件消失
+    destroyCom(ms) {
+      let that = this;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          this.$emit("smaller", null);
+          this.isSeel = 0;
+          this.$store.commit("isSubmitShow", false);
+          this.$store.commit("isPostShow", false);
+           this.$store.commit("isBlingShow", false);
+          resolve(100);
+        }, ms);
+      });
+    },
+    // 第六步——组件消失后，首页出现信封
+    letterAppear(ms) {
+      let that = this;
+      return new Promise(() => {
+        setTimeout(() => {
+          //this.$store.commit("isBlingShow", false);
+          this.$store.commit("isLetterShow", true);
+          //  resolve();
+        }, ms);
+      });
+    },
+    // 定义动画全过程
+    myAnimation() {
+      this.takeSeel()
+        .then(this.rollFly)
+        .then(this.flyStar)
+        .then(this.starBling)
+        .then(this.destroyCom)
+        .then(this.letterAppear);
     },
     judgePhoneNo(phoneNo) {
       var reg = /^1[3-9][0-9]\d{8}$/;
@@ -335,18 +409,22 @@ export default {
     // 判断是否都输入且是否输入合法
     judgeInsure() {
       if (this.formData.name == "") {
+        //  this.remindIndex=1;
         return true;
       } else if (!this.judeName(this.formData.name)) {
         // console.log("请输入正确的姓名");
+        //  this.remindIndex=1;
         return true;
       }
       if (this.formData.sex == "") {
         // console.log("请选择性别");
+        //  this.remindIndex=1;
         return true;
       }
       for (var i = 0; i < this.propArr.length; i++) {
         let index = this.propArr[i].prop;
         if (this.formData[index] == "") {
+          //  this.remindIndex=1;
           // console.log("请填写" + this.propArr[i].content);
           return true;
         } else if (
@@ -354,25 +432,32 @@ export default {
           !this.judgePhoneNo(this.formData[index])
         ) {
           // console.log("请输入正确的手机号");
+          // this.remindIndex=4;
           return true;
         }
       }
       if (this.formData.direction == "") {
+        //  this.remindIndex=1;
         console.log("请选择方向！");
 
         return true;
       }
       if (this.formData.introduce == "") {
+        //  this.remindIndex=1;
         return true;
       }
     },
     submit() {
       // this.judgeInsure();
-      // 输入不合法时
+      // 输入不合法时,提示框出现，显示报名表是否填写完整
       if (this.judgeInsure()) {
-        this.isRemindShow = true;
         this.remindIndex = 1;
-      } else {
+        this.isRemindShow = true;
+        
+     
+      }
+      // 当输入合法时，判断是第一次提交还是第二次以上提交
+      else {
         this.submitForm();
         // 后台返回一个状态码，如果成功则先盖章后卡片翻转，不成功则提醒
       }
@@ -380,21 +465,26 @@ export default {
     moreSubmit() {
       this.$axios.post("/update", this.formData).then(res => {
         this.backStatus = res.data.code;
-         if (this.backStatus == 5) {
+        if (this.backStatus == 5) {
           // 当存入数据库失败时
           this.isRemindShow = true;
           this.remindIndex = 3;
-        }else this.roll2();
+        } else {
+          this.isBoxShow=true;
+          this.myAnimation();
+          }
       });
     },
     submitForm() {
+      // 先整理数据
       this.collectingData();
 
       //axios
       this.$axios.post("/new", this.formData).then(res => {
         this.backStatus = res.data.code;
         if (this.backStatus == 2) {
-          this.roll2();
+          this.isBoxShow=true;
+          this.myAnimation();
         } else if (this.backStatus == 4) {
           // this.moreSubmit();
           this.isRemindShow = true;
@@ -420,48 +510,85 @@ export default {
         this.$store.commit("isLetterShow", true);
         this.$store.commit("isRoll", 0);
       }
+    },
+    // 获取localstorge的值
+    getLocal() {
+      this.isLocal = localStorage.getItem("isLocal");
+      if (this.isLocal) {
+        this.formData = JSON.parse(localStorage.getItem("formData"));
+        this.SexIndex = localStorage.getItem("SexIndex");
+        this.DirIndex = localStorage.getItem("DirIndex");
+        var sexArr = this.sexArr;
+        sexArr[this.SexIndex].isRight = true;
+        var dirArr = this.dirArr;
+        dirArr[this.DirIndex].isRight = true;
+      }
+    },
+    iosInput() {
+      let ua = window.navigator.userAgent;
+      let app = window.navigator.appVersion;
+      //$alert('浏览器版本: ' + app + '\n' + '用户代理: ' + ua);
+      if (!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+        // alert('ios端');
+        $("input,textarea").on("blur", function() {
+          var currentPosition, timer;
+          var speed = 1;
+          timer = setInterval(function() {
+            currentPosition =
+              document.documentElement.scrollTop || document.body.scrollTop;
+            currentPosition -= speed;
+            window.scrollTo(0, currentPosition); //页面向上滚动
+            currentPosition += speed;
+            window.scrollTo(0, currentPosition); //页面向下滚动
+            clearInterval(timer);
+          }, 100);
+        });
+      } else if (ua.indexOf("Android") > -1 || ua.indexOf("Adr") > -1) {
+        // alert('android端');
+      }
     }
   },
   mounted() {
-    this.isLocal = localStorage.getItem("isLocal");
-    if (this.isLocal) {
-      this.formData = JSON.parse(localStorage.getItem("formData"));
-      this.SexIndex = localStorage.getItem("SexIndex");
-      this.DirIndex = localStorage.getItem("DirIndex");
-      var sexArr = this.sexArr;
-      sexArr[this.SexIndex].isRight = true;
-      // console.log(this.SexIndex);
+    this.getLocal();
+    this.iosInput();
+    // this.isLocal = localStorage.getItem("isLocal");
+    // if (this.isLocal) {
+    //   this.formData = JSON.parse(localStorage.getItem("formData"));
+    //   this.SexIndex = localStorage.getItem("SexIndex");
+    //   this.DirIndex = localStorage.getItem("DirIndex");
+    //   var sexArr = this.sexArr;
+    //   sexArr[this.SexIndex].isRight = true;
+    //   // console.log(this.SexIndex);
 
-      var dirArr = this.dirArr;
-      dirArr[this.DirIndex].isRight = true;
-    }
+    //   var dirArr = this.dirArr;
+    //   dirArr[this.DirIndex].isRight = true;
+    // }
 
     // 解决安卓苹果输入框问题
-    let ua = window.navigator.userAgent;
-    let app = window.navigator.appVersion;
-    //$alert('浏览器版本: ' + app + '\n' + '用户代理: ' + ua);
-    if (!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-      // alert('ios端');
-      $("input,textarea").on("blur", function() {
-        var currentPosition, timer;
-        var speed = 1;
-        timer = setInterval(function() {
-          currentPosition =
-            document.documentElement.scrollTop || document.body.scrollTop;
-          currentPosition -= speed;
-          window.scrollTo(0, currentPosition); //页面向上滚动
-          currentPosition += speed;
-          window.scrollTo(0, currentPosition); //页面向下滚动
-          clearInterval(timer);
-        }, 100);
-      });
-    } else if (ua.indexOf("Android") > -1 || ua.indexOf("Adr") > -1) {
-      // alert('android端');
-    }
+    // let ua = window.navigator.userAgent;
+    // let app = window.navigator.appVersion;
+    // //$alert('浏览器版本: ' + app + '\n' + '用户代理: ' + ua);
+    // if (!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
+    //   // alert('ios端');
+    //   $("input,textarea").on("blur", function() {
+    //     var currentPosition, timer;
+    //     var speed = 1;
+    //     timer = setInterval(function() {
+    //       currentPosition =
+    //         document.documentElement.scrollTop || document.body.scrollTop;
+    //       currentPosition -= speed;
+    //       window.scrollTo(0, currentPosition); //页面向上滚动
+    //       currentPosition += speed;
+    //       window.scrollTo(0, currentPosition); //页面向下滚动
+    //       clearInterval(timer);
+    //     }, 100);
+    //   });
+    // } else if (ua.indexOf("Android") > -1 || ua.indexOf("Adr") > -1) {
+    //   // alert('android端');
+    // }
   },
   beforeMount() {
     this._close = e => {
-      // alert('...')
       // 如果点击发生在当前组件内部，则不处理
       if (this.$el.contains(e.target)) {
         return;
@@ -472,8 +599,9 @@ export default {
     // 两秒之后转到报名页面才监听事件
     setTimeout(() => {
       document.body.addEventListener("click", this._close);
-      document.body.addEventListener("touchstart", this._close);
-    }, 1500);
+      // 在ipad上得加这个才能监听？奇了怪了
+      // document.body.addEventListener("touchstart", this._close);
+    }, 2500);
   },
   beforeDestroy() {
     document.body.removeEventListener("click", this._close);
@@ -528,29 +656,41 @@ ul {
   top: 12vw;
   width: 27vw;
   display: block;
-  animation: fadeInOpacity .8s forwards ,fadeInBig .3s .3s forwards;
-  /* opacity: 1; */
+  /* animation: fadeInOpacity 0.3s forwards, fadeInBig 0.3s 0.3s forwards; */
   opacity: 0;
+  animation:fadeSeal .6s forwards;
   z-index: 10;
 }
-
+@keyframes fadeSeal{
+  0%{
+    opacity: 0;
+    transform: scale(1.6);
+  }
+  50%{
+    opacity: 1;
+    transform: scale(1.6);
+  }
+  100%{
+    transform: scale(1);
+     opacity: 1;
+  }
+}
 @keyframes fadeInOpacity {
   0% {
     opacity: 0;
     transform: scale(1.6);
   }
-  100%{
-    /* transform: scale(1); */
+  100% {
     opacity: 1;
     transform: scale(1.6);
   }
 }
-@keyframes fadeInBig{
-  0%{
-    transform: scale(1.6)
+@keyframes fadeInBig {
+  0% {
+    transform: scale(1.6);
   }
-  100%{
-    transform: scale(1)
+  100% {
+    transform: scale(1);
   }
 }
 .postcard {
@@ -594,7 +734,7 @@ input {
   top: 0;
   left: 0;
   transition: all 1s;
-  background: url("../../assets/postcard.png") no-repeat;
+  background: url("/static/img/postcard.png") no-repeat;
   background-size: 100% 100%;
   backface-visibility: hidden;
 }
@@ -608,6 +748,7 @@ input {
   margin-left: -10px;
 }
 .bottom {
+  font-size: 20px;
   bottom: 2vw;
   position: absolute;
   left: 50%;
@@ -616,7 +757,7 @@ input {
 .form {
   /* transform: translateY(-8px); */
   position: relative;
-  top: -8px
+  top: -8px;
 }
 .form li {
   box-sizing: border-box;
@@ -694,12 +835,12 @@ input {
   line-height: 24px;
   margin-right: 9vw;
 }
-.male img{
+.male img {
   width: 12.5px;
   display: inline-block;
   vertical-align: top;
 }
-.female img{
+.female img {
   width: 15px;
   display: inline-block;
   vertical-align: top;
@@ -743,14 +884,14 @@ input {
   display: inline-block;
   /* vertical-align: top; */
 }
-.direction label{
+.direction label {
   display: inline-block;
   /* vertical-align: middle; */
 }
 .direction span,
 .direction input {
-      margin-left: 36px;
-  display: inline-block
+  margin-left: 36px;
+  display: inline-block;
 }
 .dir {
   font-size: 24px;
@@ -810,6 +951,7 @@ input {
   height: 100%;
   font-size: 22px;
   color: #282828;
+  line-height: 28px;
 }
 .submit {
   border: none;
@@ -832,5 +974,11 @@ input {
 .direction-container {
   display: inline-block;
   margin-left: 5.4vw;
+}
+.box{
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  position: absolute;
 }
 </style>
