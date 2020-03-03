@@ -60,7 +60,7 @@ export default {
       }, 500);
       setTimeout(() => {
         this.showIcon = true;
-      }, 8000);
+      }, 6000);
     },
     toStarryHome () {
       console.log(this.starryCurrent);
