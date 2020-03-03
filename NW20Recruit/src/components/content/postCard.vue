@@ -126,6 +126,8 @@
         <div slot="no">{{remindArr[remindIndex].rejectBtn}}</div>
       </popup>
     </div>
+    <!-- 点击之后出现一个蒙版，导致组件不可以被点击 -->
+    <div class="box" v-if="isBoxShow"></div>
   </div>
 </template>
 
@@ -145,29 +147,35 @@ export default {
   },
   data() {
     return {
+      isBoxShow:false,
       remindIndex: 0,
       remindArr: [
         {
-          content1: "你的报名表尚未提交,",
+          content1: "您的报名表尚未提交,",
           content2: "确认残忍离开吗QAQ",
           sureBtn: "继续报名",
           rejectBtn: "忍痛拒绝"
         },
         {
-          content1: "你的报名表未填写完整,",
+          content1: "您的报名表未填写完整,",
           content2: "不能提交哦QAQ",
           sureBtn: "继续报名"
         },
         {
-          content1: "你的报名表已提交过一次了,",
+          content1: "您的报名表已提交过一次了,",
           content2: "确认继续提交吗?",
           sureBtn: "继续提交",
           rejectBtn: "忍痛拒绝"
         },
         {
           content1: "提交信息未成功哦",
-          content2: "请重新提交QAQ",
+          content2: "重新提交QAQ",
           sureBtn: "继续报名"
+        },
+         {
+          content1: "您的手机号未填写正确",
+          content2: "不能提交哦QAQ",
+          sureBtn: "继续填写"
         }
       ],
       formData: {
@@ -398,18 +406,22 @@ export default {
     // 判断是否都输入且是否输入合法
     judgeInsure() {
       if (this.formData.name == "") {
+         this.remindIndex=1;
         return true;
       } else if (!this.judeName(this.formData.name)) {
         // console.log("请输入正确的姓名");
+         this.remindIndex=1;
         return true;
       }
       if (this.formData.sex == "") {
         // console.log("请选择性别");
+         this.remindIndex=1;
         return true;
       }
       for (var i = 0; i < this.propArr.length; i++) {
         let index = this.propArr[i].prop;
         if (this.formData[index] == "") {
+           this.remindIndex=1;
           // console.log("请填写" + this.propArr[i].content);
           return true;
         } else if (
@@ -417,15 +429,18 @@ export default {
           !this.judgePhoneNo(this.formData[index])
         ) {
           // console.log("请输入正确的手机号");
+          this.remindIndex=4;
           return true;
         }
       }
       if (this.formData.direction == "") {
+         this.remindIndex=1;
         console.log("请选择方向！");
 
         return true;
       }
       if (this.formData.introduce == "") {
+         this.remindIndex=1;
         return true;
       }
     },
@@ -433,8 +448,10 @@ export default {
       // this.judgeInsure();
       // 输入不合法时,提示框出现，显示报名表是否填写完整
       if (this.judgeInsure()) {
+        // this.remindIndex = 1;
         this.isRemindShow = true;
-        this.remindIndex = 1;
+        
+     
       }
       // 当输入合法时，判断是第一次提交还是第二次以上提交
       else {
@@ -449,7 +466,10 @@ export default {
           // 当存入数据库失败时
           this.isRemindShow = true;
           this.remindIndex = 3;
-        } else this.myAnimation();
+        } else {
+          this.isBoxShow=true;
+          this.myAnimation();
+          }
       });
     },
     submitForm() {
@@ -460,6 +480,7 @@ export default {
       this.$axios.post("/new", this.formData).then(res => {
         this.backStatus = res.data.code;
         if (this.backStatus == 2) {
+          this.isBoxShow=true;
           this.myAnimation();
         } else if (this.backStatus == 4) {
           // this.moreSubmit();
@@ -577,7 +598,7 @@ export default {
       document.body.addEventListener("click", this._close);
       // 在ipad上得加这个才能监听？奇了怪了
       // document.body.addEventListener("touchstart", this._close);
-    }, 1500);
+    }, 2500);
   },
   beforeDestroy() {
     document.body.removeEventListener("click", this._close);
@@ -632,19 +653,31 @@ ul {
   top: 12vw;
   width: 27vw;
   display: block;
-  animation: fadeInOpacity 0.8s forwards, fadeInBig 0.3s 0.3s forwards;
-  /* opacity: 1; */
+  /* animation: fadeInOpacity 0.3s forwards, fadeInBig 0.3s 0.3s forwards; */
   opacity: 0;
+  animation:fadeSeal .6s forwards;
   z-index: 10;
 }
-
+@keyframes fadeSeal{
+  0%{
+    opacity: 0;
+    transform: scale(1.6);
+  }
+  50%{
+    opacity: 1;
+    transform: scale(1.6);
+  }
+  100%{
+    transform: scale(1);
+     opacity: 1;
+  }
+}
 @keyframes fadeInOpacity {
   0% {
     opacity: 0;
     transform: scale(1.6);
   }
   100% {
-    /* transform: scale(1); */
     opacity: 1;
     transform: scale(1.6);
   }
@@ -712,6 +745,7 @@ input {
   margin-left: -10px;
 }
 .bottom {
+  font-size: 20px;
   bottom: 2vw;
   position: absolute;
   left: 50%;
@@ -936,5 +970,11 @@ input {
 .direction-container {
   display: inline-block;
   margin-left: 5.4vw;
+}
+.box{
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  position: absolute;
 }
 </style>
