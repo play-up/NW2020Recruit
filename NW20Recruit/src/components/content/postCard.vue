@@ -158,7 +158,7 @@ export default {
         },
         {
           content1: "您的报名表填写不正确,",
-          content2: "不能提交哦QAQ",
+          content2: "请仔细检查哦",
           sureBtn: "继续报名"
         },
         {
