@@ -60,7 +60,7 @@ export default {
       
        setTimeout(()=>{
         this.$store.commit('isRoll',1)
-      },500)
+      },2000)
     }
   },
 

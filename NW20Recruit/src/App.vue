@@ -93,6 +93,6 @@ body {
   opacity: 1;
 }
 .router-enter-active, .router-leave-active {
-  transition: opacity 6s ease;
+  /* transition: opacity 6s ease; */
 }
 </style>

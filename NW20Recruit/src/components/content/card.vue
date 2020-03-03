@@ -47,7 +47,7 @@ export default {
       this.$store.commit('isPostShow',true)
       setTimeout(()=>{
         this.$store.commit('isRoll',1)
-      },1000)
+      },2000)
     },
     smaller(val) {
       this.rotate = val;
@@ -169,7 +169,7 @@ export default {
     opacity: 1;
   }
   100% {
-    left: 18vw;
+    left: 21vw;
     top: 60%;
     /* transform: rotateX(51deg) rotateY(-48deg) rotateZ(-43deg) scale(0.05); */
     transform: rotateX(43deg) rotateY(-42deg) rotateZ(-49deg) scale(0.03);

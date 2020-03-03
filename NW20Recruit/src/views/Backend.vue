@@ -27,7 +27,7 @@
 
 <script>
 import Planet from "@/components/content/Planet";
-
+import store from "@/store";
 import { mapState, mapMutations } from "vuex";
 
 export default {
@@ -64,7 +64,7 @@ export default {
     },
     toStarryHome() {
       console.log(this.starryCurrent);
-
+      this.$store.commit('isSubmitShow',true)
       if (this.starryCurrent === 2) {
         this.starryNext();
         console.log(this.starryCurrent);
