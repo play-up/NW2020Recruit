@@ -83,7 +83,7 @@ export default {
       }
     },
     toNextPage() {
-      this.$router.replace("/backend");
+      this.$router.replace("/");
     },
     goBack() {
       let start, end;
@@ -96,9 +96,9 @@ export default {
       this.$refs.all.addEventListener("touchend", evt => {
         // 上滑减小，下滑增加
         if (end > start) {
-          this.$router.replace("/design");
+          this.$router.replace("/frontend");
         } else if (end < start) {
-          this.$router.replace("/backend");
+          this.$router.replace("/");
         }
       });
     }
@@ -236,20 +236,20 @@ export default {
 }
 .next {
   position: absolute;
-  bottom: 100px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
   animation: float 1s linear infinite;
 }
 .next img {
-  height: 50px;
+  width: 48px;
 }
 @keyframes float {
   0% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(10px);
+    transform: translateY(3px);
   }
   100% {
     transform: translateY(0);
