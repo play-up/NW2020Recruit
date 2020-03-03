@@ -69,7 +69,7 @@ export default {
 .up{
     height: 24%;
     width: 39%;
-    background-image: url('~assets/letters.png');
+    background-image: url('http://recruit.zqyy.site/letters.png');
     background-size: 100% 100%;
     position: relative;
     left: 32%;
@@ -79,7 +79,7 @@ export default {
 .down{
     height: 76%;
     width: 100%;
-    background-image: url('~assets/test-ball.png');
+    background-image: url('http://recruit.zqyy.site/test-ball.png');
     background-size: 100% 100%;
 }
 @keyframes boolean {
