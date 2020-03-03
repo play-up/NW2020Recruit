@@ -372,6 +372,7 @@ export default {
           this.isSeel = 0;
           this.$store.commit("isSubmitShow", false);
           this.$store.commit("isPostShow", false);
+           this.$store.commit("isBlingShow", false);
           resolve(100);
         }, ms);
       });
@@ -381,6 +382,7 @@ export default {
       let that = this;
       return new Promise(() => {
         setTimeout(() => {
+          //this.$store.commit("isBlingShow", false);
           this.$store.commit("isLetterShow", true);
           //  resolve();
         }, ms);

@@ -64,7 +64,9 @@ export default {
     },
     toStarryHome() {
       console.log(this.starryCurrent);
-      this.$store.commit('isSubmitShow',true)
+      this.$store.commit('isSubmitShow',true);
+      this.$store.commit("isBlingShow", false);
+      this.$store.commit("isLetterShow", false);
       if (this.starryCurrent === 2) {
         this.starryNext();
         console.log(this.starryCurrent);
