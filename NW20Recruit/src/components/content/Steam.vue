@@ -2,10 +2,10 @@
   <div>
     <div class="container">
       <div class="Steam">
-        <img src="~assets/steam.png" />
+        <img src="http://recruit.zqyy.site/steam.png" />
       </div>
       <div class="steamPlanet">
-        <img src="~assets/steamPlanet.png" />
+        <img src="http://recruit.zqyy.site/steamPlanet.png" />
       </div>
     </div>
   </div>
