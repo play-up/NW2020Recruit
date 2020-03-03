@@ -80,7 +80,7 @@ export default {
   z-index: 10000;
 }
 .popup {
-  background: url("/static/img/cancelBg.png") no-repeat;
+  background: url("http://recruit.zqyy.site/cancelBg.png") no-repeat;
   background-size: 100% 100%;
   width: 78vw;
   height: 78vw;

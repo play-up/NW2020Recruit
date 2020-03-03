@@ -6,7 +6,7 @@
       ref="front"
       :style="{'transform':(isRoll==1?'rotateY(180deg)':'rotateY(0deg)')}"
     >
-      <img class="pic" src="/static/img/post-pic.jpg" />
+      <img class="pic" src="http://recruit.zqyy.site/post-pic.jpg" />
       <img src="../../assets/post-text.png" alt class="post-text" />
       <img src="../../assets/post-name.png" alt class="post-name" />
       <!-- <p class="text">愿你找到属于自己的星球</p> -->
@@ -18,7 +18,7 @@
       ref="back"
       :style="{'transform':(isRoll==1?'rotateY(0deg)':'rotateY(180deg)')}"
     >
-      <img class="top" src="/static/img/nw2020.png" />
+      <img class="top" src="http://recruit.zqyy.site/nw2020.png" />
       <form @submit.prevent="submitForm($event)">
         <ul class="form">
           <li class="name">
@@ -95,13 +95,13 @@
               src="../../assets/submit.png"
             />-->
             <!-- <img src="/static/img/submit.png" alt @click="submit();return false;" class="submit" /> -->
-            <img src="/static/img/submit.png" alt @click="submit()" class="submit" />
+            <img src="http://recruit.zqyy.site/submit.png" alt @click="submit()" class="submit" />
           </li>
         </ul>
 
         <div class="right">
           <div class="code">
-            <img src="/static/img/code.png" alt />
+            <img src="http://recruit.zqyy.site/code.png" alt />
             <div class="code-text">招新咨询群</div>
           </div>
           <div>
@@ -734,7 +734,7 @@ input {
   top: 0;
   left: 0;
   transition: all 1s;
-  background: url("/static/img/postcard.png") no-repeat;
+  background: url("http://recruit.zqyy.site/postcard.png") no-repeat;
   background-size: 100% 100%;
   backface-visibility: hidden;
 }
