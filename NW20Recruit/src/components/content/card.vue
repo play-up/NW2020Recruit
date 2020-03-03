@@ -180,7 +180,7 @@ export default {
   0% {
     transform: rotateX(61deg) rotateY(-27deg) rotateZ(-15deg) ;
   }
-  30% {
+  35% {
     /* transform: rotateX(84deg) rotateY(-24deg) rotateZ(-4deg) scale(0.3); */
     transform:rotateX(89deg) rotateY(-27deg) rotateZ(-2deg) scale(0.3);
   }
