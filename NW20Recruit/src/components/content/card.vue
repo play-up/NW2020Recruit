@@ -182,13 +182,15 @@ export default {
   }
   35% {
     /* transform: rotateX(84deg) rotateY(-24deg) rotateZ(-4deg) scale(0.3); */
-    transform:rotateX(87deg) rotateY(-27deg) rotateZ(-2deg) scale(0.2);
+    /* transform:rotateX(87deg) rotateY(-27deg) rotateZ(-2deg) scale(0.2); */
+    transform:rotateX(87deg) rotateY(-32deg) rotateZ(-2deg) scale(0.2);
   }
   100% {
-    top: 31%;;
+    top: 32%;;
     left: 27vw;
     /* transform: rotateX(61deg) rotateY(-27deg) rotateZ(-2deg) scale(0.06); */
-     transform: rotateX(40deg) rotateY(-14deg) rotateZ(-16deg) scale(0.06)  ;
+     /* transform: rotateX(40deg) rotateY(-14deg) rotateZ(-16deg) scale(0.06)  ; */
+     transform: rotateX(38deg) rotateY(-27deg) rotateZ(-22deg) scale(0.06)  ;
      
   }
 }
