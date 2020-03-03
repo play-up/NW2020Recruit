@@ -49,16 +49,11 @@ export default {
       e.preventDefault(); 
     }, {passive: false});
     window.onload = () => {
-      
       // this.isLoading = false
-      console.log(this.isLoading);
-      this.updateLoading({isLoading: false})
       this.starryNext()
     }
     
     window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", hengshuping, false);
-
-
  function hengshuping() {
         if (window.orientation == 90 || window.orientation == -90) {
            //横屏

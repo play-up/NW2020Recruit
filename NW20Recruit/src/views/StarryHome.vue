@@ -1,9 +1,9 @@
 <template>
   <div id="starry-home">
-    <img src="~assets/hill.png" alt="hill" class="hill" />
+    <img src="http://recruit.zqyy.site/hill.png" alt="hill" class="hill" />
     <!-- 信封 -->
     <img
-      src="../assets/letter.png"
+      src="http://recruit.zqyy.site/letter.png"
       alt
       class="letter"
       v-if="isLetterShow"
@@ -44,7 +44,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["starryNext"]),
+    ...mapMutations(["starryNext","updateLoading"]),
     moonEv(state) {
       if (state === 0) {
         this.ShadowShow = true;
@@ -67,21 +67,29 @@ export default {
     ...mapState(["isSubmitShow", "isLetterShow"])
   },
   mounted() {
+    let that = this 
     let imgs = [
-      "/static/img/d_background.png",
-      "/static/img/bat1.png",
-      "/static/img/bat2.png",
-      "/static/img/castle.png"
+      "http://recruit.zqyy.site/single-starry.png",
+      "http://recruit.zqyy.site/hill.png",
+      "http://recruit.zqyy.site/d_background.png",
+      "http://recruit.zqyy.site/bat1.png",
+      "http://recruit.zqyy.site/bat2.png",
+      "http://recruit.zqyy.site/castle.png",
+      "http://recruit.zqyy.site/test-ball.png"
     ]
+    let num = 0
     for( let img of imgs) {
       let image = new Image()
       image.src = img
+      num++
       image.onload=()=>{
         console.log('预加载了')
+        if(num >= imgs.length) {
+          that.updateLoading({isLoading: false})
+        }
       }
       image.onerror = () => {
         console.log('预加载失败');
-        
       };
     }
   },
@@ -102,7 +110,7 @@ export default {
 #starry-home {
   width: 100%;
   height: 100%;
-  background: url("~assets/single-starry.png") no-repeat;
+  background: url("http://recruit.zqyy.site/single-starry.png") no-repeat;
   background-size: 100% 100%;
   position: relative;
 }
