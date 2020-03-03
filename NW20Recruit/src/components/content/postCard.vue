@@ -348,7 +348,7 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           this.$emit("smaller", this.isSmaller);
-          resolve(3000);
+          resolve(3200);
         }, ms);
       });
     },
@@ -372,7 +372,7 @@ export default {
           this.isSeel = 0;
           this.$store.commit("isSubmitShow", false);
           this.$store.commit("isPostShow", false);
-          resolve(1000);
+          resolve(100);
         }, ms);
       });
     },
