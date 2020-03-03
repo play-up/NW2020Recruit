@@ -29,14 +29,15 @@
         >{{letter}}</p>
       </div>
     </div>
-    <div class="next" v-show="showIcon" @click="toNextPage"></div>
-    <img src="http://recruit.zqyy.site/frontend_next.png" @click="toStarryHome" />
+    <div class="next" v-show="showIcon" @click="toNextPage">
+      <img src="http://recruit.zqyy.site/frontend_next.png" @click="toStarryHome" />
+    </div>
   </div>
 </template>
 
 <script>
 import Planet from "@/components/content/Planet";
-
+import store from "@/store";
 import { mapState, mapMutations } from "vuex";
 
 export default {
@@ -73,17 +74,12 @@ export default {
     },
     toStarryHome() {
       console.log(this.starryCurrent);
-
+      this.$store.commit("isSubmitShow", true);
+      this.$store.commit("isBlingShow", false);
+      this.$store.commit("isLetterShow", false);
       if (this.starryCurrent === 2) {
         this.starryNext();
         console.log(this.starryCurrent);
-        this.$store.commit("isSubmitShow", true);
-        this.$store.commit("isBlingShow", false);
-        this.$store.commit("isLetterShow", false);
-        if (this.starryCurrent === 2) {
-          this.starryNext();
-          console.log(this.starryCurrent);
-        }
       }
     },
     toNextPage() {
@@ -124,6 +120,9 @@ export default {
       image.src = img;
       image.onload = () => {
         console.log("预加载了");
+      };
+      image.onerror = () => {
+        console.log("预加载失败");
       };
       for (let img of imgs) {
         let image = new Image();
