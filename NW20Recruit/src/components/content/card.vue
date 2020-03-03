@@ -182,7 +182,7 @@ export default {
   }
   35% {
     /* transform: rotateX(84deg) rotateY(-24deg) rotateZ(-4deg) scale(0.3); */
-    transform:rotateX(88deg) rotateY(-27deg) rotateZ(-2deg) scale(0.3);
+    transform:rotateX(87deg) rotateY(-27deg) rotateZ(-2deg) scale(0.2);
   }
   100% {
     top: 31%;;
