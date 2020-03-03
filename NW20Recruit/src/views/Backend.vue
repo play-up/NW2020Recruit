@@ -28,13 +28,10 @@
           :key="index"
         >{{letter}}</p>
       </div>
-    </div><<<<<<< HEAD
-    <router-link to="/" tag="div" class="next" v-show="showIcon">
-      <img src="~assets/frontend_next.png" @click="toStarryHome" />
-    </router-link>=======
-    <div class="next" v-show="showIcon" @click="toNextPage"></div>
-    <img src="http://recruit.zqyy.site/frontend_next.png" @click="toStarryHome" />
-    >>>>>>> Lee
+    </div>
+    <div class="next" v-show="showIcon" @click="toNextPage">
+      <img src="http://recruit.zqyy.site/frontend_next.png" @click="toStarryHome" />
+    </div>
   </div>
 </template>
 
