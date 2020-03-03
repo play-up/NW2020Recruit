@@ -1,6 +1,6 @@
 <template>
     <div class="all" ref="all">
-        <Loading v-if="loading"></Loading>
+        <!-- <Loading v-if="loading"></Loading> -->
         <Boolean :class="[!isfly?'':'lsmall', 'cbig']"></Boolean>
         <div :class="['title', {'show':showTitle}]">
             <img class="word-img" src="@/assets/sheji.png" alt="">
@@ -65,8 +65,8 @@ export default {
             imgUrl: [
                 require('@/assets/sheji.png'),
                 require('@/assets/pinkarrow.png'),
-                require('@/assets/test-bg.jpg'),
-                require('@/assets/bat2.png'),
+                '/static/img/test-bg.jpg',
+                '/static/img/bat2.png',
                 require('@/assets/letters.png'),
                 require('@/assets/test-ball.png')
             ],
@@ -187,7 +187,11 @@ export default {
         }
     },
     mounted() {
-        this.loadImg(this.imgUrl, true);
+        //加载下一页的图片
+        this.loadNext();
+        //动画
+        this.anim();
+        //滑动切换路由
         this.goBack();
     }
 }
@@ -197,7 +201,7 @@ export default {
 .all{
     width: 100%;
     height: 100%;
-    background-image: url('/static/img/d_background.png');
+    background-image: url('/static/img/test-bg.jpg');
     background-size: 100% 100%;
     position: relative;
 }
