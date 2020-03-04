@@ -368,7 +368,8 @@ export default {
       return new Promise((resolve, reject) => {
         document.body.removeEventListener("click", this._close);
         this.isSeel = 1;
-        resolve(1500);
+        // resolve(1500);
+        resolve(800)
       });
     },
     // 第二步——卡片翻转并向vuex传值飞到哪个星球
@@ -398,6 +399,13 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           this.$store.commit("chooseNum", this.isSmaller);
+
+          // 修改后如下
+          this.$emit("smaller", null);
+          this.$store.commit("isSubmitShow", false);
+          this.isSeel = 0;
+          this.$store.commit("isPostShow", false);
+          this.isBoxShow=false;
           this.$store.commit("isBlingShow", true);
           resolve(1000);
         }, ms);
@@ -408,12 +416,12 @@ export default {
       let that = this;
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          this.$emit("smaller", null);
-          this.isSeel = 0;
-          this.$store.commit("isSubmitShow", false);
-          this.$store.commit("isPostShow", false);
+          // this.$emit("smaller", null);
+          // this.isSeel = 0;
+          // this.$store.commit("isSubmitShow", false);
+          // this.$store.commit("isPostShow", false);
           this.$store.commit("isBlingShow", false);
-          resolve(200);
+          resolve(300);
         }, ms);
       });
     },
