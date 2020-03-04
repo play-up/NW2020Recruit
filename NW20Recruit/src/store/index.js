@@ -18,7 +18,9 @@ export default new Vuex.Store({
     //是否加载loading
     isLoading: false,
     isRoll:0,//信封是否翻转
-    isBlingShow:false
+    isBlingShow:false,
+    // 是否经过报名表
+    isPass:false
   },
   mutations: {
     starryNext(state) { //首页进入下一个状态
@@ -47,6 +49,9 @@ export default new Vuex.Store({
     },
     isBlingShow(state,val){
       state.isBlingShow=val
+    },
+    isPass(state,val){
+      state.isPass=val;
     }
   }
 });
