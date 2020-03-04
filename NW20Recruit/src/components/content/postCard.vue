@@ -77,6 +77,7 @@
             <p class="i-text">自我介绍</p>
             <div class="self">
               <textarea
+                id="myTextarea"
                 cols="30"
                 rows="10"
                 v-model="formData.introduce"
@@ -86,14 +87,6 @@
             <span class="remain">{{remainNum}}/200</span>
           </li>
           <li>
-            <!-- <input
-              type="submit"
-              class="submit"
-              @click="submit();return false;"
-              readonly="readonly"
-              src="../../assets/submit.png"
-            />-->
-            <!-- <img src="/static/img/submit.png" alt @click="submit();return false;" class="submit" /> -->
             <img src="http://recruit.zqyy.site/submit.png" alt @click="submit()" class="submit" />
           </li>
         </ul>
@@ -146,8 +139,8 @@ export default {
   },
   data() {
     return {
-      remainNum:200,//剩余字数
-      isBoxShow:false,
+      remainNum: 200, //剩余字数
+      isBoxShow: false,
       remindIndex: 0,
       remindArr: [
         {
@@ -157,7 +150,7 @@ export default {
           rejectBtn: "忍痛拒绝"
         },
         {
-          content1: "您的报名表填写不正确,",
+          content1: "您的报名表填写不完整,",
           content2: "请仔细检查哦",
           sureBtn: "继续报名"
         },
@@ -172,12 +165,17 @@ export default {
           content2: "重新提交QAQ",
           sureBtn: "继续报名"
         },
-         {
+        {
           content1: "您的手机号未填写正确",
           content2: "不能提交哦QAQ",
           sureBtn: "继续填写"
         },
-
+        {
+          content1: "您的报名表已经修改且未提交",
+          content2: "是否离开",
+          sureBtn: "继续报名",
+          rejectBtn: "忍痛离开"
+        }
       ],
       formData: {
         name: "", //名字
@@ -239,16 +237,32 @@ export default {
       isLocal: false, //是否已经客户端保存
       isAlive: true, //是否点击了提交，点击后点击外围不跳转到首页
       backStatus: null, //后台返回的状态
-      isRemindShow: false //弹窗是否要出现
+      isRemindShow: false, //弹窗是否要出现
+      count:0
     };
   },
   watch: {
-    'formData.introduce'(){
+    "formData.introduce"() {
       let textLength = this.formData.introduce.length;
-      if(textLength>200){
-        this.formData.introduce=String(this.formData.introduce).slice(0,200);
-      }else{
-        this.remainNum=200-textLength
+      if (textLength > 200) {
+        this.formData.introduce = String(this.formData.introduce).slice(0, 200);
+      } else {
+        this.remainNum = textLength;
+      }
+    },
+    formData: {
+      handler (val) {
+        if (val) {
+          this.count++
+          // console.log(this.count);
+        }
+      },
+      deep: true
+    },
+    backStatus(){
+      // 提交成功
+      if(this.backStatus==2){
+
       }
     }
   },
@@ -256,13 +270,9 @@ export default {
     ...mapState(["isRoll"])
   },
   methods: {
-    preventMove(e){
+    preventMove(e) {
       e.stopPropagation();
     },
-    // descInput(){
-    //   let textLength = this.formData.introduce.length;
-    //   this.remainNum=200-textLength
-    // },
     // 整理数据
     collectingData() {
       let formData = JSON.stringify(this.formData);
@@ -271,6 +281,19 @@ export default {
       this.formData.phone = parseInt(this.formData.phone);
       this.formData.sex = 1;
       //  console.log(this.formData.studentid);
+      // let arr = this.formData;
+      // localStorage.setItem("formData", JSON.stringify(arr));
+
+      // localStorage.setItem("SexIndex", this.SexIndex);
+      // this.SexIndex = localStorage.getItem("SexIndex");
+
+      // localStorage.setItem("DirIndex", this.DirIndex);
+      // this.DirIndex = localStorage.getItem("DirIndex");
+
+      // localStorage.setItem("isLocal", true);
+    },
+    // 存入localstoage
+    takeInLocal() {
       let arr = this.formData;
       localStorage.setItem("formData", JSON.stringify(arr));
 
@@ -305,7 +328,7 @@ export default {
         this.DirIndex = index;
       }
     },
-    // 点击后盖章，卡片翻转到正面且向父组件传值，使卡片缩小且飞向指定位置
+    // 点击后盖章，卡片翻转到正面且向父组件传值，使卡片缩小且飞向指定位置（之前的写法）
     roll2() {
       // 取消body上的监听事件
       document.body.removeEventListener("click", this._close);
@@ -389,7 +412,7 @@ export default {
           this.isSeel = 0;
           this.$store.commit("isSubmitShow", false);
           this.$store.commit("isPostShow", false);
-           this.$store.commit("isBlingShow", false);
+          this.$store.commit("isBlingShow", false);
           resolve(200);
         }, ms);
       });
@@ -425,22 +448,23 @@ export default {
     // 判断是否都输入且是否输入合法
     judgeInsure() {
       if (this.formData.name == "") {
-        //  this.remindIndex=1;
+        this.remindIndex = 1;
         return true;
-      } else if (!this.judeName(this.formData.name)) {
-        // console.log("请输入正确的姓名");
-        //  this.remindIndex=1;
-        return true;
-      }
+      } 
+      // else if (!this.judeName(this.formData.name)) {
+      //   // console.log("请输入正确的姓名");
+      //   this.remindIndex = 1;
+      //   return true;
+      // }
       if (this.formData.sex == "") {
         // console.log("请选择性别");
-        //  this.remindIndex=1;
+        this.remindIndex = 1;
         return true;
       }
       for (var i = 0; i < this.propArr.length; i++) {
         let index = this.propArr[i].prop;
         if (this.formData[index] == "") {
-          //  this.remindIndex=1;
+          this.remindIndex = 1;
           // console.log("请填写" + this.propArr[i].content);
           return true;
         } else if (
@@ -448,18 +472,18 @@ export default {
           !this.judgePhoneNo(this.formData[index])
         ) {
           // console.log("请输入正确的手机号");
-          // this.remindIndex=4;
+          this.remindIndex = 4;
           return true;
         }
       }
       if (this.formData.direction == "") {
-        //  this.remindIndex=1;
+        this.remindIndex = 1;
         console.log("请选择方向！");
 
         return true;
       }
       if (this.formData.introduce == "") {
-        //  this.remindIndex=1;
+        this.remindIndex = 1;
         return true;
       }
     },
@@ -467,10 +491,8 @@ export default {
       // this.judgeInsure();
       // 输入不合法时,提示框出现，显示报名表是否填写完整
       if (this.judgeInsure()) {
-        this.remindIndex = 1;
+        // this.remindIndex = 1;
         this.isRemindShow = true;
-        
-     
       }
       // 当输入合法时，判断是第一次提交还是第二次以上提交
       else {
@@ -486,9 +508,12 @@ export default {
           this.isRemindShow = true;
           this.remindIndex = 3;
         } else {
-          this.isBoxShow=true;
+          // this.$store.commit("status",this.backStatus)
+          localStorage.setItem("status", this.backStatus);
+          this.isBoxShow = true;
           this.myAnimation();
-          }
+          this.takeInLocal();
+        }
       });
     },
     submitForm() {
@@ -499,8 +524,11 @@ export default {
       this.$axios.post("/new", this.formData).then(res => {
         this.backStatus = res.data.code;
         if (this.backStatus == 2) {
-          this.isBoxShow=true;
+          // this.$store.commit("status",this.backStatus)
+          localStorage.setItem("status", this.backStatus);
+          this.isBoxShow = true;
           this.myAnimation();
+          this.takeInLocal();
         } else if (this.backStatus == 4) {
           // this.moreSubmit();
           this.isRemindShow = true;
@@ -518,7 +546,7 @@ export default {
     },
     no() {
       this.isRemindShow = false;
-      if (this.remindIndex == 0) {
+      if (this.remindIndex == 0 ||this.remindIndex == 5) {
         // 报名表这个组件消失
         this.$store.commit("isSubmitShow", false);
         this.$store.commit("isPostShow", false);
@@ -527,7 +555,7 @@ export default {
         this.$store.commit("isRoll", 0);
       }
     },
-    // 获取localstorge的值
+    // 获取localstorge的值,渲染到表单上
     getLocal() {
       this.isLocal = localStorage.getItem("isLocal");
       if (this.isLocal) {
@@ -562,12 +590,18 @@ export default {
       } else if (ua.indexOf("Android") > -1 || ua.indexOf("Adr") > -1) {
         // alert('android端');
       }
+    },
+    showPopUp(e,status,index){
+       if (this.$el.contains(e.target)) {
+        return;
+      }
+      this.isRemindShow = status; //如果点击了则弹窗出现
+      this.remindIndex = index;
     }
   },
   mounted() {
     this.getLocal();
     this.iosInput();
-  
   },
   beforeMount() {
     this._close = e => {
@@ -575,14 +609,31 @@ export default {
       if (this.$el.contains(e.target)) {
         return;
       }
+      let status = localStorage.getItem("status");
+      // 未提交时
+      if(status!=2){
       this.isRemindShow = true; //如果点击了则弹窗出现
       this.remindIndex = 0;
+      return ;
+      }
+      // 提交过后修改表单
+     if(this.count>1){
+        this.isRemindShow = true; //如果点击了则弹窗出现
+        this.remindIndex =5;
+        return ;
+      }
+      // 当提交成功时，点击组件消失
+      if(status==2&&this.count<=1){
+         this.$store.commit("isSubmitShow", false);
+        this.$store.commit("isPostShow", false);
+        // this.isAlive=false;
+        this.$store.commit("isLetterShow", true);
+        this.$store.commit("isRoll", 0);
+      }
     };
     // 两秒之后转到报名页面才监听事件
     setTimeout(() => {
       document.body.addEventListener("click", this._close);
-      // 在ipad上得加这个才能监听？奇了怪了
-      // document.body.addEventListener("touchstart", this._close);
     }, 2500);
   },
   beforeDestroy() {
@@ -640,21 +691,21 @@ ul {
   display: block;
   /* animation: fadeInOpacity 0.3s forwards, fadeInBig 0.3s 0.3s forwards; */
   opacity: 0;
-  animation:fadeSeal .6s forwards;
+  animation: fadeSeal 0.6s forwards;
   z-index: 10;
 }
-@keyframes fadeSeal{
-  0%{
+@keyframes fadeSeal {
+  0% {
     opacity: 0;
     transform: scale(1.6);
   }
-  50%{
+  50% {
     opacity: 1;
     transform: scale(1.6);
   }
-  100%{
+  100% {
     transform: scale(1);
-     opacity: 1;
+    opacity: 1;
   }
 }
 @keyframes fadeInOpacity {
@@ -720,7 +771,7 @@ input {
   background-size: 100% 100%;
   backface-visibility: hidden;
 }
-.front{
+.front {
   z-index: 200;
 }
 .back {
@@ -750,7 +801,6 @@ input {
 }
 .form label {
   font-size: 24px;
-  
 }
 .form input[type="text"] {
   outline: none;
@@ -942,14 +992,14 @@ input {
   line-height: 28px;
   /* overflow: scroll; */
 }
-textarea ::-webkit-scrollbar{
+textarea ::-webkit-scrollbar {
   width: 30px;
 }
-.remain{
+.remain {
   position: absolute;
-    right: 1vw;
-    bottom: 1vw;
-    font-size: 16px;
+  right: 1vw;
+  bottom: 1vw;
+  font-size: 16px;
 }
 .submit {
   border: none;
@@ -973,7 +1023,7 @@ textarea ::-webkit-scrollbar{
   display: inline-block;
   margin-left: 5.4vw;
 }
-.box{
+.box {
   width: 100%;
   height: 100%;
   z-index: 1000;
