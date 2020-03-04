@@ -74,15 +74,24 @@ export default {
     },
     toStarryHome() {
       console.log(this.starryCurrent);
-      this.$store.commit("isSubmitShow", true);
-      this.$store.commit("isBlingShow", false);
-      this.$store.commit("isLetterShow", false);
+      // this.$store.commit("isSubmitShow", true);
+      // this.$store.commit("isBlingShow", false);
+      // this.$store.commit("isLetterShow", false);
       if (this.starryCurrent === 2) {
         this.starryNext();
         console.log(this.starryCurrent);
       }
     },
     toNextPage() {
+      if(this.isPass==false){
+      this.$store.commit("isSubmitShow", true);
+      // this.$store.commit("isBlingShow", false);
+      this.$store.commit("isLetterShow", false);
+      }else{
+         this.$store.commit("isSubmitShow", false);
+      // this.$store.commit("isBlingShow", false);
+      this.$store.commit("isLetterShow", true);
+      }
       this.$router.replace("/");
     },
     goBack() {
@@ -98,6 +107,8 @@ export default {
         if (end > start && this.showIcon == true) {
           if (this.isPass == true) {
             this.$router.replace("/");
+            this.$store.commit("isSubmitShow", false);
+      this.$store.commit("isLetterShow", true);
           } else {
             this.$router.replace("/frontend");
           }
