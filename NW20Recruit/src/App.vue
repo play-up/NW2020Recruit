@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h-screen v-if="isHscreen" />
-    <loading v-if="isLoading" />
+    <!-- <loading v-if="isLoading" /> -->
     <transition name="router" v-show="phone">
       <router-view v-show="phone"/>
     </transition>
