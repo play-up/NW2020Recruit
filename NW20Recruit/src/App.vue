@@ -86,6 +86,7 @@ body {
   height: 100%;
   position: relative;
   background: black;
+  user-select:none;
 }
 .router-enter {
   /* transform: translate3d(-100%,0,0); */

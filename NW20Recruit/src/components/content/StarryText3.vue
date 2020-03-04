@@ -87,7 +87,7 @@ export default {
             this.starryNext()//进入下一个状态 
             clearTimeout(nextCurrent)
           },3000)
-    } else {
+    } else if (this.starryCurrent > 0){
       this.StarryTextShow = false
     }
   },
@@ -125,7 +125,7 @@ export default {
 }
 /* 欢迎进入NW星球*/
 .starry-text1 {
-  width: 411px;
+  width: 418px;
 }
 
 /* 整个组件淡入淡出 */
