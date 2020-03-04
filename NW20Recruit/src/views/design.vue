@@ -23,7 +23,7 @@
                 v-for="(word, index) in words" 
                 :key="index"
                 class="landin"
-                :style="`animationDelay:${index * 0.05}s`"
+                :style="`animationDelay:${index * 0.03}s`"
             >{{word}}</p>
         </div>
         <div class="downBat"></div>
@@ -87,8 +87,8 @@ export default {
             return new Promise((resolve, reject) =>{
                 setTimeout(() => {
                     that.isfly = true;
-                    resolve(3000);
-                }, 3000)
+                    resolve(2000);
+                }, 1500)
             })
         },
         //停顿留有动画时间
@@ -252,7 +252,7 @@ export default {
 .word{
     color: white;
     font-size: 4rem;
-    top: 380px;
+    top: 420px;
     position: relative;
     display: block;
     z-index: 4;
@@ -286,8 +286,8 @@ export default {
     height: 350px; */
     /* left: 40px;
     top: 25px; */
-    transform: scale(0.55) translate(-400px, -530px);
-    transition: transform 3s linear;
+    transform: scale(0.55) translate(-400px, -500px);
+    transition: transform 2s linear;
     /* transition: width 3s, height 3s, left 3s, top 3s linear; */
 }
 .landin {
