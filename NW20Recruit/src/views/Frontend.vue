@@ -437,6 +437,7 @@ export default {
 }
 .title img {
   height: 96px;
+  margin-right: 18px;
 }
 .content {
   font-size: 30px;
@@ -499,7 +500,7 @@ export default {
     transform: translateY(0);
   }
 }
-@media screen and (min-aspect-ratio: 375/667) and (max-aspect-ratio: 375/358) {
+@media screen and (min-aspect-ratio: 375/666) and (max-aspect-ratio: 375/358) {
   .content {
     top: 34%;
   }
