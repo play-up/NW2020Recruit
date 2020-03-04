@@ -66,9 +66,9 @@ export default {
   mounted() {
     let that = this
     // 这里导致textarea不可以滑动。。。
-    // document.body.addEventListener('touchmove', function (e) {
-    //   e.preventDefault(); 
-    // }, {passive: false});
+    document.body.addEventListener('touchmove', function (e) {
+      e.preventDefault(); 
+    }, {passive: false});
     window.onload = () => {
       // this.isLoading = false
       this.starryNext()
