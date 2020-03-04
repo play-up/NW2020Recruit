@@ -29,7 +29,7 @@ export default {
     position: relative;
 }
 .run {
-    animation: run-around 5s linear 1s infinite;
+    animation: run-around 10s linear 1s infinite;
 }
 .run-box::before {
     content: '';

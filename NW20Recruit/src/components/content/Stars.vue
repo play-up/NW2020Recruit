@@ -72,9 +72,12 @@ export default {
   methods: {
       ...mapMutations(['starryNext']),
       starClick () {
-            if(this.starryCurrent >= 2) {
-            this.$router.replace('/design')
-            }
+        if(this.starryCurrent == 2) {
+            this.starryNext()
+        }
+        if(this.starryCurrent >= 2) {
+        this.$router.replace('/design')
+        }
       }
   },
 }
