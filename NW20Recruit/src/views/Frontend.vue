@@ -48,12 +48,13 @@
       <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
     <div class="content" v-if="showContent">
-      <p
+      <!-- <p
         v-for="(letter, index) in content"
         class="letter"
         :style="`animation-delay:${index * 0.05}s`"
         :key="index"
-      >{{letter}}</p>
+      >{{letter}}</p>-->
+      <p v-for="(letter, index) in content" class="letter" :key="index">{{letter}}</p>
     </div>
     <div class="next" @click="toNextPage" v-show="showIcon">
       <img src="http://recruit.zqyy.site/frontend_next.png" />
@@ -106,9 +107,9 @@ export default {
       });
       this.$refs.all.addEventListener("touchend", evt => {
         // 上滑减小，下滑增加
-        if (end > start) {
+        if (end > start && this.showIcon == true) {
           this.$router.replace("/design");
-        } else if (end < start) {
+        } else if (end < start && this.showIcon == true) {
           this.$router.replace("/backend");
         }
       });
@@ -433,7 +434,7 @@ export default {
   min-width: 5px;
   animation: letterFade 2s linear both;
 }
-@keyframes letterFade {
+/* @keyframes letterFade {
   0% {
     opacity: 0;
   }
@@ -448,6 +449,14 @@ export default {
   30% {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+} */
+@keyframes letterFade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 .next {
@@ -465,7 +474,7 @@ export default {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(10px);
+    transform: translateY(3px);
   }
   100% {
     transform: translateY(0);

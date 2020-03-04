@@ -95,9 +95,9 @@ export default {
       });
       this.$refs.all.addEventListener("touchend", evt => {
         // 上滑减小，下滑增加
-        if (end > start) {
+        if (end > start && this.showIcon == true) {
           this.$router.replace("/frontend");
-        } else if (end < start) {
+        } else if (end < start && this.showIcon == true) {
           this.$router.replace("/");
         }
       });

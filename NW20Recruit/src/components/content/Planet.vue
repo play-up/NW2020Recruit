@@ -32,7 +32,7 @@ export default {
 .bigPlanet {
   height: 100%;
   width: 100%;
-  background-image: url(/static/img/bigPlanet.png);
+  background-image: url(http://recruit.zqyy.site/bigPlanet.png);
   background-position: center center;
   background-size: cover;
 }
@@ -57,7 +57,7 @@ export default {
 .smallPlanet {
   height: 100%;
   width: 100%;
-  background-image: url(~assets/smallPlanet.png);
+  background-image: url(http://recruit.zqyy.site/smallPlanet.png);
   background-position: center center;
   background-size: cover;
   animation: planetrotate 3s linear 0s normal none infinite;

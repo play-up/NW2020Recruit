@@ -22,11 +22,12 @@
         <img src="~assets/moon.png" 
         alt="dawdawdw" 
         class="moon" 
-        :class="{'moon-shine': starryCurrent == 1}"
+        :class="{'moon-shine': starryCurrent == 1 || drop == 1}"
         >
         <img src="~assets/line.png" alt="adawd" class="line-moon">
         <transition name="moon-notice-fade" >
-            <span class="moon-notice" v-if="starryCurrent === 1&&drop===0">点击/下拉</span>
+            <span class="moon-notice" v-if="starryCurrent === 1&& drop==0">点击/下拉</span>
+            <span class="moon-notice" v-if="starryCurrent === 1 && drop==1">点击/上拉</span>
         </transition>
     </div>
     
@@ -102,7 +103,10 @@ export default {
                         if(this.drop == 0) {//下拉
                             this.$emit('moonEvent',0)
                             this.drop = 1
-                        }else if (this.drop == 1) {//上移
+                        }
+                    }
+                    if(that.touchY.startY > that.touchY.endY) {
+                        if (this.drop == 1) {//上移
                             this.$emit('moonEvent',1)
                             this.drop = 0
                             if(this.starryCurrent === 1) {

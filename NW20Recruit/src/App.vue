@@ -1,10 +1,14 @@
 <template>
   <div id="app">
-    <loading v-if="isLoading" />
     <h-screen v-if="isHscreen" />
-    <transition name="router">
-      <router-view/>
+    <loading v-if="isLoading" />
+    <transition name="router" v-show="phone">
+      <router-view v-show="phone"/>
     </transition>
+    <div class="cov" v-show="!phone">
+      <img class="center qrcode" src="/static/img/qrcode.png">
+      <p class="center">抱歉，当前不支持此设备查看网页<br/>请使用宽高比小于0.7的设备访问</p>
+    </div>
   </div>
 </template>
 
@@ -24,7 +28,8 @@ export default {
   data() {
     return {
       // isLoading: true,
-      isHscreen: false
+      isHscreen: false,
+      phone: true
     }
   },
   watch: {
@@ -41,7 +46,22 @@ export default {
     ...mapState(['isLoading'])
   },
   methods: {
-    ...mapMutations(['starryNext','updateLoading'])
+    ...mapMutations(['starryNext','updateLoading']),
+    watchWH() {
+      if(document.body.clientWidth/document.body.clientHeight > 0.7) {
+          this.phone = false;
+      } else {
+        this.phone = true;
+      }
+      window.onresize = () => {
+        console.log(document.body.clientWidth/document.body.clientHeight)
+        if(document.body.clientWidth/document.body.clientHeight > 0.7) {
+          this.phone = false;
+        } else {
+          this.phone = true;
+        }
+      } 
+    }
   },
   mounted() {
     let that = this
@@ -66,6 +86,7 @@ export default {
           //  that.$router.go(0)
         }
     }
+    this.watchWH();
   },
 }
 </script>
@@ -86,6 +107,7 @@ body {
   height: 100%;
   position: relative;
   background: black;
+  user-select:none;
 }
 .router-enter {
   /* transform: translate3d(-100%,0,0); */
@@ -102,5 +124,29 @@ body {
 .router-enter-active, .router-leave-active {
   transition: opacity 3s ease;
   position: absolute !important;
+}
+.cov {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  position: fixed;
+  z-index: 300;
+}
+.center {
+  position: relative;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.qrcode {
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin-top: 20vh;
+  background-color: black;
+}
+p{
+  text-align: center;
+  margin-top: 20px;
 }
 </style>

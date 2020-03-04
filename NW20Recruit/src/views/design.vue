@@ -23,7 +23,7 @@
                 v-for="(word, index) in words" 
                 :key="index"
                 class="landin"
-                :style="`animationDelay:${index * 0.05}s`"
+                :style="`animationDelay:${index * 0.03}s`"
             >{{word}}</p>
         </div>
         <div class="downBat"></div>
@@ -87,8 +87,8 @@ export default {
             return new Promise((resolve, reject) =>{
                 setTimeout(() => {
                     that.isfly = true;
-                    resolve(3000);
-                }, 3000)
+                    resolve(2000);
+                }, 1500)
             })
         },
         //停顿留有动画时间
@@ -117,7 +117,7 @@ export default {
                 if(typeof this.words === 'String'){
                     this.words = this.words.split("");
                 }
-                resolve(9300);
+                resolve(7300);
             })
         },
         //返回上一页
@@ -176,10 +176,11 @@ export default {
                 .then(() => {
                     return new Promise((resolve, reject) => {
                         this.showArrow = true;
+                        //滑动切换路由
+                        this.goBack();
                         resolve();
                     })
                 })
-                // .then(this.loadNext);
         },
         //加载下一页的动画
         loadNext() {
@@ -191,8 +192,6 @@ export default {
         this.loadNext();
         //动画
         this.anim();
-        //滑动切换路由
-        this.goBack();
     }
 }
 </script>
@@ -252,7 +251,7 @@ export default {
 .word{
     color: white;
     font-size: 4rem;
-    top: 380px;
+    top: 420px;
     position: relative;
     display: block;
     z-index: 4;
@@ -286,8 +285,8 @@ export default {
     height: 350px; */
     /* left: 40px;
     top: 25px; */
-    transform: scale(0.55) translate(-400px, -530px);
-    transition: transform 3s linear;
+    transform: scale(0.55) translate(-400px, -500px);
+    transition: transform 2s linear;
     /* transition: width 3s, height 3s, left 3s, top 3s linear; */
 }
 .landin {
