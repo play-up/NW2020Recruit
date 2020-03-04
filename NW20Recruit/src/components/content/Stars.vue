@@ -1,6 +1,6 @@
 <template>
   <div id="stars">
-      <div class="design-star star" @click="starClick()">
+      <div class="design-star star" @click="starClick(1)">
           <!-- <tip-r 
           :text="designText"  
           :tipWidth="designWidth"
@@ -18,7 +18,7 @@
           >
           <div :class="{'bling1 ':chooseNum==1&&isBlingShow}" ></div>
       </div>
-      <div class="back-star star">
+      <div class="back-star star" @click="starClick(2)">
           <!-- <tip-r 
           :text="backText" 
           starTip="back-star-tip"
@@ -29,7 +29,7 @@
           alt="" >
           <div :class="{'bling2 ':chooseNum==2&&isBlingShow}"></div>
       </div>
-      <div class="front-star star">
+      <div class="front-star star"  @click="starClick(3)">
           <!-- <tip-r 
           :text="frontText" 
           starTip="front-star-tip" 
@@ -65,19 +65,30 @@ export default {
       }
   },
   computed: {
-      ...mapState(['starryCurrent','chooseNum','isBlingShow'])
+      ...mapState(['starryCurrent','chooseNum','isBlingShow','isPass'])
   },
   watch: {
   },
   methods: {
       ...mapMutations(['starryNext']),
-      starClick () {
-        if(this.starryCurrent == 2) {
-            this.starryNext()
-        }
-        if(this.starryCurrent >= 2) {
-        this.$router.replace('/design')
-        }
+      starClick (star) {
+          if(star == 1) {
+            if(this.starryCurrent == 2) {
+                this.starryNext()
+            }
+            if(this.starryCurrent >= 2) {
+                this.$router.replace('/design')
+            }
+          } else if ( star == 2) {
+              if(this.Pass == true) {
+                this.$router.replace("/backend");
+              }
+          } else if (star == 3) {
+            if(this.Pass == true) {
+                this.$router.replace("/frontend");
+            }
+          }
+
       }
   },
 }
