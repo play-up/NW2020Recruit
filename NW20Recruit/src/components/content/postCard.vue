@@ -54,7 +54,7 @@
             <span class="dir">方向</span>
             <div class="direction-container">
               <div class="direction" v-for="(item,index) in dirArr" :key="item.id">
-                <label :for="item.id">{{item.content}}</label>
+                <label :for="item.id" onselectstart="return false;">{{item.content}}</label>
                 <input
                   type="radio"
                   :id="item.id"
@@ -76,15 +76,15 @@
           <li class="introdution">
             <p class="i-text">自我介绍</p>
             <div class="self">
-              <textarea
-                name
-                id
+              <!-- <textarea
                 cols="30"
                 rows="10"
-                οnpaste="return true;"
                 v-model="formData.introduce"
-              ></textarea>
+     
+              ></textarea> -->
+              <textarea name="" id="" cols="30" rows="10" v-model="formData.introduce"></textarea>
             </div>
+            <span>{{remainNum}}/200</span>
           </li>
           <li>
             <!-- <input
@@ -147,6 +147,7 @@ export default {
   },
   data() {
     return {
+      remainNum:200,//剩余字数
       isBoxShow:false,
       remindIndex: 0,
       remindArr: [
@@ -158,7 +159,7 @@ export default {
         },
         {
           content1: "您的报名表填写不正确,",
-          content2: "不能提交哦QAQ",
+          content2: "请仔细检查哦",
           sureBtn: "继续报名"
         },
         {
@@ -242,11 +243,24 @@ export default {
       isRemindShow: false //弹窗是否要出现
     };
   },
-  watch: {},
+  watch: {
+    'formData.introduce'(){
+      let textLength = this.formData.introduce.length;
+      if(textLength>200){
+        this.formData.introduce=String(this.formData.introduce).slice(0,200);
+      }else{
+        this.remainNum=200-textLength
+      }
+    }
+  },
   computed: {
     ...mapState(["isRoll"])
   },
   methods: {
+    // descInput(){
+    //   let textLength = this.formData.introduce.length;
+    //   this.remainNum=200-textLength
+    // },
     // 整理数据
     collectingData() {
       let formData = JSON.stringify(this.formData);
@@ -349,7 +363,7 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           this.$emit("smaller", this.isSmaller);
-          resolve(3200);
+          resolve(3000);
         }, ms);
       });
     },
@@ -374,7 +388,7 @@ export default {
           this.$store.commit("isSubmitShow", false);
           this.$store.commit("isPostShow", false);
            this.$store.commit("isBlingShow", false);
-          resolve(100);
+          resolve(200);
         }, ms);
       });
     },
@@ -551,41 +565,7 @@ export default {
   mounted() {
     this.getLocal();
     this.iosInput();
-    // this.isLocal = localStorage.getItem("isLocal");
-    // if (this.isLocal) {
-    //   this.formData = JSON.parse(localStorage.getItem("formData"));
-    //   this.SexIndex = localStorage.getItem("SexIndex");
-    //   this.DirIndex = localStorage.getItem("DirIndex");
-    //   var sexArr = this.sexArr;
-    //   sexArr[this.SexIndex].isRight = true;
-    //   // console.log(this.SexIndex);
-
-    //   var dirArr = this.dirArr;
-    //   dirArr[this.DirIndex].isRight = true;
-    // }
-
-    // 解决安卓苹果输入框问题
-    // let ua = window.navigator.userAgent;
-    // let app = window.navigator.appVersion;
-    // //$alert('浏览器版本: ' + app + '\n' + '用户代理: ' + ua);
-    // if (!!ua.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)) {
-    //   // alert('ios端');
-    //   $("input,textarea").on("blur", function() {
-    //     var currentPosition, timer;
-    //     var speed = 1;
-    //     timer = setInterval(function() {
-    //       currentPosition =
-    //         document.documentElement.scrollTop || document.body.scrollTop;
-    //       currentPosition -= speed;
-    //       window.scrollTo(0, currentPosition); //页面向上滚动
-    //       currentPosition += speed;
-    //       window.scrollTo(0, currentPosition); //页面向下滚动
-    //       clearInterval(timer);
-    //     }, 100);
-    //   });
-    // } else if (ua.indexOf("Android") > -1 || ua.indexOf("Adr") > -1) {
-    //   // alert('android端');
-    // }
+  
   },
   beforeMount() {
     this._close = e => {
@@ -738,6 +718,9 @@ input {
   background-size: 100% 100%;
   backface-visibility: hidden;
 }
+.front{
+  z-index: 200;
+}
 .back {
   transform: rotateY(180deg);
   padding: 3vw 6vw;
@@ -765,6 +748,7 @@ input {
 }
 .form label {
   font-size: 24px;
+  
 }
 .form input[type="text"] {
   outline: none;
@@ -952,6 +936,10 @@ input {
   font-size: 22px;
   color: #282828;
   line-height: 28px;
+  /* overflow: scroll; */
+}
+textarea ::-webkit-scrollbar{
+  width: 30px;
 }
 .submit {
   border: none;

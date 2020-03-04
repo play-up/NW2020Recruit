@@ -117,7 +117,7 @@ export default {
                 if(typeof this.words === 'String'){
                     this.words = this.words.split("");
                 }
-                resolve(9300);
+                resolve(7300);
             })
         },
         //返回上一页
@@ -176,10 +176,11 @@ export default {
                 .then(() => {
                     return new Promise((resolve, reject) => {
                         this.showArrow = true;
+                        //滑动切换路由
+                        this.goBack();
                         resolve();
                     })
                 })
-                // .then(this.loadNext);
         },
         //加载下一页的动画
         loadNext() {
@@ -191,8 +192,6 @@ export default {
         this.loadNext();
         //动画
         this.anim();
-        //滑动切换路由
-        this.goBack();
     }
 }
 </script>

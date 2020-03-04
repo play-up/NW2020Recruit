@@ -44,7 +44,9 @@ export default {
   methods: {
     changeCom() {
       this.isShow = !this.isShow;
-      this.$store.commit('isPostShow',true)
+      this.$store.commit('isPostShow',true);
+      // 表示经历了报名表
+      this.$store.commit('isPass',true);
       setTimeout(()=>{
         this.$store.commit('isRoll',1)
       },2000)
@@ -116,7 +118,7 @@ export default {
 .smaller1 {
   animation: smaller1 2.5s ease-out forwards;
   opacity: 0;
-  transition: opacity 0.5s 1.5s linear;
+  transition: opacity 0.5s 1.5s linear ;
 }
 
 .hover2 {
