@@ -21,10 +21,15 @@
         <planet></planet>
       </div>
       <div id="content" v-show="showContent">
-        <p
+        <!-- <p
           v-for="(letter, index) in letters_content"
           :class="{'letters_content_1': index % 2 == 0,'letters_content_2': index % 2 != 0}"
           :style="`animation-delay:${index * 0.05}s`"
+          :key="index"
+        >{{letter}}</p> -->
+        <p
+          v-for="(letter, index) in letters_content"
+          :class="{'letters_content_1': index % 2 == 0,'letters_content_2': index % 2 != 0}"
           :key="index"
         >{{letter}}</p>
       </div>
@@ -70,7 +75,7 @@ export default {
       }, 500);
       setTimeout(() => {
         this.showIcon = true;
-      }, 6000);
+      }, 2000);
     },
     toStarryHome() {
       console.log(this.starryCurrent);
@@ -83,14 +88,14 @@ export default {
       }
     },
     toNextPage() {
-      if(this.isPass==false){
-      this.$store.commit("isSubmitShow", true);
-      // this.$store.commit("isBlingShow", false);
-      this.$store.commit("isLetterShow", false);
-      }else{
-         this.$store.commit("isSubmitShow", false);
-      // this.$store.commit("isBlingShow", false);
-      this.$store.commit("isLetterShow", true);
+      if (this.isPass == false) {
+        this.$store.commit("isSubmitShow", true);
+        // this.$store.commit("isBlingShow", false);
+        this.$store.commit("isLetterShow", false);
+      } else {
+        this.$store.commit("isSubmitShow", false);
+        // this.$store.commit("isBlingShow", false);
+        this.$store.commit("isLetterShow", true);
       }
       this.$router.replace("/");
     },
@@ -108,7 +113,7 @@ export default {
           if (this.isPass == true) {
             this.$router.replace("/");
             this.$store.commit("isSubmitShow", false);
-      this.$store.commit("isLetterShow", true);
+            this.$store.commit("isLetterShow", true);
           } else {
             this.$router.replace("/frontend");
           }
@@ -193,13 +198,23 @@ export default {
 }
 .letters_content_1 {
   display: inline-block;
-  animation: landInTop_content 0.5s ease-out both;
+  /* animation: landInBottom_content 0.5s ease-out both; */
+  animation: landIn_content 2s linear both;
 }
 .letters_content_2 {
   display: inline-block;
-  animation: landInBottom_content 0.5s ease-out both;
+  /* animation: landInBottom_content 0.5s ease-out both; */
+  animation: landIn_content 2s linear both;
 }
-@keyframes landInTop_content {
+@keyframes landIn_content {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* @keyframes landInTop_content {
   from {
     opacity: 0;
     transform: translateX(80%) translateY(-40%);
@@ -220,7 +235,7 @@ export default {
     opacity: 1;
     transform: translateX(0) translateY(0);
   }
-}
+} */
 .titleImg1 {
   animation: landInTop_title 1s ease-out both;
 }
@@ -262,13 +277,13 @@ export default {
 }
 @keyframes float {
   0% {
-    transform: translateY(0);
+    transform: translateY(0) translateX(-50%);
   }
   50% {
-    transform: translateY(3px);
+    transform: translateY(3px) translateX(-50%);
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(0) translateX(-50%);
   }
 }
 @media screen and (min-aspect-ratio: 375/666) and (max-aspect-ratio: 375/358) {

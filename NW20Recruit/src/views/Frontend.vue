@@ -148,7 +148,7 @@ export default {
       setTimeout(() => {
         this.showIcon = true;
       }, 1000);
-    }, 5000);
+    }, 4000);
   }
 };
 </script>
@@ -491,13 +491,13 @@ export default {
 }
 @keyframes float {
   0% {
-    transform: translateY(0);
+    transform: translateY(0) translateX(-50%);
   }
   50% {
-    transform: translateY(3px);
+    transform: translateY(3px) translateX(-50%);
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(0) translateX(-50%);
   }
 }
 @media screen and (min-aspect-ratio: 375/666) and (max-aspect-ratio: 375/358) {
