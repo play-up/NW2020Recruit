@@ -821,7 +821,7 @@ input {
 .underline3 {
   display: inline-block;
   position: relative;
-  width: 16vw;
+  width: 20vw;
   margin-left: 2vw;
   padding-bottom: 2px;
 }
