@@ -1,5 +1,6 @@
 <template>
   <div id="starry-home">
+    <loading v-if="isLoading" />
     <img src="http://recruit.zqyy.site/hill.png" alt="hill" class="hill" />
     <!-- 信封 -->
     <img
@@ -64,7 +65,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["isSubmitShow", "isLetterShow"])
+    ...mapState(["isSubmitShow", "isLetterShow","isLoading"])
   },
   mounted() {
     let that = this 
