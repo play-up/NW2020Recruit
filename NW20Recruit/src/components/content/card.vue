@@ -75,7 +75,6 @@ export default {
 .v-leave-active {
   transition: opacity 0.7s;
 }
-
 .card {
   color: white;
   position: absolute;
