@@ -57,7 +57,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["starryCurrent"])
+    ...mapState(["starryCurrent", "isPass"])
   },
   methods: {
     ...mapMutations(["starryNext"]),
@@ -96,7 +96,11 @@ export default {
       this.$refs.all.addEventListener("touchend", evt => {
         // 上滑减小，下滑增加
         if (end > start && this.showIcon == true) {
-          this.$router.replace("/frontend");
+          if (this.isPass == true) {
+            this.$router.replace("/");
+          } else {
+            this.$router.replace("/frontend");
+          }
         } else if (end < start && this.showIcon == true) {
           this.$router.replace("/");
         }

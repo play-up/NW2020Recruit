@@ -64,6 +64,7 @@
 
 <script>
 import Steam from "@/components/content/Steam";
+import {mapState} from "vuex";
 export default {
   name: "Frontend",
   components: {
@@ -78,6 +79,9 @@ export default {
       showContent: false,
       showIcon: false
     };
+  },
+  computed: {
+    ...mapState(["isPass"])
   },
   methods: {
     async loadImg() {
@@ -108,9 +112,17 @@ export default {
       this.$refs.all.addEventListener("touchend", evt => {
         // 上滑减小，下滑增加
         if (end > start && this.showIcon == true) {
-          this.$router.replace("/design");
+          if (this.isPass == true) {
+            this.$router.replace("/");
+          } else {
+            this.$router.replace("/design");
+          }
         } else if (end < start && this.showIcon == true) {
-          this.$router.replace("/backend");
+          if (this.isPass == true) {
+            this.$router.replace("/");
+          } else {
+            this.$router.replace("/backend");
+          }
         }
       });
     }
