@@ -76,15 +76,14 @@
           <li class="introdution">
             <p class="i-text">自我介绍</p>
             <div class="self">
-              <!-- <textarea
+              <textarea
                 cols="30"
                 rows="10"
                 v-model="formData.introduce"
-     
-              ></textarea> -->
-              <textarea name="" id="" cols="30" rows="10" v-model="formData.introduce"></textarea>
+                @touchmove="preventMove($event)"
+              ></textarea>
             </div>
-            <span>{{remainNum}}/200</span>
+            <span class="remain">{{remainNum}}/200</span>
           </li>
           <li>
             <!-- <input
@@ -257,6 +256,9 @@ export default {
     ...mapState(["isRoll"])
   },
   methods: {
+    preventMove(e){
+      e.stopPropagation();
+    },
     // descInput(){
     //   let textLength = this.formData.introduce.length;
     //   this.remainNum=200-textLength
@@ -915,6 +917,7 @@ input {
 .i-text {
   font-size: 22px;
   padding-bottom: 2vw;
+  display: inline-block;
 }
 .self {
   width: 78vw;
@@ -926,6 +929,7 @@ input {
   padding-bottom: 6vw;
   padding-left: 2vw;
   padding-right: 2vw;
+  position: relative;
 }
 .self textarea {
   background: transparent;
@@ -940,6 +944,12 @@ input {
 }
 textarea ::-webkit-scrollbar{
   width: 30px;
+}
+.remain{
+  position: absolute;
+    right: 1vw;
+    bottom: 1vw;
+    font-size: 16px;
 }
 .submit {
   border: none;
