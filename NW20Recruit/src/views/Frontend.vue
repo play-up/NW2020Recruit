@@ -64,7 +64,7 @@
 
 <script>
 import Steam from "@/components/content/Steam";
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "Frontend",
   components: {
@@ -99,7 +99,11 @@ export default {
       }
     },
     toNextPage() {
-      this.$router.replace("/backend");
+      if (this.isPass == true) {
+        this.$router.replace("/");
+      } else {
+        this.$router.replace("/backend");
+      }
     },
     goBack() {
       let start, end;
