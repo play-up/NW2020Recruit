@@ -84,7 +84,7 @@ export default {
         else {
             //竖屏
            that.isHscreen = false
-          //  that.$router.go(0)
+           that.$router.go(0)
         }
     }
     this.watchWH();
@@ -146,7 +146,7 @@ body {
   margin-top: 20vh;
   background-color: black;
 }
-p{
+.cov p{
   text-align: center;
   margin-top: 20px;
 }

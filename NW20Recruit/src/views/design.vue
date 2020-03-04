@@ -37,6 +37,7 @@
 <script>
 import Boolean from '@/components/content/Boolean'
 import Loading from '@/components/common/Loading'
+import {mapState} from "vuex"
 export default {
     name: "design",
     components: {
@@ -80,6 +81,9 @@ export default {
             ]
         }
     },
+    computed: {
+        ...mapState(["isPass"])
+    },
     methods: {
         //气球向上飞
         fly() {
@@ -117,7 +121,7 @@ export default {
                 if(typeof this.words === 'String'){
                     this.words = this.words.split("");
                 }
-                resolve(7300);
+                resolve(6300);
             })
         },
         //返回上一页
@@ -134,13 +138,21 @@ export default {
                 if(end > start) {
                     this.$router.replace('/');
                 } else if(end < start) {
-                    this.$router.replace('/frontend');
+                    if(this.isPass) {
+                        this.$router.replace('/');
+                    } else {
+                        this.$router.replace('/frontend');
+                    }
                 }
             })
         },
         //进入下一个页面
         goNext() {
-            this.$router.replace('/frontend');
+            if(this.isPass) {
+                this.$router.replace('/');
+            } else {
+                this.$router.replace('/frontend');
+            }
         },
         //加载图片资源
         addPromise(url) {
