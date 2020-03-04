@@ -214,6 +214,7 @@ export default {
   animation: landInTop_title 1s ease-out both;
 }
 .titleImg2 {
+  margin-left: 18px;
   animation: landInBottom_title 1s ease-out both;
 }
 @keyframes landInTop_title {
@@ -259,7 +260,7 @@ export default {
     transform: translateY(0);
   }
 }
-@media screen and (min-aspect-ratio: 375/667) and (max-aspect-ratio: 375/358) {
+@media screen and (min-aspect-ratio: 375/666) and (max-aspect-ratio: 375/358) {
   #content {
     top: 49vw;
   }
