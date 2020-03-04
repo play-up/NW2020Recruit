@@ -255,4 +255,15 @@ export default {
     transform: translateY(0);
   }
 }
+@media screen and (min-aspect-ratio: 375/667) and (max-aspect-ratio: 375/358) {
+  #content {
+    top: 49vw;
+  }
+  .title {
+    top: 20vw;
+  }
+  .planet {
+    top: -5vw;
+  }
+}
 </style>

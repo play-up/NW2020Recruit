@@ -425,7 +425,7 @@ export default {
   color: white;
   line-height: 50px;
   position: absolute;
-  top: 41%;
+  top: 38%;
   margin: 0 60px;
   z-index: 1;
 }
@@ -478,6 +478,14 @@ export default {
   }
   100% {
     transform: translateY(0);
+  }
+}
+@media screen and (min-aspect-ratio: 375/667) and (max-aspect-ratio: 375/358) {
+  .content {
+    top: 34%;
+  }
+  .title {
+    top: 20%;
   }
 }
 </style>
