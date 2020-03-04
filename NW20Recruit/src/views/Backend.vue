@@ -252,7 +252,7 @@ export default {
 }
 .next {
   position: absolute;
-  bottom: 40px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
   animation: float 1s linear infinite;

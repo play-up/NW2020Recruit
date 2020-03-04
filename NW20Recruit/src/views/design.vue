@@ -367,10 +367,10 @@ export default {
 } */
 @keyframes jump {
     0%, 100% {
-        top: -3px;
+        transform: translateY(0);
     }
     50% {
-        top: 0;
+        transform: translateY(3px);
     }
 }
 .hide{
