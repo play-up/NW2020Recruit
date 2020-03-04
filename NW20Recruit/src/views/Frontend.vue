@@ -138,9 +138,12 @@ export default {
     }, 4600);
     setTimeout(() => {
       this.showContent = true;
+      // setTimeout(() => {
+      //   this.showIcon = true;
+      // }, 7500);
       setTimeout(() => {
         this.showIcon = true;
-      }, 7500);
+      }, 1000);
     }, 5000);
   }
 };
