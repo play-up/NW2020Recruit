@@ -25,6 +25,7 @@
           tipShowWay="back-show"
           tipWidth="9ch"
           v-show="backShow" /> -->
+              <p class="can-click can-click-back" v-if="isPass">I can click,too</p>
           <img src="~assets/back-star.png" 
           alt="" >
           <div :class="{'bling2 ':chooseNum==2&&isBlingShow}"></div>
@@ -37,6 +38,7 @@
           tipWidth="6ch"
           v-show="frontShow"
           /> -->
+              <p class="can-click can-click-front" v-if="isPass">I can click</p>
           <img src="~assets/front-star.png" 
           alt="" >
           <div :class="{'bling3 ':chooseNum==3&&isBlingShow}"></div>
@@ -72,6 +74,7 @@ export default {
   methods: {
       ...mapMutations(['starryNext']),
       starClick (star) {
+          
           if(star == 1) {
             if(this.starryCurrent == 2) {
                 this.starryNext()
@@ -80,11 +83,11 @@ export default {
                 this.$router.replace('/design')
             }
           } else if ( star == 2) {
-              if(this.Pass == true) {
+              if(this.isPass == true) {
                 this.$router.replace("/backend");
               }
           } else if (star == 3) {
-            if(this.Pass == true) {
+            if(this.isPass == true) {
                 this.$router.replace("/frontend");
             }
           }
@@ -97,6 +100,7 @@ export default {
 <style>
 #stars .star{
     position: absolute;
+    z-index: 2;
 }
 .design-star {
     /* top: 50%;
@@ -146,6 +150,44 @@ export default {
         transform:  rotate(0deg)
     }
 }
+/* 星球点击 */
+.can-click {
+    color: #ffffff;
+    white-space: nowrap;
+    text-shadow: .5px 0px .5px wheat;
+    position: absolute;
+    z-index: -1;
+    animation: star-text-jump 2s ease 3s infinite reverse;
+}
+.can-click-back {
+    font-size: 18px;
+    top: -28px;
+    left: 18px;
+
+}
+.can-click-front {
+    font-size: 15px;
+    top: -25px;
+    left: -28px;
+}
+@keyframes star-text-jump {
+    0% {
+        transform: translateY(0px)
+    }
+    25% {
+        transform: translateY(-2px)
+    }
+    50% {
+        transform: translateY(1px)
+    }
+    75% {
+        transform: translateY(-1px)
+    }
+    100% {
+        transform: translateY(0px)
+    }
+}
+
 .back-star {
     /* top: 50%;
     transform: translateY(-30px); */
