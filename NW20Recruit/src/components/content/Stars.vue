@@ -12,6 +12,7 @@
               v-if="starryCurrent === 2"
               >前往第一站</p>
           </transition>
+            <p class="can-click can-click-design" v-if="isLetterShow">I can click again</p>
           <img src="~assets/design-star.png" 
           alt="" 
           :class="{'star-light': starryCurrent === 2}"
@@ -25,7 +26,7 @@
           tipShowWay="back-show"
           tipWidth="9ch"
           v-show="backShow" /> -->
-              <p class="can-click can-click-back" v-if="isPass">I can click,too</p>
+              <p class="can-click can-click-back" v-if="isLetterShow">I can click,too</p>
           <img src="~assets/back-star.png" 
           alt="" >
           <div :class="{'bling2 ':chooseNum==2&&isBlingShow}"></div>
@@ -38,7 +39,7 @@
           tipWidth="6ch"
           v-show="frontShow"
           /> -->
-              <p class="can-click can-click-front" v-if="isPass">I can click</p>
+              <p class="can-click can-click-front" v-if="isLetterShow">I can click</p>
           <img src="~assets/front-star.png" 
           alt="" >
           <div :class="{'bling3 ':chooseNum==3&&isBlingShow}"></div>
@@ -67,7 +68,7 @@ export default {
       }
   },
   computed: {
-      ...mapState(['starryCurrent','chooseNum','isBlingShow','isPass'])
+      ...mapState(['starryCurrent','chooseNum','isBlingShow','isPass','isLetterShow'])
   },
   watch: {
   },
@@ -79,15 +80,15 @@ export default {
             if(this.starryCurrent == 2) {
                 this.starryNext()
             }
-            if(this.starryCurrent >= 2) {
+            if(this.starryCurrent >= 2 || this.isLetterShow) {
                 this.$router.replace('/design')
             }
           } else if ( star == 2) {
-              if(this.isPass == true) {
+              if(this.isLetterShow == true) {
                 this.$router.replace("/backend");
               }
           } else if (star == 3) {
-            if(this.isPass == true) {
+            if(this.isLetterShow == true) {
                 this.$router.replace("/frontend");
             }
           }
@@ -157,31 +158,37 @@ export default {
     text-shadow: .5px 0px .5px wheat;
     position: absolute;
     z-index: -1;
+}
+.can-click-design {
+    font-size: 19px;
+    top: -28px;
+    left: -18px;
     animation: star-text-jump 2s ease 3s infinite reverse;
 }
 .can-click-back {
-    font-size: 18px;
+    font-size: 19px;
     top: -28px;
     left: 18px;
-
+    animation: star-text-jump 1.5s ease 2s infinite reverse;
 }
 .can-click-front {
     font-size: 15px;
     top: -25px;
     left: -28px;
+    animation: star-text-jump 1s ease 1s infinite reverse;
 }
 @keyframes star-text-jump {
     0% {
         transform: translateY(0px)
     }
     25% {
-        transform: translateY(-2px)
+        transform: translateY(-1px)
     }
     50% {
         transform: translateY(1px)
     }
     75% {
-        transform: translateY(-1px)
+        transform: translateY(-0.5px)
     }
     100% {
         transform: translateY(0px)
