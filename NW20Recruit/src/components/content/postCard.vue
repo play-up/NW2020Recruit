@@ -82,6 +82,8 @@
                 rows="10"
                 v-model="formData.introduce"
                 @touchmove="preventMove($event)"
+                @touchstart="preventStart($event)"
+                @touchend="preventEnd($event)"
               ></textarea>
             </div>
             <span class="remain">{{remainNum}}/200</span>
