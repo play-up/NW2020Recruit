@@ -83,14 +83,14 @@ export default {
       }
     },
     toNextPage() {
-      if(this.isPass==false){
-      this.$store.commit("isSubmitShow", true);
-      // this.$store.commit("isBlingShow", false);
-      this.$store.commit("isLetterShow", false);
-      }else{
-         this.$store.commit("isSubmitShow", false);
-      // this.$store.commit("isBlingShow", false);
-      this.$store.commit("isLetterShow", true);
+      if (this.isPass == false) {
+        this.$store.commit("isSubmitShow", true);
+        // this.$store.commit("isBlingShow", false);
+        this.$store.commit("isLetterShow", false);
+      } else {
+        this.$store.commit("isSubmitShow", false);
+        // this.$store.commit("isBlingShow", false);
+        this.$store.commit("isLetterShow", true);
       }
       this.$router.replace("/");
     },
@@ -108,12 +108,14 @@ export default {
           if (this.isPass == true) {
             this.$router.replace("/");
             this.$store.commit("isSubmitShow", false);
-      this.$store.commit("isLetterShow", true);
+            this.$store.commit("isLetterShow", true);
           } else {
             this.$router.replace("/frontend");
           }
         } else if (end < start && this.showIcon == true) {
           this.$router.replace("/");
+          this.$store.commit("isSubmitShow", true);
+          this.$store.commit("isLetterShow", false);
         }
       });
     }

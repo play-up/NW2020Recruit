@@ -102,6 +102,7 @@ body {
   width: 100%;
   height: 100%;
   font-size: 1vw;
+
 }
 #app {
   width: 100%;
@@ -109,6 +110,7 @@ body {
   position: relative;
   background: black;
   user-select:none;
+  /* pointer-events:none; */
 }
 .router-enter {
   /* transform: translate3d(-100%,0,0); */

@@ -7,10 +7,10 @@
           <!-- 弹窗的提示信息 -->
           <slot name="main">提示信息</slot>
         </div>
-        <div class="yes" @touchstart="yes1" @touchend="yes2">
+        <div class="yes" @touchstart="yes1($event)" @touchend="yes2($event)">
           <slot name="yes">确认按钮</slot>
         </div>
-        <div class="no" @click="no">
+        <div class="no"  @touchstart="no1($event)" @touchend="no2($event)">
           <slot name="no">取消按钮</slot>
         </div>
       </div>
@@ -52,19 +52,27 @@ export default {
           }, 300);
         });
     },
-    yes1(){
+    yes1(e){
       var that = this;
       $(".yes").addClass("yes2");
          that.$store.commit("isFilterShow", true);
-      
+      e.stopPropagation();
     },
-    yes2(){
+    yes2(e){
+      e.stopPropagation();
       var that = this;
       $(".yes").removeClass("yes2");
           that.$store.commit("isFilterShow", false);
           setTimeout(() => {
             that.$emit("yes");
           }, 300);
+    },
+    no1(e){
+      e.stopPropagation();
+    },
+    no2(e){
+      e.stopPropagation();
+       this.$emit("no");
     },
     no() {
       this.$emit("no");

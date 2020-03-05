@@ -45,8 +45,8 @@ export default {
     changeCom() {
       this.isShow = !this.isShow;
       this.$store.commit('isPostShow',true);
-      // 表示经历了报名表
-      this.$store.commit('isPass',true);
+      // // 表示经历了报名表
+      // this.$store.commit('isPass',true);
       setTimeout(()=>{
         this.$store.commit('isRoll',1)
       },2000)
@@ -104,7 +104,7 @@ export default {
   animation: shine 2s infinite reverse;
 }
 .text {
-  font-size: 3vw;
+  font-size: 3.3vw;
   display: inline-block;
 }
 .hover1 {

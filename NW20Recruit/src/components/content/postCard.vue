@@ -1,5 +1,5 @@
 <template>
-  <div class="postcard" @click.stop>
+  <div class="postcard" @click.stop ref="all">
     <!-- 正面卡片 -->
     <div
       class="front"
@@ -87,7 +87,14 @@
             <span class="remain">{{remainNum}}/200</span>
           </li>
           <li>
-            <img src="http://recruit.zqyy.site/submit.png" alt @click="submit()" class="submit" />
+            <img
+              src="http://recruit.zqyy.site/submit.png"
+              alt
+              @click="submit()"
+              class="submit"
+              @touchstart="preventStart($event)"
+              @touchend="preventEnd($event)"
+            />
           </li>
         </ul>
 
@@ -238,7 +245,7 @@ export default {
       isAlive: true, //是否点击了提交，点击后点击外围不跳转到首页
       backStatus: null, //后台返回的状态
       isRemindShow: false, //弹窗是否要出现
-      count:0
+      count: 0
     };
   },
   watch: {
@@ -251,18 +258,17 @@ export default {
       }
     },
     formData: {
-      handler (val) {
+      handler(val) {
         if (val) {
-          this.count++
-          // console.log(this.count);
+          this.count++;
+          console.log(this.count);
         }
       },
       deep: true
     },
-    backStatus(){
+    backStatus() {
       // 提交成功
-      if(this.backStatus==2){
-
+      if (this.backStatus == 2) {
       }
     }
   },
@@ -270,6 +276,12 @@ export default {
     ...mapState(["isRoll"])
   },
   methods: {
+    preventStart(e) {
+      e.stopPropagation();
+    },
+    preventEnd(e) {
+      e.stopPropagation();
+    },
     preventMove(e) {
       e.stopPropagation();
     },
@@ -458,7 +470,7 @@ export default {
       if (this.formData.name == "") {
         this.remindIndex = 1;
         return true;
-      } 
+      }
       // else if (!this.judeName(this.formData.name)) {
       //   // console.log("请输入正确的姓名");
       //   this.remindIndex = 1;
@@ -522,6 +534,7 @@ export default {
           this.myAnimation();
           this.takeInLocal();
         }
+        console.log(this.remindIndex);
       });
     },
     submitForm() {
@@ -546,19 +559,24 @@ export default {
           this.isRemindShow = true;
           this.remindIndex = 3;
         }
+        console.log(this.remindIndex);
       });
     },
     yes() {
+      console.log(this.remindIndex);
       this.isRemindShow = false;
       if (this.remindIndex == 2) this.moreSubmit(); //如果是继续提交按钮被点击，则触发这个方法
     },
     no() {
+      
       this.isRemindShow = false;
-      if (this.remindIndex == 0 ||this.remindIndex == 5) {
+      console.log(this.remindIndex);
+      
+      // 修改了不保存+未提交不保存 点击拒绝，组件消失
+      if (this.remindIndex == 0 || this.remindIndex == 5) {
         // 报名表这个组件消失
         this.$store.commit("isSubmitShow", false);
         this.$store.commit("isPostShow", false);
-        // this.isAlive=false;
         this.$store.commit("isLetterShow", true);
         this.$store.commit("isRoll", 0);
       }
@@ -599,17 +617,47 @@ export default {
         // alert('android端');
       }
     },
-    showPopUp(e,status,index){
-       if (this.$el.contains(e.target)) {
+    showPopUp() {
+      let status = localStorage.getItem("status");
+      // 未提交时
+      if (status != 2) {
+        this.isRemindShow = true; //如果点击了则弹窗出现
+        this.remindIndex = 0;
         return;
       }
-      this.isRemindShow = status; //如果点击了则弹窗出现
-      this.remindIndex = index;
+
+      // 提交过后修改表单
+      if (this.count > 1) {
+        this.isRemindShow = true; //如果点击了则弹窗出现
+        this.remindIndex = 5;
+        return;
+      }
+      // 当提交成功时，点击外层组件直接消失
+      if (status == 2 && this.count <= 1) {
+        this.$store.commit("isSubmitShow", false);
+        this.$store.commit("isPostShow", false);
+        // this.isAlive=false;
+        this.$store.commit("isLetterShow", true);
+        this.$store.commit("isRoll", 0);
+      }
     }
   },
   mounted() {
     this.getLocal();
     this.iosInput();
+    let start, end;
+    this.$refs.all.addEventListener("touchstart", evt => {
+      start = evt.touches[0].clientY;
+    });
+    this.$refs.all.addEventListener("touchmove", evt => {
+      end = evt.touches[0].clientY;
+    });
+    this.$refs.all.addEventListener("touchend", evt => {
+      // 上滑减小，下滑增加
+      if (start - end > 30) {
+        this.showPopUp();
+      }
+    });
   },
   beforeMount() {
     this._close = e => {
@@ -617,27 +665,28 @@ export default {
       if (this.$el.contains(e.target)) {
         return;
       }
-      let status = localStorage.getItem("status");
-      // 未提交时
-      if(status!=2){
-      this.isRemindShow = true; //如果点击了则弹窗出现
-      this.remindIndex = 0;
-      return ;
-      }
-      // 提交过后修改表单
-     if(this.count>1){
-        this.isRemindShow = true; //如果点击了则弹窗出现
-        this.remindIndex =5;
-        return ;
-      }
-      // 当提交成功时，点击组件消失
-      if(status==2&&this.count<=1){
-         this.$store.commit("isSubmitShow", false);
-        this.$store.commit("isPostShow", false);
-        // this.isAlive=false;
-        this.$store.commit("isLetterShow", true);
-        this.$store.commit("isRoll", 0);
-      }
+      this.showPopUp();
+      //   let status = localStorage.getItem("status");
+      //   // 未提交时
+      //   if(status!=2){
+      //   this.isRemindShow = true; //如果点击了则弹窗出现
+      //   this.remindIndex = 0;
+      //   return ;
+      //   }
+      //   // 提交过后修改表单
+      //  if(this.count>1){
+      //     this.isRemindShow = true; //如果点击了则弹窗出现
+      //     this.remindIndex =5;
+      //     return ;
+      //   }
+      //   // 当提交成功时，点击外层组件消失
+      //   if(status==2&&this.count<=1){
+      //      this.$store.commit("isSubmitShow", false);
+      //     this.$store.commit("isPostShow", false);
+      //     // this.isAlive=false;
+      //     this.$store.commit("isLetterShow", true);
+      //     this.$store.commit("isRoll", 0);
+      //   }
     };
     // 两秒之后转到报名页面才监听事件
     setTimeout(() => {
