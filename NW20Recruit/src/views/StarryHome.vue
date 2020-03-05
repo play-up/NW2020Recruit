@@ -42,6 +42,7 @@ export default {
   data() {
     return {
       ShadowShow: false,
+      isLoading: true
     };
   },
   methods: {
@@ -65,11 +66,16 @@ export default {
   },
 
   computed: {
-    ...mapState(["isSubmitShow", "isLetterShow","isLoading"])
+    ...mapState(["isSubmitShow", "isLetterShow","starryCurrent"])
   },
   mounted() {
+    
     let that = this 
+    that.updateLoading({isLoading: true})
     let imgs = [
+      "http://recruit.zqyy.site/design-star.png",
+      "http://recruit.zqyy.site/front-star.png",
+      "http://recruit.zqyy.site/back-star.png",
       "http://recruit.zqyy.site/single-starry.png",
       "http://recruit.zqyy.site/hill.png",
       "http://recruit.zqyy.site/d_background.png",
@@ -84,11 +90,8 @@ export default {
       image.src = img
       num++
       image.onload=()=>{
-        console.log('预加载了')
-        if(num >= imgs.length) {
-          this.starryNext()
-          that.updateLoading({isLoading: false})
-        }
+          if(that.starryCurrent == -1)that.starryNext()
+          that.isLoading = false
       }
       image.onerror = () => {
         console.log('预加载失败');

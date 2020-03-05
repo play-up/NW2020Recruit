@@ -49,14 +49,14 @@ const router = new Router({
 });
 
 
-router.beforeEach((to,from,next)=>{
-    store.commit("updateLoading", { isLoading: true });
-        // Vue.nextTick(() => {
-        //   console.log("loading false");
-        //   store.commit("updateLoading", { isLoading: false });
-        // });
-  next()
-})
+// router.beforeEach((to,from,next)=>{
+//     // store.commit("updateLoading", { isLoading: true });
+//         // Vue.nextTick(() => {
+//         //   console.log("loading false");
+//         //   store.commit("updateLoading", { isLoading: false });
+//         // });
+//   next()
+// })
 // router.afterEach((to,from)=>{
 //     // 从后台到首页，往vuex传值，判断submit组件是否出现
 //     store.commit("updateLoading", { isLoading: false });

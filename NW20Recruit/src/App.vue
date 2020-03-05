@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h-screen v-if="isHscreen" />
-    <!-- <loading v-if="isLoading" /> -->
+    <loading v-if="isLoading" />
     <transition name="router" v-show="phone">
       <router-view v-show="phone"/>
     </transition>
@@ -32,16 +32,16 @@ export default {
       phone: true
     }
   },
-  watch: {
-    $route: {
-      handler (val,oldVal) {
-        this.$nextTick(()=>{
-            this.updateLoading({isLoading: false})
-        })
-      },
-      deep: true
-    }
-  },
+  // watch: {
+  //   $route: {
+  //     handler (val,oldVal) {
+  //       this.$nextTick(()=>{
+  //           this.updateLoading({isLoading: false})
+  //       })
+  //     },
+  //     deep: true
+  //   }
+  // },
   computed: {
     ...mapState(['isLoading'])
   },
@@ -69,11 +69,11 @@ export default {
     document.body.addEventListener('touchmove', function (e) {
       e.preventDefault(); 
     }, {passive: false});
-    window.onload = () => {
-      // this.isLoading = false
-      this.starryNext()
+    //监听window.onload加载
+    window.onload = ()=>{
+      that.updateLoading({isLoading: false})
     }
-    
+
     window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", hengshuping, false);
  function hengshuping() {
         if (window.orientation == 90 || window.orientation == -90) {
