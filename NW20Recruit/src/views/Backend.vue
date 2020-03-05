@@ -119,6 +119,8 @@ export default {
           }
         } else if (end < start && this.showIcon == true) {
           this.$router.replace("/");
+          this.$store.commit("isSubmitShow", true);
+          this.$store.commit("isLetterShow", false);
         }
       });
     }
