@@ -12,7 +12,7 @@
               v-if="starryCurrent === 2 && !isLetterShow"
               >前往第一站</p>
           </transition>
-            <p class="can-click can-click-design" v-if="isLetterShow">I can click again</p>
+            <p class="can-click can-click-design" v-if="isLetterShow">可以</p>
           <img src="http://recruit.zqyy.site/design-star.png" 
           alt="" 
           :class="{'star-light': starryCurrent === 2}"
@@ -26,7 +26,7 @@
           tipShowWay="back-show"
           tipWidth="9ch"
           v-show="backShow" /> -->
-              <p class="can-click can-click-back" v-if="isLetterShow">I can click,too</p>
+              <p class="can-click can-click-back" v-if="isLetterShow">点击</p>
           <img src="http://recruit.zqyy.site/back-star.png" 
           alt="" >
           <div :class="{'bling2 ':chooseNum==2&&isBlingShow}"></div>
@@ -39,7 +39,7 @@
           tipWidth="6ch"
           v-show="frontShow"
           /> -->
-              <p class="can-click can-click-front" v-if="isLetterShow">I can click</p>
+              <p class="can-click can-click-front" v-if="isLetterShow">我们</p>
           <img src="http://recruit.zqyy.site/front-star.png" 
           alt="" >
           <div :class="{'bling3 ':chooseNum==3&&isBlingShow}"></div>
@@ -159,13 +159,13 @@ export default {
     z-index: -1;
 }
 .can-click-design {
-    font-size: 19px;
+    font-size: 23px;
     top: -28px;
     left: -18px;
     animation: star-text-jump 2s ease 3s infinite reverse;
 }
 .can-click-back {
-    font-size: 19px;
+    font-size: 20px;
     top: -28px;
     left: 18px;
     animation: star-text-jump 1.5s ease 2s infinite reverse;

@@ -239,7 +239,7 @@ export default {
     bottom: 49px;
 }
 .moon-shine {
-    animation:moonlight 1.5s infinite reverse;
+    animation:moonlight 2s infinite reverse;
 }
 .moon-notice {
     font-size: 20px;
