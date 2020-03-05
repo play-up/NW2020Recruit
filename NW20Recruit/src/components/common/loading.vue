@@ -6,7 +6,8 @@
         <div class="circle circle-2"></div>
         <div class="circle circle-3"></div>
         <div class="circle circle-4"></div>
-      </div>  
+      </div> 
+      <img class="ani" src="http://recruit.zqyy.site/load.gif" alt=""> 
     </div>
     
 </template>
@@ -18,6 +19,16 @@ export default {
 </script>
 
 <style scoped>
+.ani {
+    width: 100%;
+    /* height: 100px; */
+    position: absolute;
+    display: block;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 300px;
+}
 @-webkit-keyframes rotate-animation {
     0% {
         -webkit-transform: rotate(0deg);
