@@ -121,7 +121,8 @@ export default {
   width: 100%;
   height: 100%;
   background: url("http://recruit.zqyy.site/single-starry.png") no-repeat;
-  background-size: 100% 100%;
+  background-size: 101% 100%;
+  background-position: center;
   position: relative;
 }
 .hill {

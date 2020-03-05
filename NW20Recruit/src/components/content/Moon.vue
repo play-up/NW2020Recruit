@@ -160,6 +160,8 @@ export default {
     font-size: 22px;
     font-weight: 550;
     line-height: 42px;
+    position: relative;
+    z-index: 10;
 }
 .run-around-wrap {
     display: flex;
@@ -226,6 +228,7 @@ export default {
     position: relative;
     text-align: center;
     margin: 0 auto;
+    background: transparent;
 }
 .line-moon {
     width: 10%;

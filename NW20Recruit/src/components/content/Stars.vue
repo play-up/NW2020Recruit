@@ -12,7 +12,7 @@
               v-if="starryCurrent === 2 && !isLetterShow"
               >前往第一站</p>
           </transition>
-            <p class="can-click can-click-design" v-if="isLetterShow">可以</p>
+            <p class="can-click can-click-design" v-show="designShow">点我进入设计星球</p>
           <img src="http://recruit.zqyy.site/design-star.png" 
           alt="" 
           :class="{'star-light': starryCurrent === 2}"
@@ -26,7 +26,7 @@
           tipShowWay="back-show"
           tipWidth="9ch"
           v-show="backShow" /> -->
-              <p class="can-click can-click-back" v-if="isLetterShow">点击</p>
+              <p class="can-click can-click-back" v-show="backShow">点我来星球做客</p>
           <img src="http://recruit.zqyy.site/back-star.png" 
           alt="" >
           <div :class="{'bling2 ':chooseNum==2&&isBlingShow}"></div>
@@ -39,7 +39,7 @@
           tipWidth="6ch"
           v-show="frontShow"
           /> -->
-              <p class="can-click can-click-front" v-if="isLetterShow">我们</p>
+              <p class="can-click can-click-front" v-show="frontShow">点我再聊聊前端</p>
           <img src="http://recruit.zqyy.site/front-star.png" 
           alt="" >
           <div :class="{'bling3 ':chooseNum==3&&isBlingShow}"></div>
@@ -70,11 +70,39 @@ export default {
       ...mapState(['starryCurrent','chooseNum','isBlingShow','isPass','isLetterShow'])
   },
   watch: {
+      isLetterShow (val) {
+          if(val = true) {
+              this.starTextShow()
+                .then(that=>{
+                    return new Promise((resolve,reject)=>{
+                        clearTimeout(that.time1)
+                        that.time1 = setTimeout(()=>{
+                        that.frontShow = true
+                        resolve(that)
+                        },7000)
+                    })
+                })
+                .then(that=>{
+                    return new Promise((resolve,reject)=>{
+                        clearTimeout(that.time2)
+                        that.time1 = setTimeout(()=>{
+                        that.designShow = true
+                        resolve(that)
+                        },7000)
+                    })
+                })
+          } else {
+              clearTimeout(this.time1)
+              clearTimeout(this.time2)
+              this.designShow = false;
+              this.backShow = false;
+              this.frontShow = false;
+          }
+      }
   },
   methods: {
       ...mapMutations(['starryNext']),
       starClick (star) {
-          
           if(star == 1) {
             if(this.starryCurrent == 2) {
                 this.starryNext()
@@ -91,7 +119,15 @@ export default {
                 this.$router.replace("/frontend");
             }
           }
-
+      },
+      starTextShow () {
+          let that = this
+          return new Promise((resolve,reject)=>{
+              that.time1 = setTimeout(()=>{
+                  that.backShow = true
+                  resolve(that)
+              },1000)
+          })
       }
   },
 }
@@ -161,33 +197,71 @@ export default {
 .can-click-design {
     font-size: 23px;
     top: -28px;
-    left: -18px;
-    animation: star-text-jump 2s ease 3s infinite reverse;
+    left: 28px;
+    animation: star-text-jump 21s ease 1s infinite normal;
 }
 .can-click-back {
     font-size: 20px;
-    top: -28px;
-    left: 18px;
-    animation: star-text-jump 1.5s ease 2s infinite reverse;
+    top: -32px;
+    left: 38px;
+    animation: star-text-jump 20s ease 1s infinite normal;
 }
 .can-click-front {
     font-size: 15px;
-    top: -25px;
-    left: -28px;
-    animation: star-text-jump 1s ease 1s infinite reverse;
+    top: -40px;
+    left: -48px;
+    text-shadow: .1px 0px .2px wheat;
+    animation: star-text-jump 18s ease 1s infinite normal;
 }
 @keyframes star-text-jump {
     0% {
         transform: translateY(0px)
     }
-    25% {
+    3% {
         transform: translateY(-1px)
     }
-    50% {
+    6% {
         transform: translateY(1px)
     }
-    75% {
+    9% {
         transform: translateY(-0.5px)
+    }
+    12% {
+        transform: translateY(0px)
+    }
+    15% {
+        transform: translateY(-1px)
+    }
+    18% {
+        transform: translateY(1px)
+    }
+    20% {
+        transform: translateY(-0.5px)
+    }
+    23% {
+        transform: translateY(0px)
+    }
+    26% {
+        transform: translateY(2.5px)
+    }
+    27% {
+        transform: translateY(-3.5px)
+    }
+    28% {
+        opacity: 1;
+        transform: translateY(-3.5px);
+    }
+    32% {
+        opacity: 0;
+        transform: translateY(-4.5px);
+    }
+    96% {
+        opacity: 0;
+        transform: translateY(-4.5px);
+    }
+    97% {
+        opacity: 1;
+        transform: translateY(0px)
     }
     100% {
         transform: translateY(0px)
