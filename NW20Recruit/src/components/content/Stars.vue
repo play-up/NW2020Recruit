@@ -6,14 +6,14 @@
           :tipWidth="designWidth"
           v-show="designShow"
           /> -->
-          <transition name="next-text">
+          <transition name="next-text" >
               <p 
               class="next-status-text"
               v-if="starryCurrent === 2"
               >前往第一站</p>
           </transition>
             <p class="can-click can-click-design" v-if="isLetterShow">I can click again</p>
-          <img src="~assets/design-star.png" 
+          <img src="http://recruit.zqyy.site/design-star.png" 
           alt="" 
           :class="{'star-light': starryCurrent === 2}"
           >
@@ -27,7 +27,7 @@
           tipWidth="9ch"
           v-show="backShow" /> -->
               <p class="can-click can-click-back" v-if="isLetterShow">I can click,too</p>
-          <img src="~assets/back-star.png" 
+          <img src="http://recruit.zqyy.site/back-star.png" 
           alt="" >
           <div :class="{'bling2 ':chooseNum==2&&isBlingShow}"></div>
       </div>
@@ -40,7 +40,7 @@
           v-show="frontShow"
           /> -->
               <p class="can-click can-click-front" v-if="isLetterShow">I can click</p>
-          <img src="~assets/front-star.png" 
+          <img src="http://recruit.zqyy.site/front-star.png" 
           alt="" >
           <div :class="{'bling3 ':chooseNum==3&&isBlingShow}"></div>
       </div>
@@ -50,7 +50,6 @@
 <script>
 import { mapState,mapMutations } from 'vuex'
 
-// import TipR from 'components/common/TipR'
 export default {
   name: 'Stars',
   data() {
