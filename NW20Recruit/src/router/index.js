@@ -60,16 +60,7 @@ const router = new Router({
 // router.afterEach((to,from)=>{
 //     // 从后台到首页，往vuex传值，判断submit组件是否出现
 //     store.commit("updateLoading", { isLoading: false });
-//     if(to.path=='/'&&from.path=='/backend')
-//     {
-//     console.log(store.state.isPass);
-    
-//      store.commit('isSubmitShow',true);
-//      store.commit("isLetterShow", false);
-//      store.commit("isPostShow", false);
-//      store.commit("isRoll", 0);
-//     }
-//   console.log(store.state.isPostShow);
+//     
   
 // })
 export default router
