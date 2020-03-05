@@ -46,7 +46,7 @@ export default {
       this.isShow = !this.isShow;
       this.$store.commit('isPostShow',true);
       // // 表示经历了报名表
-      // this.$store.commit('isPass',true);
+      this.$store.commit('isPass',true);
       setTimeout(()=>{
         this.$store.commit('isRoll',1)
       },2000)
