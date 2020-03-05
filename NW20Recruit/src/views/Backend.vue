@@ -111,16 +111,21 @@ export default {
         // 上滑减小，下滑增加
         if (end > start && this.showIcon == true) {
           if (this.isPass == true) {
-            this.$router.replace("/");
             this.$store.commit("isSubmitShow", false);
             this.$store.commit("isLetterShow", true);
+            this.$router.replace("/");
           } else {
             this.$router.replace("/frontend");
           }
         } else if (end < start && this.showIcon == true) {
+          if (this.isPass == true) {
+            this.$store.commit("isSubmitShow", false);
+            this.$store.commit("isLetterShow", true);
+          } else {
+            this.$store.commit("isSubmitShow", true);
+            this.$store.commit("isLetterShow", false);
+          }
           this.$router.replace("/");
-          this.$store.commit("isSubmitShow", true);
-          this.$store.commit("isLetterShow", false);
         }
       });
     }

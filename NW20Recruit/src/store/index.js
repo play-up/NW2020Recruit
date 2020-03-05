@@ -16,7 +16,7 @@ export default new Vuex.Store({
     isLetterShow:false,
     isFilterShow:false,
     //是否加载loading
-    isLoading: false,
+    isLoading: true,
     isRoll:0,//信封是否翻转
     isBlingShow:false,
     // 是否经过报名表

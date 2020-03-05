@@ -19,12 +19,13 @@
                     :style="`animationDelay:${i * 0.02}s`"
                 >{{letter}}</span>
             </p> -->
-            <p 
+            <!-- <p 
                 v-for="(word, index) in words" 
                 :key="index"
                 class="landin"
                 :style="`animationDelay:${index * 0.03}s`"
-            >{{word}}</p>
+            >{{word}}</p> -->
+            <p class="para">{{words}}</p>
         </div>
         <div class="downBat"></div>
         <div :class="['next', {'hide':!showArrow}]" @click="goNext">
@@ -109,7 +110,7 @@ export default {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     this.showTitle = true;
-                    resolve(500);
+                    resolve(800);
                 }, ms)
             });
         },
@@ -118,10 +119,10 @@ export default {
             let that = this;
             return new Promise((resolve, reject) => {
                 this.showWord = true;
-                if(typeof this.words === 'String'){
-                    this.words = this.words.split("");
-                }
-                resolve(6300);
+                // if(typeof this.words === 'String'){
+                //     this.words = this.words.split("");
+                // }
+                resolve();
             })
         },
         //返回上一页
@@ -184,7 +185,6 @@ export default {
                 .then(this.typTitle)
                 .then(this.rest)
                 .then(this.typPara)
-                .then(this.rest)
                 .then(() => {
                     return new Promise((resolve, reject) => {
                         this.showArrow = true;
@@ -314,11 +314,13 @@ export default {
     animation: landIn 0.2s ease-out both;
     display: inline-block;
 }
-
+.para {
+    animation: landIn 0.8s linear both;
+}
 @keyframes landIn {
   from {
     opacity: 0;
-    transform: translate(0, -2vw);
+    transform: translate(0, 2vw);
   }
 
   to {
