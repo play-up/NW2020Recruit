@@ -621,6 +621,11 @@ export default {
         // alert('android端');
       }
     },
+    InputStop(){
+      $("input,textarea").on('touchstart,touchmove,touchend',function(event){
+         event.stopPropagation();
+      })
+    },
     showPopUp() {
       let status = localStorage.getItem("status");
       // 未提交时
@@ -649,30 +654,31 @@ export default {
       // let start, end;
       this._takeStart = e =>{
         this.start = e.touches[0].clientY;
+        console.log(e.touches[0]);
+        
       }
       this._takeEnd = e =>{
           this.end = e.touches[0].clientY;
+          console.log(e.touches[0]);
+          
       }
+      
+      // console.log(this.start);
+      
+      
       this._show = e =>{
-        if (this.start - this.end > 30) {
+        if (this.start&&this.end&&this.start-this.end>30 ) {
+          this.start = null;
+          this.end =null;
           this.showPopUp();
+          
+          // console.log(this.start - this.end);
+          // console.log(this.start - this.end);
         }
       }
       this.$refs.all.addEventListener("touchstart", this._takeStart);
       this.$refs.all.addEventListener("touchmove", this._takeEnd);
       this.$refs.all.addEventListener("touchend", this._show);
-      // this.$refs.all.addEventListener("touchstart", evt => {
-      //   start = evt.touches[0].clientY;
-      // });
-      // this.$refs.all.addEventListener("touchmove", evt => {
-      //   end = evt.touches[0].clientY;
-      // });
-      // this.$refs.all.addEventListener("touchend", evt => {
-      //   // 上滑减小，下滑增加
-      //   if (start - end > 30) {
-      //     this.showPopUp();
-      //   }
-      // });
     },
     removeSlide(){
       this.$refs.all.removeEventListener("touchstart", this._takeStart);
@@ -685,6 +691,7 @@ export default {
     this.iosInput();
   },
   beforeMount() {
+    this.InputStop()
     this._close = e => {
       // 如果点击发生在当前组件内部，则不处理
       if (this.$el.contains(e.target)) {
