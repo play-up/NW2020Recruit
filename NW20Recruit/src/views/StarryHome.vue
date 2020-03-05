@@ -86,6 +86,7 @@ export default {
       image.onload=()=>{
         console.log('预加载了')
         if(num >= imgs.length) {
+          this.starryNext()
           that.updateLoading({isLoading: false})
         }
       }

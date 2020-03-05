@@ -46,7 +46,6 @@ export default {
   },
   watch: {
     starryCurrent (val) {
-      console.log(val)
       if(val==0) {
         let come = setTimeout(()=>{
           this.isCome = true
@@ -87,7 +86,7 @@ export default {
             this.starryNext()//进入下一个状态 
             clearTimeout(nextCurrent)
           },3000)
-    } else if (this.starryCurrent > 0){
+    } else if (this.starryCurrent != 0){
       this.StarryTextShow = false
     }
   },
