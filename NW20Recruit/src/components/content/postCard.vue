@@ -148,7 +148,7 @@ export default {
   },
   data() {
     return {
-      remainNum: 200, //剩余字数
+      remainNum: 0, //剩余字数
       isBoxShow: false,
       remindIndex: 0,
       remindArr: [
@@ -501,7 +501,7 @@ export default {
           return true;
         }
       }
-      if (this.formData.direction == "") {
+      if (this.formData.intention == "") {
         this.remindIndex = 1;
         console.log("请选择方向！");
 
@@ -515,6 +515,10 @@ export default {
     submit() {
       // this.judgeInsure();
       // 输入不合法时,提示框出现，显示报名表是否填写完整
+      console.log(this.judgeInsure());
+      
+      console.log(this.formData.sex);
+      
       if (this.judgeInsure()) {
         // this.remindIndex = 1;
         this.isRemindShow = true;
