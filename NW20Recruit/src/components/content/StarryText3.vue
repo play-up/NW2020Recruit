@@ -1,6 +1,6 @@
 <template>
   <transition name="starry-text-fade">
-    <div id="starry-text" v-if="StarryTextShow && starryCurrent===0"><!--  -->
+    <div id="starry-text" v-if="StarryTextShow && starryCurrent===0 && isPostShow"><!--  -->
       <div class="text-box">
         <p class="starry-text1">
           <span>欢</span>
@@ -42,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['starryCurrent']),
+    ...mapState(['starryCurrent','isPostShow']),
   },
   watch: {
     starryCurrent (val) {

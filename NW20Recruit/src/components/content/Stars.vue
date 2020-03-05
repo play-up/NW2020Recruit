@@ -9,7 +9,7 @@
           <transition name="next-text" >
               <p 
               class="next-status-text"
-              v-if="starryCurrent === 2"
+              v-if="starryCurrent === 2 && !isLetterShow"
               >前往第一站</p>
           </transition>
             <p class="can-click can-click-design" v-if="isLetterShow">I can click again</p>
