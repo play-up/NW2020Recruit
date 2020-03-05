@@ -484,7 +484,7 @@ export default {
   bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
-  animation: float 1s linear infinite;
+  animation: float 1s linear infinite, fade 1s linear;
 }
 .next img {
   width: 48px;
@@ -498,6 +498,14 @@ export default {
   }
   100% {
     transform: translateY(0) translateX(-50%);
+  }
+}
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 @media screen and (min-aspect-ratio: 375/666) and (max-aspect-ratio: 375/358) {
