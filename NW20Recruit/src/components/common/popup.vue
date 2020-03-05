@@ -71,8 +71,11 @@ export default {
       e.stopPropagation();
     },
     no2(e){
+       var that = this;
       e.stopPropagation();
-       this.$emit("no");
+       setTimeout(() => {
+            that.$emit("no");
+          }, 300);
     },
     no() {
       this.$emit("no");
