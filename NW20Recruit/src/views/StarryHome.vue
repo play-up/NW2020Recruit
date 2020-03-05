@@ -1,6 +1,6 @@
 <template>
   <div id="starry-home">
-    <loading v-if="isLoading" />
+    <!-- <loading v-if="isLoading" /> -->
     <img src="http://recruit.zqyy.site/hill.png" alt="hill" class="hill" />
     <!-- 信封 -->
     <img
@@ -45,6 +45,13 @@ export default {
       isLoading: true
     };
   },
+  watch: {
+    isLetterShow (val) {
+      if(val) {
+        this.starryNext()
+      }
+    }
+  },
   methods: {
     ...mapMutations(["starryNext","updateLoading"]),
     moonEv(state) {
@@ -71,7 +78,6 @@ export default {
   mounted() {
     
     let that = this 
-    that.updateLoading({isLoading: true})
     let imgs = [
       "http://recruit.zqyy.site/design-star.png",
       "http://recruit.zqyy.site/front-star.png",
@@ -91,7 +97,6 @@ export default {
       num++
       image.onload=()=>{
           if(that.starryCurrent == -1)that.starryNext()
-          that.isLoading = false
       }
       image.onerror = () => {
         console.log('预加载失败');

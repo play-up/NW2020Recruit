@@ -71,6 +71,25 @@ export default {
     }, {passive: false});
     //监听window.onload加载
     window.onload = ()=>{
+      let imgs = [
+        "http://recruit.zqyy.site/design-star.png",
+        "http://recruit.zqyy.site/front-star.png",
+        "http://recruit.zqyy.site/back-star.png",
+        "http://recruit.zqyy.site/single-starry.png",
+        "http://recruit.zqyy.site/hill.png"
+      ]
+      let num = 0
+      for( let img of imgs) {
+        let image = new Image()
+        image.src = img
+        num++
+        image.onload=()=>{
+            if(that.starryCurrent == -1)that.starryNext()
+        }
+        image.onerror = () => {
+          console.log('预加载失败');
+        };
+      }
       that.updateLoading({isLoading: false})
     }
 
