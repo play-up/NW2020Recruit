@@ -247,7 +247,9 @@ export default {
       isAlive: true, //是否点击了提交，点击后点击外围不跳转到首页
       backStatus: null, //后台返回的状态
       isRemindShow: false, //弹窗是否要出现
-      count: 0
+      count: 0,
+      start:null,
+      end:null
     };
   },
   watch: {
@@ -381,6 +383,7 @@ export default {
       let that = this;
       return new Promise((resolve, reject) => {
         document.body.removeEventListener("click", this._close);
+        this.removeSlide();
         this.isSeel = 1;
         resolve(1000);
         // resolve(800)
@@ -570,10 +573,9 @@ export default {
       if (this.remindIndex == 2) this.moreSubmit(); //如果是继续提交按钮被点击，则触发这个方法
     },
     no() {
-      
       this.isRemindShow = false;
       console.log(this.remindIndex);
-      
+
       // 修改了不保存+未提交不保存 点击拒绝，组件消失
       if (this.remindIndex == 0 || this.remindIndex == 5) {
         // 报名表这个组件消失
@@ -642,24 +644,45 @@ export default {
         this.$store.commit("isLetterShow", true);
         this.$store.commit("isRoll", 0);
       }
+    },
+    slideCancel(){
+      // let start, end;
+      this._takeStart = e =>{
+        this.start = e.touches[0].clientY;
+      }
+      this._takeEnd = e =>{
+          this.end = e.touches[0].clientY;
+      }
+      this._show = e =>{
+        if (this.start - this.end > 30) {
+          this.showPopUp();
+        }
+      }
+      this.$refs.all.addEventListener("touchstart", this._takeStart);
+      this.$refs.all.addEventListener("touchmove", this._takeEnd);
+      this.$refs.all.addEventListener("touchend", this._show);
+      // this.$refs.all.addEventListener("touchstart", evt => {
+      //   start = evt.touches[0].clientY;
+      // });
+      // this.$refs.all.addEventListener("touchmove", evt => {
+      //   end = evt.touches[0].clientY;
+      // });
+      // this.$refs.all.addEventListener("touchend", evt => {
+      //   // 上滑减小，下滑增加
+      //   if (start - end > 30) {
+      //     this.showPopUp();
+      //   }
+      // });
+    },
+    removeSlide(){
+      this.$refs.all.removeEventListener("touchstart", this._takeStart);
+      this.$refs.all.removeEventListener("touchmove", this._takeEnd);
+      this.$refs.all.removeEventListener("touchend", this._show);
     }
   },
   mounted() {
     this.getLocal();
     this.iosInput();
-    let start, end;
-    this.$refs.all.addEventListener("touchstart", evt => {
-      start = evt.touches[0].clientY;
-    });
-    this.$refs.all.addEventListener("touchmove", evt => {
-      end = evt.touches[0].clientY;
-    });
-    this.$refs.all.addEventListener("touchend", evt => {
-      // 上滑减小，下滑增加
-      if (start - end > 30) {
-        this.showPopUp();
-      }
-    });
   },
   beforeMount() {
     this._close = e => {
@@ -668,32 +691,13 @@ export default {
         return;
       }
       this.showPopUp();
-      //   let status = localStorage.getItem("status");
-      //   // 未提交时
-      //   if(status!=2){
-      //   this.isRemindShow = true; //如果点击了则弹窗出现
-      //   this.remindIndex = 0;
-      //   return ;
-      //   }
-      //   // 提交过后修改表单
-      //  if(this.count>1){
-      //     this.isRemindShow = true; //如果点击了则弹窗出现
-      //     this.remindIndex =5;
-      //     return ;
-      //   }
-      //   // 当提交成功时，点击外层组件消失
-      //   if(status==2&&this.count<=1){
-      //      this.$store.commit("isSubmitShow", false);
-      //     this.$store.commit("isPostShow", false);
-      //     // this.isAlive=false;
-      //     this.$store.commit("isLetterShow", true);
-      //     this.$store.commit("isRoll", 0);
-      //   }
     };
+
     // 两秒之后转到报名页面才监听事件
     setTimeout(() => {
       document.body.addEventListener("click", this._close);
-    }, 2500);
+      this.slideCancel()
+    }, 2000);
   },
   beforeDestroy() {
     document.body.removeEventListener("click", this._close);
