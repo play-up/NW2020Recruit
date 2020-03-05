@@ -295,7 +295,7 @@ export default {
       // 将学号，手机号转为数字型
       this.formData.studentid = parseInt(this.formData.studentid);
       this.formData.phone = parseInt(this.formData.phone);
-      this.formData.sex = 1;
+      // this.formData.sex = 1;
       //  console.log(this.formData.studentid);
       // let arr = this.formData;
       // localStorage.setItem("formData", JSON.stringify(arr));
