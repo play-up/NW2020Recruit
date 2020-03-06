@@ -271,11 +271,14 @@ export default {
     left: 0;
     right: 0;
     margin: auto;
+    font-family: '微软雅黑';
 }
 .word>p{
     position: relative;
     left: 0;
     right: 0;
+    font-family: '微软雅黑';
+    text-indent: 60px;
 }
 .none{
     display: none;
