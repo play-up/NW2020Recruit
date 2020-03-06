@@ -47,14 +47,25 @@
       <img src="http://recruit.zqyy.site/frontend2.png" />
       <img src="http://recruit.zqyy.site/frontend1.png" />
     </div>
-    <div class="content" v-if="showContent">
-      <!-- <p
+    <div class="contentBox">
+      <div class="content" v-if="showContent">
+        <!-- <p
         v-for="(letter, index) in content"
         class="letter"
         :style="`animation-delay:${index * 0.05}s`"
         :key="index"
-      >{{letter}}</p>-->
-      <p v-for="(letter, index) in content" class="letter" :key="index">{{letter}}</p>
+        >{{letter}}</p>-->
+        <p v-for="(letter, index) in content1" class="letter" :key="index">{{letter}}</p>
+      </div>
+      <div class="content" v-if="showContent">
+        <!-- <p
+        v-for="(letter, index) in content"
+        class="letter"
+        :style="`animation-delay:${index * 0.05}s`"
+        :key="index"
+        >{{letter}}</p>-->
+        <p v-for="(letter, index) in content2" class="letter" :key="index">{{letter}}</p>
+      </div>
     </div>
     <div class="next" @click="toNextPage" v-show="showIcon">
       <img src="http://recruit.zqyy.site/frontend_next.png" />
@@ -72,8 +83,10 @@ export default {
   },
   data() {
     return {
-      content:
-        "基于 CSS 、 HTML 、 JavaScript 三件套，使用 Vue 作为框架开发各种各样的网页。前端一直在发展,我们一直在进步。我们并不局限于前端，我们还要学会利用 Node.js 进行后台开发，利用 node express 实现高并发 http 中间件,最终走向全栈。",
+      content1:
+        "基于 CSS 、 HTML 、 JavaScript 三件套，使用 Vue 作为框架开发各种各样的网页。前端一直在发展,我们一直在进步。",
+      content2:
+        "我们并不局限于前端，我们还要学会利用 Node.js 进行后台开发，利用 node express 实现高并发 http 中间件,最终走向全栈。",
       showTitle: false,
       showCompleteTitle: false,
       showContent: false,
@@ -439,15 +452,17 @@ export default {
   height: 96px;
   margin-right: 18px;
 }
+.contentBox {
+  position: absolute;
+  top: 38%;
+  margin: 0 60px;
+  z-index: 1;
+}
 .content {
   font-size: 30px;
   font-family: "微软雅黑";
   color: white;
   line-height: 50px;
-  position: absolute;
-  top: 38%;
-  margin: 0 60px;
-  z-index: 1;
 }
 .letter {
   display: inline-block;
@@ -509,7 +524,7 @@ export default {
   }
 }
 @media screen and (min-aspect-ratio: 375/666) and (max-aspect-ratio: 375/358) {
-  .content {
+  .contentBox {
     top: 34%;
   }
   .title {
