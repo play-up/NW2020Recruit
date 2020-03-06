@@ -25,7 +25,7 @@
                 class="landin"
                 :style="`animationDelay:${index * 0.03}s`"
             >{{word}}</p> -->
-            <p class="para">{{words}}</p>
+            <p class="para" v-for="(word, index) in words" :key="index">{{word}}</p>
         </div>
         <div class="downBat"></div>
         <div :class="['next', {'hide':!showArrow}]" @click="goNext">
@@ -60,7 +60,7 @@ export default {
             //         'AfterEffect制定交互……工具多如繁星，只为实',
             //         '现你天马行空的绮梦。'
             // ],
-            words: '不同于传统画师，UI设计师除了要给用户带来最优的视觉效果，同时需要明确产品功能，安排界面布局，制定交互逻辑，创造流畅的动态效果从而带来最佳的用户体验。当然，我们设计组并不局限于UI设计，还会涉及到平面，海报，插图设计等，从用笔纸作画，到用PhotoShop处理图像，Illustrator绘制图案，AfterEffect制定交互……工具多如繁星，只为实现你天马行空的绮梦。',
+            words: ['不同于传统画师，UI设计师除了要给用户带来最优的视觉效果，同时需要明确产品功能，安排界面布局，制定交互逻辑，创造流畅的动态效果从而带来最佳的用户体验。','当然，我们设计组并不局限于UI设计，还会涉及到平面，海报，插图设计等，从用笔纸作画，到用PhotoShop处理图像，Illustrator绘制图案，AfterEffect制定交互……工具多如繁星，只为实现你天马行空的绮梦。'],
             showWord: false,
             letters: [],
             showArrow: false,
@@ -271,11 +271,14 @@ export default {
     left: 0;
     right: 0;
     margin: auto;
+    font-family: '微软雅黑';
 }
 .word>p{
     position: relative;
     left: 0;
     right: 0;
+    font-family: '微软雅黑';
+    text-indent: 60px;
 }
 .none{
     display: none;
