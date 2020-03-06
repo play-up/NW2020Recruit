@@ -79,7 +79,7 @@ export default {
                         that.time1 = setTimeout(()=>{
                         that.frontShow = true
                         resolve(that)
-                        },7000)
+                        },2000)
                     })
                 })
                 .then(that=>{
@@ -88,7 +88,7 @@ export default {
                         that.time1 = setTimeout(()=>{
                         that.designShow = true
                         resolve(that)
-                        },7000)
+                        },4000)
                     })
                 })
           } else {
@@ -198,20 +198,21 @@ export default {
     font-size: 23px;
     top: -28px;
     left: 28px;
-    animation: star-text-jump 21s ease 1s infinite normal;
+    animation: star-text-jump 21s ease .5s infinite normal;
 }
 .can-click-back {
     font-size: 20px;
     top: -32px;
     left: 38px;
-    animation: star-text-jump 20s ease 1s infinite normal;
+    animation: star-text-jump 20s ease .5s infinite normal;
 }
 .can-click-front {
     font-size: 15px;
     top: -40px;
     left: -48px;
+    letter-spacing: .5px;
     text-shadow: .1px 0px .2px wheat;
-    animation: star-text-jump 18s ease 1s infinite normal;
+    animation: star-text-jump 18s ease .5s infinite normal;
 }
 @keyframes star-text-jump {
     0% {
