@@ -22,10 +22,16 @@
       <form @submit.prevent="submitForm($event)">
         <ul class="form">
           <li class="name">
-            <label for="name">姓名</label>
+            <div class="name-container">
+              <label for="name">姓名</label>
+              <div class="underline">
+                <input type="text" id="name" v-model="formData.name" required />
+              </div>
+            </div>
+            <!-- <label for="name">姓名</label>
             <div class="underline">
               <input type="text" id="name" v-model="formData.name" required />
-            </div>
+            </div>-->
             <div class="sex">
               <div :class="item.class" v-for="(item,index) in sexArr" :key="item.id">
                 <!-- <label :for="item.id"><img :src="item.src" alt=""></label> -->
@@ -248,8 +254,8 @@ export default {
       backStatus: null, //后台返回的状态
       isRemindShow: false, //弹窗是否要出现
       count: 0,
-      start:null,
-      end:null
+      start: null,
+      end: null
     };
   },
   watch: {
@@ -516,9 +522,9 @@ export default {
       // this.judgeInsure();
       // 输入不合法时,提示框出现，显示报名表是否填写完整
       console.log(this.judgeInsure());
-      
+
       console.log(this.formData.sex);
-      
+
       if (this.judgeInsure()) {
         // this.remindIndex = 1;
         this.isRemindShow = true;
@@ -625,12 +631,12 @@ export default {
         // alert('android端');
       }
     },
-    InputStop(){
-      $("input,textarea").on('touchstart,touchmove,touchend',function(event){
-        console.log('....');
-        
-         event.stopPropagation();
-      })
+    InputStop() {
+      $("input,textarea").on("touchstart,touchmove,touchend", function(event) {
+        console.log("....");
+
+        event.stopPropagation();
+      });
     },
     showPopUp() {
       let status = localStorage.getItem("status");
@@ -656,37 +662,38 @@ export default {
         this.$store.commit("isRoll", 0);
       }
     },
-    slideCancel(){
+    slideCancel() {
       // let start, end;
-      this._takeStart = e =>{
+      this._takeStart = e => {
         this.start = e.touches[0].clientY;
         console.log(e.touches[0]);
-        
-      }
-      this._takeEnd = e =>{
-          this.end = e.touches[0].clientY;
-          console.log(e.touches[0]);
-          
-      }
-      
+      };
+      this._takeEnd = e => {
+        this.end = e.touches[0].clientY;
+        console.log(e.touches[0]);
+      };
+
       // console.log(this.start);
-      
-      
-      this._show = e =>{
-        if (this.start&&this.end&&((this.start-this.end>30)||(this.end-this.start>30) )) {
+
+      this._show = e => {
+        if (
+          this.start &&
+          this.end &&
+          (this.start - this.end > 30 || this.end - this.start > 30)
+        ) {
           this.start = null;
-          this.end =null;
+          this.end = null;
           this.showPopUp();
-          
+
           // console.log(this.start - this.end);
           // console.log(this.start - this.end);
         }
-      }
+      };
       this.$refs.all.addEventListener("touchstart", this._takeStart);
       this.$refs.all.addEventListener("touchmove", this._takeEnd);
       this.$refs.all.addEventListener("touchend", this._show);
     },
-    removeSlide(){
+    removeSlide() {
       this.$refs.all.removeEventListener("touchstart", this._takeStart);
       this.$refs.all.removeEventListener("touchmove", this._takeEnd);
       this.$refs.all.removeEventListener("touchend", this._show);
@@ -695,10 +702,10 @@ export default {
   mounted() {
     this.getLocal();
     this.iosInput();
-    this.InputStop()
+    this.InputStop();
   },
   beforeMount() {
-    this.InputStop()
+    this.InputStop();
     this._close = e => {
       // 如果点击发生在当前组件内部，则不处理
       if (this.$el.contains(e.target)) {
@@ -710,7 +717,7 @@ export default {
     // 两秒之后转到报名页面才监听事件
     setTimeout(() => {
       document.body.addEventListener("click", this._close);
-      this.slideCancel()
+      this.slideCancel();
     }, 2000);
   },
   beforeDestroy() {
@@ -961,6 +968,11 @@ input {
 .sex {
   display: inline-block;
   margin-left: 5vw;
+  vertical-align: sub;
+}
+.name-container{
+  display: inline-block;
+  vertical-align: sub;
 }
 .sex span,
 .direction span {
@@ -1106,4 +1118,5 @@ textarea ::-webkit-scrollbar {
   z-index: 1000;
   position: absolute;
 }
+
 </style>
