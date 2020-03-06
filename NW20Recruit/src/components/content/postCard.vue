@@ -523,7 +523,8 @@ export default {
       // console.log(this.formData.studentid);
 
       if (
-        this.formData.studentid == null 
+        
+        this.formData.studentid == "" 
       ) {
         this.remindIndex = 8;
         return true;
