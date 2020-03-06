@@ -627,6 +627,8 @@ export default {
     },
     InputStop(){
       $("input,textarea").on('touchstart,touchmove,touchend',function(event){
+        console.log('....');
+        
          event.stopPropagation();
       })
     },
@@ -671,7 +673,7 @@ export default {
       
       
       this._show = e =>{
-        if (this.start&&this.end&&this.start-this.end>30 ) {
+        if (this.start&&this.end&&((this.start-this.end>30)||(this.end-this.start>30) )) {
           this.start = null;
           this.end =null;
           this.showPopUp();
@@ -693,6 +695,7 @@ export default {
   mounted() {
     this.getLocal();
     this.iosInput();
+    this.InputStop()
   },
   beforeMount() {
     this.InputStop()

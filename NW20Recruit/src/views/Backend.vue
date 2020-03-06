@@ -20,18 +20,33 @@
       <div class="planet">
         <planet></planet>
       </div>
-      <div id="content" v-show="showContent">
-        <!-- <p
+      <div class="contentBox">
+        <div class="content" v-show="showContent">
+          <!-- <p
           v-for="(letter, index) in letters_content"
           :class="{'letters_content_1': index % 2 == 0,'letters_content_2': index % 2 != 0}"
           :style="`animation-delay:${index * 0.05}s`"
           :key="index"
-        >{{letter}}</p>-->
-        <p
+          >{{letter}}</p>-->
+          <p
+            v-for="(letter, index) in letters_content1"
+            :class="{'letters_content_1': index % 2 == 0,'letters_content_2': index % 2 != 0}"
+            :key="index"
+          >{{letter}}</p>
+        </div>
+        <div class="content" v-show="showContent">
+          <!-- <p
           v-for="(letter, index) in letters_content"
           :class="{'letters_content_1': index % 2 == 0,'letters_content_2': index % 2 != 0}"
+          :style="`animation-delay:${index * 0.05}s`"
           :key="index"
-        >{{letter}}</p>
+          >{{letter}}</p>-->
+          <p
+            v-for="(letter, index) in letters_content2"
+            :class="{'letters_content_1': index % 2 == 0,'letters_content_2': index % 2 != 0}"
+            :key="index"
+          >{{letter}}</p>
+        </div>
       </div>
     </div>
     <div class="next" v-show="showIcon" @click="toNextPage">
@@ -52,8 +67,10 @@ export default {
   },
   data() {
     return {
-      content:
-        "后台组致力于使用java语言，专注于主流先进框架的学习与应用。致力于Web后端API开发。Java就是轮子多，在这里我们将要掌握多种“轮子”的使用方法，提高代码性能，搭建更加合理的架构。同时我们也会学习如何与服务器交互。",
+      content1:
+        "后台组致力于使用java语言，专注于主流先进框架的学习与应用。致力于Web后端API开发。",
+      content2:
+        "Java就是轮子多，在这里我们将要掌握多种“轮子”的使用方法，提高代码性能，搭建更加合理的架构。同时我们也会学习如何与服务器交互。",
       letters_title: [],
       letters_content: [],
       showTitle: false,
@@ -132,7 +149,8 @@ export default {
   },
   mounted() {
     this.goBack();
-    this.letters_content = this.splitTexts(this.content);
+    this.letters_content1 = this.splitTexts(this.content1);
+    this.letters_content2 = this.splitTexts(this.content2);
     this.showTitle = !this.showTitle;
     let imgs = [
       "http://recruit.zqyy.site/postcard.png",
@@ -193,15 +211,18 @@ export default {
   position: absolute;
   right: 14px;
 }
-#content {
+.contentBox {
+  position: absolute;
+  top: 480px;
+  right: 60px;
+}
+.content {
   width: 485px;
   font-size: 30px;
   font-family: "微软雅黑";
   color: white;
   line-height: 50px;
-  position: absolute;
-  top: 480px;
-  right: 60px;
+  margin-bottom: 20px;
 }
 .letters_content_1 {
   display: inline-block;
@@ -302,7 +323,7 @@ export default {
   }
 }
 @media screen and (min-aspect-ratio: 375/666) and (max-aspect-ratio: 375/358) {
-  #content {
+  .contentBox {
     top: 49vw;
   }
   .title {
