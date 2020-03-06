@@ -17,7 +17,7 @@ import { mapState,mapMutations } from 'vuex'
 
 import Loading from 'components/common/Loading'
 import HScreen from 'components/common/H-screen'
-
+   
 
 export default {
   name: 'App',
