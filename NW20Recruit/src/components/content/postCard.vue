@@ -190,6 +190,36 @@ export default {
           content2: "是否离开",
           sureBtn: "继续报名",
           rejectBtn: "忍痛离开"
+        },
+        {
+          content1: "您的姓名尚未填写",
+          content2: "不能提交哦QAQ",
+          sureBtn: "继续报名"
+        },
+        {
+          content1: "您的性别未勾选",
+          content2: "不能提交哦QAQ",
+          sureBtn: "继续报名"
+        },
+        {
+          content1: "您的学号未填写",
+          content2: "不能提交哦QAQ",
+          sureBtn: "继续报名"
+        },
+        {
+          content1: "您的专业班级未填写",
+          content2: "不能提交哦QAQ",
+          sureBtn: "继续报名"
+        },
+        {
+          content1: "您的方向未选择",
+          content2: "不能提交哦QAQ",
+          sureBtn: "继续报名"
+        },
+        {
+          content1: "您的自我介绍未填写",
+          content2: "不能提交哦QAQ",
+          sureBtn: "继续报名"
         }
       ],
       formData: {
@@ -478,43 +508,49 @@ export default {
     },
     // 判断是否都输入且是否输入合法
     judgeInsure() {
-      if (this.formData.name == "") {
-        this.remindIndex = 1;
+      if (
+        this.formData.name == "" ||
+        this.formData.name.replace(/(^\s*)|(\s*$)/g, "") == ""
+      ) {
+        this.remindIndex = 6;
         return true;
       }
-      // else if (!this.judeName(this.formData.name)) {
-      //   // console.log("请输入正确的姓名");
-      //   this.remindIndex = 1;
-      //   return true;
-      // }
       if (this.formData.sex == "") {
         // console.log("请选择性别");
-        this.remindIndex = 1;
+        this.remindIndex = 7;
         return true;
       }
-      for (var i = 0; i < this.propArr.length; i++) {
-        let index = this.propArr[i].prop;
-        if (this.formData[index] == "") {
-          this.remindIndex = 1;
-          // console.log("请填写" + this.propArr[i].content);
-          return true;
-        } else if (
-          index == "phone" &&
-          !this.judgePhoneNo(this.formData[index])
-        ) {
-          // console.log("请输入正确的手机号");
-          this.remindIndex = 4;
-          return true;
-        }
+      // console.log(this.formData.studentid);
+
+      if (
+        this.formData.studentid == null 
+      ) {
+        this.remindIndex = 8;
+        return true;
+      }
+      if (
+        this.formData.college == "" ||
+        this.formData.college.replace(/(^\s*)|(\s*$)/g, "") == ""
+      ) {
+        this.remindIndex = 9;
+        return true;
+      }
+      if (!this.judgePhoneNo(this.formData.phone)) {
+        // console.log("请输入正确的手机号");
+        this.remindIndex = 4;
+        return true;
       }
       if (this.formData.intention == "") {
-        this.remindIndex = 1;
-        console.log("请选择方向！");
+        this.remindIndex = 10;
+        // console.log("请选择方向！");
 
         return true;
       }
-      if (this.formData.introduce == "") {
-        this.remindIndex = 1;
+      if (
+        this.formData.introduce == "" ||
+        this.formData.introduce.replace(/(^\s*)|(\s*$)/g, "") == ""
+      ) {
+        this.remindIndex = 11;
         return true;
       }
     },
@@ -970,7 +1006,7 @@ input {
   margin-left: 5vw;
   vertical-align: middle;
 }
-.name-container{
+.name-container {
   display: inline-block;
   vertical-align: middle;
 }
@@ -1118,5 +1154,4 @@ textarea ::-webkit-scrollbar {
   z-index: 1000;
   position: absolute;
 }
-
 </style>
