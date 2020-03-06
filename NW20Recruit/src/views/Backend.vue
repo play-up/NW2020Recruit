@@ -222,6 +222,7 @@ export default {
   font-family: "微软雅黑";
   color: white;
   line-height: 50px;
+  margin-bottom: 20px;
 }
 .letters_content_1 {
   display: inline-block;
