@@ -322,7 +322,7 @@ export default {
   }
 }
 @media screen and (min-aspect-ratio: 375/666) and (max-aspect-ratio: 375/358) {
-  #contentBox {
+  .contentBox {
     top: 49vw;
   }
   .title {

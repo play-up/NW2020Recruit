@@ -84,9 +84,9 @@ export default {
   data() {
     return {
       content1:
-        "基于 CSS 、 HTML 、 JavaScript 三件套，使用 Vue 作为框架开发各种各样的网页。前端一直在发展,我们一直在进步。",
+        "前端开发者基于 CSS 、 HTML 、 JavaScript 三件套，使用 Vue 等框架开发各种各样的网页。前端一直在发展,我们一直在进步。",
       content2:
-        "我们并不局限于前端，我们还要学会利用 Node.js 进行后台开发，利用 node express 实现高并发 http 中间件,最终走向全栈。",
+        "我们并不局限于前端，还要学会利用 Node.js 进行后台开发，利用 node express 实现高并发 http 中间件,最终走向全栈。",
       showTitle: false,
       showCompleteTitle: false,
       showContent: false,
@@ -454,7 +454,7 @@ export default {
 }
 .contentBox {
   position: absolute;
-  top: 38%;
+  top: 40%;
   margin: 0 60px;
   z-index: 1;
 }
