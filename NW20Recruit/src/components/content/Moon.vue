@@ -171,7 +171,6 @@ export default {
     height: inherit;
     position: absolute;
     top: 0;
-    left: 10px;
 }
 .moon-text p {
     /* padding-left:68px; */
