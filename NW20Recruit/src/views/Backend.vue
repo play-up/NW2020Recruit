@@ -128,13 +128,20 @@ export default {
         // 上滑减小，下滑增加
         if (end > start && this.showIcon == true) {
           if (this.isPass == true) {
-            this.$router.replace("/");
             this.$store.commit("isSubmitShow", false);
             this.$store.commit("isLetterShow", true);
+            this.$router.replace("/");
           } else {
             this.$router.replace("/frontend");
           }
         } else if (end < start && this.showIcon == true) {
+          if (this.isPass == true) {
+            this.$store.commit("isSubmitShow", false);
+            this.$store.commit("isLetterShow", true);
+          } else {
+            this.$store.commit("isSubmitShow", true);
+            this.$store.commit("isLetterShow", false);
+          }
           this.$router.replace("/");
         }
       });
@@ -287,7 +294,7 @@ export default {
 }
 .next {
   position: absolute;
-  bottom: 40px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
   animation: float 1s linear infinite, fade 1s linear;
@@ -315,7 +322,7 @@ export default {
   }
 }
 @media screen and (min-aspect-ratio: 375/666) and (max-aspect-ratio: 375/358) {
-  #contentBox {
+  .contentBox {
     top: 49vw;
   }
   .title {
