@@ -968,11 +968,11 @@ input {
 .sex {
   display: inline-block;
   margin-left: 5vw;
-  vertical-align: sub;
+  vertical-align: middle;
 }
 .name-container{
   display: inline-block;
-  vertical-align: sub;
+  vertical-align: middle;
 }
 .sex span,
 .direction span {
