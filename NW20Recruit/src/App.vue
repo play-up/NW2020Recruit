@@ -44,7 +44,7 @@ export default {
   //   }
   // },
   computed: {
-    ...mapState(['isLoading'])
+    ...mapState(['isLoading','starryCurrent'])
   },
   methods: {
     ...mapMutations(['starryNext','updateLoading']),
@@ -66,6 +66,8 @@ export default {
     timer() {
       setTimeout(()=> {
         this.enoughTime = true;
+      if(this.starryCurrent == -1)this.starryNext()
+
         console.log('时间到了')
       }, 4500)
     }
@@ -80,9 +82,12 @@ export default {
     }
     loadImg.onerror=()=> {
       this.enoughTime = true;
+      if(this.starryCurrent == -1)this.starryNext()
+      
     }
     setTimeout(()=> {
       this.enoughTime = true;
+      if(this.starryCurrent == -1)this.starryNext()
     }, 20000)
     let that = this
     // 这里导致textarea不可以滑动。。。
@@ -104,7 +109,6 @@ export default {
         image.src = img
         num++
         image.onload=()=>{
-            if(that.starryCurrent == -1)that.starryNext()
         }
         image.onerror = () => {
           console.log('预加载失败');
