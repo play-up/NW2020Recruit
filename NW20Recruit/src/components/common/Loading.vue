@@ -27,7 +27,7 @@ export default {
     left: 0;
     right: 0;
     margin: auto;
-    top: 300px;
+    top: 360px;
 }
 @-webkit-keyframes rotate-animation {
     0% {
