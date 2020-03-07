@@ -520,11 +520,10 @@ export default {
         this.remindIndex = 7;
         return true;
       }
-      // console.log(this.formData.studentid);
+      console.log(this.formData.studentid);
 
       if (
-        
-        this.formData.studentid == "" 
+        this.formData.studentid == "" ||this.formData.studentid==null
       ) {
         this.remindIndex = 8;
         return true;
