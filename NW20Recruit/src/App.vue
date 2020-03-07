@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h-screen v-if="isHscreen" />
-    <loading v-if="isLoading" />
+    <loading v-if="isLoading || !enoughTime" />
     <transition name="router" v-show="phone">
       <router-view v-show="phone"/>
     </transition>
@@ -29,7 +29,8 @@ export default {
     return {
       // isLoading: true,
       isHscreen: false,
-      phone: true
+      phone: true,
+      enoughTime: false
     }
   },
   // watch: {
@@ -61,9 +62,28 @@ export default {
           this.phone = true;
         }
       } 
+    },
+    timer() {
+      setTimeout(()=> {
+        this.enoughTime = true;
+        console.log('时间到了')
+      }, 4500)
     }
   },
   mounted() {
+    let loadImg = new Image();
+    loadImg.src = 'http://recruit.zqyy.site/load.gif';
+    loadImg.onload=()=>{
+      console.log('开始计时');
+      this.timer();
+      console.log(this.isLoading && !this.enoughTime);
+    }
+    loadImg.onerror=()=> {
+      this.enoughTime = true;
+    }
+    setTimeout(()=> {
+      this.enoughTime = true;
+    }, 20000)
     let that = this
     // 这里导致textarea不可以滑动。。。
     document.body.addEventListener('touchmove', function (e) {
