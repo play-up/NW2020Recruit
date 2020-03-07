@@ -96,7 +96,6 @@ export default {
       image.src = img
       num++
       image.onload=()=>{
-          if(that.starryCurrent == -1)that.starryNext()
       }
       image.onerror = () => {
         console.log('预加载失败');
