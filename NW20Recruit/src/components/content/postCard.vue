@@ -19,8 +19,8 @@
       :style="{'transform':(isRoll==1?'rotateY(0deg)':'rotateY(180deg)')}"
     >
       <img class="top" src="http://recruit.zqyy.site/nw2020.png" />
-      <p class="stop">你好，网上招新报名通道已经截止。<br/>若还想报名请加入QQ群1047381092私聊管理员谢谢！</p>
-      <!-- <form @submit.prevent="submitForm($event)">
+      <!-- <p class="stop">你好，网上招新报名通道已经截止。<br/>若还想报名请加入QQ群1047381092私聊管理员谢谢！</p> -->
+      <form @submit.prevent="submitForm($event)">
         <ul class="form">
           <li class="name">
             <div class="name-container">
@@ -28,20 +28,20 @@
               <div class="underline">
                 <input type="text" id="name" v-model="formData.name" required />
               </div>
-            </div> -->
+            </div>
                 <!-- 原来的注释 -->
             <!-- <label for="name">姓名</label>
             <div class="underline">
               <input type="text" id="name" v-model="formData.name" required />
             </div>-->
-            <!-- <div class="sex">
-              <div :class="item.class" v-for="(item,index) in sexArr" :key="item.id"> -->
+            <div class="sex">
+              <div :class="item.class" v-for="(item,index) in sexArr" :key="item.id">
                 <!-- 原来的注释 -->
                 <!-- <label :for="item.id"><img :src="item.src" alt=""></label> -->
-                <!-- <img :src="item.src" alt /> -->
+                <img :src="item.src" alt />
                 <!-- 原来的注释 -->
                 <!-- <label for="item.id" style="font-family:KaiTi ">{{item.content}}</label> -->
-                <!-- <input
+                <input
                   type="radio"
                   :id="item.id"
                   ref="checkSex"
@@ -119,7 +119,7 @@
             <img src="~assets/seal.png" alt class="none" :class="{'seal':isSeel}" />
           </div>
         </div>
-      </form> -->
+      </form>
 
         <div class="right">
           <div class="code">
@@ -690,31 +690,31 @@ export default {
     showPopUp() {
       let status = localStorage.getItem("status");
       // 未提交时
-      // if (status != 2) {
-      //   this.isRemindShow = true; //如果点击了则弹窗出现
-      //   this.remindIndex = 0;
-      //   return;
-      // }
+      if (status != 2) {
+        this.isRemindShow = true; //如果点击了则弹窗出现
+        this.remindIndex = 0;
+        return;
+      }
 
-      // // 提交过后修改表单
-      // if (this.count > 1) {
-      //   this.isRemindShow = true; //如果点击了则弹窗出现
-      //   this.remindIndex = 5;
-      //   return;
-      // }
-      // // 当提交成功时，点击外层组件直接消失
-      // if (status == 2 && this.count <= 1) {
-      //   this.$store.commit("isSubmitShow", false);
-      //   this.$store.commit("isPostShow", false);
-      //   // this.isAlive=false;
-      //   this.$store.commit("isLetterShow", true);
-      //   this.$store.commit("isRoll", 0);
-      // }
-      this.$store.commit("isSubmitShow", false);
-      this.$store.commit("isPostShow", false);
-      // this.isAlive=false;
-      this.$store.commit("isLetterShow", true);
-      this.$store.commit("isRoll", 0);
+      // 提交过后修改表单
+      if (this.count > 1) {
+        this.isRemindShow = true; //如果点击了则弹窗出现
+        this.remindIndex = 5;
+        return;
+      }
+      // 当提交成功时，点击外层组件直接消失
+      if (status == 2 && this.count <= 1) {
+        this.$store.commit("isSubmitShow", false);
+        this.$store.commit("isPostShow", false);
+        // this.isAlive=false;
+        this.$store.commit("isLetterShow", true);
+        this.$store.commit("isRoll", 0);
+      }
+      // this.$store.commit("isSubmitShow", false);
+      // this.$store.commit("isPostShow", false);
+      // // this.isAlive=false;
+      // this.$store.commit("isLetterShow", true);
+      // this.$store.commit("isRoll", 0);
     },
     slideCancel() {
       // let start, end;
