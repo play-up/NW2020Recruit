@@ -321,6 +321,7 @@ export default {
 }
 .para {
     animation: landIn 0.8s linear both;
+    pointer-events: none;
 }
 @keyframes landIn {
   from {
@@ -386,5 +387,6 @@ export default {
 .word-img {
     width: 220px;
     height: 100px;
+    pointer-events: none;
 }
 </style>

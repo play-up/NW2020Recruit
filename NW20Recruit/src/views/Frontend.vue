@@ -176,6 +176,12 @@ export default {
   background-position: center center;
   position: relative;
 }
+.frontend img {
+  pointer-events: none;
+}
+.frontend .next img {
+  pointer-events: auto;
+}
 .steamBox {
   height: 70%;
   width: 100%;

@@ -141,6 +141,7 @@ export default {
     /* animation:mymove 3s infinite; */
 }
 .moon-text {
+    pointer-events: none;
     display: flex;
     /* align-content: center; */
     justify-content: center ;
