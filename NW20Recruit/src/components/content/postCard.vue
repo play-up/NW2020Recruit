@@ -202,7 +202,7 @@ export default {
           sureBtn: "继续报名"
         },
         {
-          content1: "您的学号未填写",
+          content1: "您的学号填写不符合",
           content2: "不能提交哦QAQ",
           sureBtn: "继续报名"
         },
@@ -301,7 +301,7 @@ export default {
       handler(val) {
         if (val) {
           this.count++;
-          console.log(this.count);
+          // console.log(this.count);
         }
       },
       deep: true
@@ -502,6 +502,10 @@ export default {
       var reg = /^1[3-9][0-9]\d{8}$/;
       return reg.test(phoneNo);
     },
+    judgeStudentId (studentid) {
+      var reg = /^3[1-2]1[6-9]00\d{4}/;
+      return reg.test(studentid);
+    },
     judeName(name) {
       var reg = /^[\u4E00-\u9FA5A-Za-z]+$/;
       return reg.test(name);
@@ -520,10 +524,10 @@ export default {
         this.remindIndex = 7;
         return true;
       }
-      console.log(this.formData.studentid);
+      // console.log(this.formData.studentid);
 
       if (
-        this.formData.studentid == "" ||this.formData.studentid==null
+        this.formData.studentid == "" ||this.formData.studentid==null|| !this.judgeStudentId(this.formData.studentid)
       ) {
         this.remindIndex = 8;
         return true;
@@ -557,10 +561,10 @@ export default {
     submit() {
       // this.judgeInsure();
       // 输入不合法时,提示框出现，显示报名表是否填写完整
-      console.log(this.judgeInsure());
+      // console.log(this.judgeInsure());
 
-      console.log(this.formData.sex);
-
+      // console.log(this.formData.sex);
+      this.collectingData()
       if (this.judgeInsure()) {
         // this.remindIndex = 1;
         this.isRemindShow = true;
@@ -585,7 +589,7 @@ export default {
           this.myAnimation();
           this.takeInLocal();
         }
-        console.log(this.remindIndex);
+        // console.log(this.remindIndex);
       });
     },
     submitForm() {
@@ -610,17 +614,17 @@ export default {
           this.isRemindShow = true;
           this.remindIndex = 3;
         }
-        console.log(this.remindIndex);
+        // console.log(this.remindIndex);
       });
     },
     yes() {
-      console.log(this.remindIndex);
+      // console.log(this.remindIndex);
       this.isRemindShow = false;
       if (this.remindIndex == 2) this.moreSubmit(); //如果是继续提交按钮被点击，则触发这个方法
     },
     no() {
       this.isRemindShow = false;
-      console.log(this.remindIndex);
+      // console.log(this.remindIndex);
 
       // 修改了不保存+未提交不保存 点击拒绝，组件消失
       if (this.remindIndex == 0 || this.remindIndex == 5) {
@@ -702,11 +706,9 @@ export default {
       // let start, end;
       this._takeStart = e => {
         this.start = e.touches[0].clientY;
-        console.log(e.touches[0]);
       };
       this._takeEnd = e => {
         this.end = e.touches[0].clientY;
-        console.log(e.touches[0]);
       };
 
       // console.log(this.start);

@@ -73,6 +73,8 @@ export default {
         "Java就是轮子多，在这里我们将要掌握多种“轮子”的使用方法，提高代码性能，搭建更加合理的架构。同时我们也会学习如何与服务器交互。",
       letters_title: [],
       letters_content: [],
+      letters_content1:[],
+      letters_content2:[],
       showTitle: false,
       showContent: false,
       showIcon: false
@@ -193,6 +195,12 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
   position: relative;
+}
+.backend img {
+  pointer-events: none;
+}
+.backend .next img {
+  pointer-events: auto;
 }
 .container {
   position: relative;

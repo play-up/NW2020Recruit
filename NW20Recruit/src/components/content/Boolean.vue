@@ -75,12 +75,14 @@ export default {
     left: 32%;
     bottom: -1%;
     animation: boolean 4s linear infinite;
+    pointer-events: none;
 }
 .down{
     height: 76%;
     width: 100%;
     background-image: url('http://recruit.zqyy.site/test-ball.png');
     background-size: 100% 100%;
+    pointer-events: none;
 }
 @keyframes boolean {
     0%, 100% {
